@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 50;
+	objectVersion = 51;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -14,6 +14,9 @@
 		2B0D3ECF22CA3CA400054216 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2B0D3ECD22CA3CA400054216 /* LaunchScreen.storyboard */; };
 		2B0D3EDA22CA3CA400054216 /* Sasha_GalleryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B0D3ED922CA3CA400054216 /* Sasha_GalleryTests.swift */; };
 		2B0D3EE522CA3CA400054216 /* Sasha_GalleryUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B0D3EE422CA3CA400054216 /* Sasha_GalleryUITests.swift */; };
+		2B0D3EF822CA442700054216 /* HTMLSourceTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B0D3EF722CA442700054216 /* HTMLSourceTest.swift */; };
+		2B0D3EFA22CA45B100054216 /* NetworkError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B0D3EF922CA45B100054216 /* NetworkError.swift */; };
+		2B0D3EFC22CA45D400054216 /* HTMLSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B0D3EFB22CA45D400054216 /* HTMLSource.swift */; };
 		B8235F06D85102C01D3A6A28 /* Pods_Sasha_Gallery.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 47EFC87C5114B0C625C0BE48 /* Pods_Sasha_Gallery.framework */; };
 		CB58A5704342A702A1D94132 /* Pods_Sasha_GalleryUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A0958BCA2A8D112FB987822B /* Pods_Sasha_GalleryUITests.framework */; };
 		E833A0941C086F5233986124 /* Pods_Sasha_GalleryTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8DFF7BB7498FC72FF5C73CEE /* Pods_Sasha_GalleryTests.framework */; };
@@ -52,6 +55,9 @@
 		2B0D3EE022CA3CA400054216 /* Sasha GalleryUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Sasha GalleryUITests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		2B0D3EE422CA3CA400054216 /* Sasha_GalleryUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Sasha_GalleryUITests.swift; sourceTree = "<group>"; };
 		2B0D3EE622CA3CA400054216 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		2B0D3EF722CA442700054216 /* HTMLSourceTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HTMLSourceTest.swift; sourceTree = "<group>"; };
+		2B0D3EF922CA45B100054216 /* NetworkError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkError.swift; sourceTree = "<group>"; };
+		2B0D3EFB22CA45D400054216 /* HTMLSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HTMLSource.swift; sourceTree = "<group>"; };
 		47EFC87C5114B0C625C0BE48 /* Pods_Sasha_Gallery.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Sasha_Gallery.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		5A2A58620993085A4EE6068F /* Pods-Sasha GalleryTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Sasha GalleryTests.release.xcconfig"; path = "Target Support Files/Pods-Sasha GalleryTests/Pods-Sasha GalleryTests.release.xcconfig"; sourceTree = "<group>"; };
 		658C9AD5B6B04332F0D22AE2 /* Pods-Sasha GalleryTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Sasha GalleryTests.debug.xcconfig"; path = "Target Support Files/Pods-Sasha GalleryTests/Pods-Sasha GalleryTests.debug.xcconfig"; sourceTree = "<group>"; };
@@ -114,6 +120,7 @@
 		2B0D3EC322CA3CA200054216 /* Sasha Gallery */ = {
 			isa = PBXGroup;
 			children = (
+				2B0D3EF222CA3DA300054216 /* NetworkModule */,
 				2B0D3EC422CA3CA200054216 /* AppDelegate.swift */,
 				2B0D3EC622CA3CA200054216 /* ViewController.swift */,
 				2B0D3EC822CA3CA200054216 /* Main.storyboard */,
@@ -129,6 +136,7 @@
 			children = (
 				2B0D3ED922CA3CA400054216 /* Sasha_GalleryTests.swift */,
 				2B0D3EDB22CA3CA400054216 /* Info.plist */,
+				2B0D3EF722CA442700054216 /* HTMLSourceTest.swift */,
 			);
 			path = "Sasha GalleryTests";
 			sourceTree = "<group>";
@@ -142,6 +150,15 @@
 			path = "Sasha GalleryUITests";
 			sourceTree = "<group>";
 		};
+		2B0D3EF222CA3DA300054216 /* NetworkModule */ = {
+			isa = PBXGroup;
+			children = (
+				2B0D3EF922CA45B100054216 /* NetworkError.swift */,
+				2B0D3EFB22CA45D400054216 /* HTMLSource.swift */,
+			);
+			path = NetworkModule;
+			sourceTree = "<group>";
+		};
 		87BEFDF4A65FEF1807611718 /* Pods */ = {
 			isa = PBXGroup;
 			children = (
@@ -152,7 +169,6 @@
 				A8499B804692C070A49317D0 /* Pods-Sasha GalleryUITests.debug.xcconfig */,
 				272C0CADD4A5E6D5EEA2B9AA /* Pods-Sasha GalleryUITests.release.xcconfig */,
 			);
-			name = Pods;
 			path = Pods;
 			sourceTree = "<group>";
 		};
@@ -177,6 +193,7 @@
 				2B0D3EBD22CA3CA200054216 /* Sources */,
 				2B0D3EBE22CA3CA200054216 /* Frameworks */,
 				2B0D3EBF22CA3CA200054216 /* Resources */,
+				D56AA8009691536602E38A9C /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -362,6 +379,23 @@
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
+		D56AA8009691536602E38A9C /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-Sasha Gallery/Pods-Sasha Gallery-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-Sasha Gallery/Pods-Sasha Gallery-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Sasha Gallery/Pods-Sasha Gallery-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
@@ -370,6 +404,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				2B0D3EC722CA3CA200054216 /* ViewController.swift in Sources */,
+				2B0D3EFC22CA45D400054216 /* HTMLSource.swift in Sources */,
+				2B0D3EFA22CA45B100054216 /* NetworkError.swift in Sources */,
 				2B0D3EC522CA3CA200054216 /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -379,6 +415,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				2B0D3EDA22CA3CA400054216 /* Sasha_GalleryTests.swift in Sources */,
+				2B0D3EF822CA442700054216 /* HTMLSourceTest.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -476,7 +513,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 12.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
@@ -531,7 +568,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 12.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				SDKROOT = iphoneos;
@@ -549,6 +586,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 2ABNASUGL6;
 				INFOPLIST_FILE = "Sasha Gallery/Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -568,6 +606,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 2ABNASUGL6;
 				INFOPLIST_FILE = "Sasha Gallery/Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",

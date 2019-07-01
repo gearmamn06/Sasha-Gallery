@@ -13,4 +13,6 @@ enum NetworkError: Error {
     
     case wrongURL
     case emptyData
+    case invalidHtml
+    case notfound
 }

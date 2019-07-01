@@ -35,8 +35,11 @@ extension HTMLParser {
             let first = items.first!
             let dataSet = first.dataset()
             print("dataSet: \(dataSet)")
-            let href = try? first.attr("href")
+            let href = try? (try? first.select("a"))?.attr("href")
             print("link: \(href)")
+            let image = try! first.select("img").first()!
+            let src = try! image.attr("data-src")
+            print("src: \(src)")
             
             return .success(items)
         }

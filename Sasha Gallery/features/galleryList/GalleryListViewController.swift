@@ -6,4 +6,23 @@
 //  Copyright © 2019 ParkHyunsoo. All rights reserved.
 //
 
-import Foundation
+import UIKit
+
+
+class GalleryListViewController: UIViewController {
+    
+    @IBOutlet weak var collectionView: UICollectionView!
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+    }
+}
+
+
+
+extension GalleryListViewController: StoryboardLoadableView {
+    
+    static var storyboardName: String {
+        return "GalleryListView"
+    }
+}

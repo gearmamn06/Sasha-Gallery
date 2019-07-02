@@ -28,12 +28,12 @@ extension HTMLSource {
     
     func loadHTMLString(_ resultCallback: (Result<String, Error>) -> Void) {
         guard let url = URL(string: urlString) else {
-            resultCallback(.failure(NetworkError.wrongURL))
+            resultCallback(.failure(CommonError.wrongURL))
             return
         }
         
         guard let string = try? String(contentsOf: url) else {
-            resultCallback(.failure(NetworkError.emptyData))
+            resultCallback(.failure(CommonError.emptyData))
             return
         }
         
@@ -52,7 +52,7 @@ extension HTMLSource {
             switch result {
             case .success(let htmlString):
                 guard let document = try? SwiftSoup.parse(htmlString) else {
-                    resultCallback(.failure(NetworkError.invalidHtml))
+                    resultCallback(.failure(CommonError.invalidHtml))
                     return
                 }
                 

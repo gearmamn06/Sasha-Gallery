@@ -35,7 +35,7 @@ extension HTMLParsable {
         }
         
         guard let found = foundElement, let sender = self.init(element: found) else {
-            return .failure(NetworkError.notfound)
+            return .failure(CommonError.notfound)
         }
         
         return .success(sender)

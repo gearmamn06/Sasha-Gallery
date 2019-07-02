@@ -9,7 +9,7 @@
 import Foundation
 
 
-enum NetworkError: Error {
+enum CommonError: Error {
     
     case wrongURL
     case emptyData

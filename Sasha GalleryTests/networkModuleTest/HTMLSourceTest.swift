@@ -63,7 +63,7 @@ extension HTMLSourceTest {
         
         // when
         var htmlString: String!
-        var error: NetworkError!
+        var error: Error!
         
         let promise = expectation(description: "get HTML Source string from given URL")
         source.loadHTMLString { result in
@@ -81,7 +81,6 @@ extension HTMLSourceTest {
         
         // then
         XCTAssertNotNil(error)
-        XCTAssertEqual(error, NetworkError.wrongURL)
         XCTAssertNil(htmlString)
     }
 }
@@ -97,7 +96,7 @@ extension HTMLSourceTest {
         
         // when
         var htmlString: String!
-        var error: NetworkError!
+        var error: Error!
         
         let promise = expectation(description: "get HTML Source string from given URL")
         source.loadHTMLString { result in
@@ -115,7 +114,42 @@ extension HTMLSourceTest {
         
         // then
         XCTAssertNotNil(error)
-        XCTAssertEqual(error, NetworkError.emptyData)
         XCTAssertNil(htmlString)
+    }
+}
+
+
+// MARK: load remote HTML source
+
+extension HTMLSourceTest {
+    
+    func test_loadRemoteGalleryImageList() {
+        
+        // given
+        let sourceURLString = URLStrings.galleryList
+        let source = HTMLSource(urlString: sourceURLString)
+        
+        // when
+        var galleryImageList: GalleryImageList!
+        var error: Error!
+        
+        let promise = expectation(description: "load html and find galleryImage list model")
+        source.loadHTML { (result: Result<GalleryImageList, Error>) in
+            switch result {
+            case .success(let model):
+                galleryImageList = model
+                
+            case .failure(let err):
+                error = err
+            }
+            promise.fulfill()
+        }
+        
+        waitForExpectations(timeout: 5, handler: nil)
+        
+        // then
+        XCTAssertNil(error)
+        XCTAssertNotNil(galleryImageList)
+        XCTAssertFalse(galleryImageList.images.isEmpty)
     }
 }

@@ -12,12 +12,15 @@ import SwiftSoup
 
 protocol HTMLParsable {
     
+    // build current HTML element to HTMLParsable model
     init?(element: Element)
     
     static var cssQuery: String { get }
     static var className: String? { get }
 }
 
+
+// MARK: find target from parent HTML element
 
 extension HTMLParsable {
     
@@ -38,3 +41,7 @@ extension HTMLParsable {
         return .success(sender)
     }
 }
+
+
+
+

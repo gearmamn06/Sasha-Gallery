@@ -142,6 +142,7 @@
 				2B0D3F0222CA51B800054216 /* URLStrings.swift */,
 				2B0D3EF922CA45B100054216 /* NetworkError.swift */,
 				2B0D3EFB22CA45D400054216 /* HTMLSource.swift */,
+				2BE1891C22CA722C0047310D /* HTMLParsable.swift */,
 			);
 			path = services;
 			sourceTree = "<group>";
@@ -157,7 +158,6 @@
 		2BE1892622CA86BF0047310D /* models */ = {
 			isa = PBXGroup;
 			children = (
-				2BE1891C22CA722C0047310D /* HTMLParsable.swift */,
 				2BE1892722CA87080047310D /* GalleryImage.swift */,
 				2BE1892922CA8D390047310D /* GalleryImageList.swift */,
 			);

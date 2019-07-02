@@ -22,7 +22,6 @@
 		2BE1892A22CA8D390047310D /* GalleryImageList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BE1892922CA8D390047310D /* GalleryImageList.swift */; };
 		2BE1892D22CA8E3A0047310D /* GalleryImageTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BE1892C22CA8E3A0047310D /* GalleryImageTest.swift */; };
 		2BE1892F22CA90C40047310D /* GalleryImageListTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BE1892E22CA90C40047310D /* GalleryImageListTest.swift */; };
-		2BE1893922CB8F240047310D /* SashaGalleryUsecase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BE1893822CB8F240047310D /* SashaGalleryUsecase.swift */; };
 		B8235F06D85102C01D3A6A28 /* Pods_Sasha_Gallery.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 47EFC87C5114B0C625C0BE48 /* Pods_Sasha_Gallery.framework */; };
 		E833A0941C086F5233986124 /* Pods_Sasha_GalleryTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8DFF7BB7498FC72FF5C73CEE /* Pods_Sasha_GalleryTests.framework */; };
 /* End PBXBuildFile section */
@@ -59,7 +58,6 @@
 		2BE1892922CA8D390047310D /* GalleryImageList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GalleryImageList.swift; sourceTree = "<group>"; };
 		2BE1892C22CA8E3A0047310D /* GalleryImageTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GalleryImageTest.swift; sourceTree = "<group>"; };
 		2BE1892E22CA90C40047310D /* GalleryImageListTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GalleryImageListTest.swift; sourceTree = "<group>"; };
-		2BE1893822CB8F240047310D /* SashaGalleryUsecase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SashaGalleryUsecase.swift; sourceTree = "<group>"; };
 		47EFC87C5114B0C625C0BE48 /* Pods_Sasha_Gallery.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Sasha_Gallery.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		5A2A58620993085A4EE6068F /* Pods-Sasha GalleryTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Sasha GalleryTests.release.xcconfig"; path = "Target Support Files/Pods-Sasha GalleryTests/Pods-Sasha GalleryTests.release.xcconfig"; sourceTree = "<group>"; };
 		658C9AD5B6B04332F0D22AE2 /* Pods-Sasha GalleryTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Sasha GalleryTests.debug.xcconfig"; path = "Target Support Files/Pods-Sasha GalleryTests/Pods-Sasha GalleryTests.debug.xcconfig"; sourceTree = "<group>"; };
@@ -112,8 +110,7 @@
 		2B0D3EC322CA3CA200054216 /* Sasha Gallery */ = {
 			isa = PBXGroup;
 			children = (
-				2B0D3EF222CA3DA300054216 /* networkLayer */,
-				2BE1893322CB8E410047310D /* domain */,
+				2BE1892622CA86BF0047310D /* models */,
 				2BE1893222CB8E300047310D /* ui */,
 				2BE1893722CB8E980047310D /* comon */,
 				2B0D3EC422CA3CA200054216 /* AppDelegate.swift */,
@@ -138,14 +135,12 @@
 			path = "Sasha GalleryTests";
 			sourceTree = "<group>";
 		};
-		2B0D3EF222CA3DA300054216 /* networkLayer */ = {
+		2B0D3EF222CA3DA300054216 /* helper */ = {
 			isa = PBXGroup;
 			children = (
 				2B0D3EFB22CA45D400054216 /* HTMLSource.swift */,
-				2BE1891C22CA722C0047310D /* HTMLParsable.swift */,
-				2BE1892622CA86BF0047310D /* models */,
 			);
-			path = networkLayer;
+			path = helper;
 			sourceTree = "<group>";
 		};
 		2B0D3EFF22CA4E0B00054216 /* networkModuleTest */ = {
@@ -159,6 +154,8 @@
 		2BE1892622CA86BF0047310D /* models */ = {
 			isa = PBXGroup;
 			children = (
+				2B0D3EF222CA3DA300054216 /* helper */,
+				2BE1891C22CA722C0047310D /* HTMLParsable.swift */,
 				2BE1892722CA87080047310D /* GalleryImage.swift */,
 				2BE1892922CA8D390047310D /* GalleryImageList.swift */,
 			);
@@ -177,25 +174,17 @@
 		2BE1893222CB8E300047310D /* ui */ = {
 			isa = PBXGroup;
 			children = (
-				2BE1893522CB8E700047310D /* mainList */,
+				2BE1893522CB8E700047310D /* GalleryList */,
 				2BE1893622CB8E830047310D /* detailPage */,
 			);
 			path = ui;
 			sourceTree = "<group>";
 		};
-		2BE1893322CB8E410047310D /* domain */ = {
-			isa = PBXGroup;
-			children = (
-				2BE1893822CB8F240047310D /* SashaGalleryUsecase.swift */,
-			);
-			path = domain;
-			sourceTree = "<group>";
-		};
-		2BE1893522CB8E700047310D /* mainList */ = {
+		2BE1893522CB8E700047310D /* GalleryList */ = {
 			isa = PBXGroup;
 			children = (
 			);
-			path = mainList;
+			path = GalleryList;
 			sourceTree = "<group>";
 		};
 		2BE1893622CB8E830047310D /* detailPage */ = {
@@ -407,7 +396,6 @@
 			files = (
 				2BE1892822CA87080047310D /* GalleryImage.swift in Sources */,
 				2B0D3EC722CA3CA200054216 /* ViewController.swift in Sources */,
-				2BE1893922CB8F240047310D /* SashaGalleryUsecase.swift in Sources */,
 				2BE1891D22CA722C0047310D /* HTMLParsable.swift in Sources */,
 				2B0D3EFC22CA45D400054216 /* HTMLSource.swift in Sources */,
 				2BE1892A22CA8D390047310D /* GalleryImageList.swift in Sources */,

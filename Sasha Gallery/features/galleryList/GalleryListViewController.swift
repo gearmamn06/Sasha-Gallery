@@ -43,16 +43,38 @@ private extension GalleryListViewController {
         collectionView.register(GalleryListItemCell.self,
                                 forCellWithReuseIdentifier: "GalleryListItemCell")
         
+        
         viewModel.output.images.asObservable()
             .bind(to: collectionView.rx.items(cellIdentifier: "GalleryListItemCell", cellType: GalleryListItemCell.self))
-            { index, element, cell in
-//                print("element: \(element) at index: \(index)")
+            { _ , element, cell in
+                cell.setUpSubViews(url: element.imageURL)
             }
             .disposed(by: bag)
+            
+        
+        collectionView.rx.setDelegate(self).disposed(by: bag)
         
         setUpCollectionViewRefreshControl()
         
         subscribeRefreshControl()
+    }
+}
+
+extension GalleryListViewController: UICollectionViewDelegateFlowLayout {
+
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        let width = self.collectionView.frame.width / 2
+        let height = width
+
+        return CGSize(width: width, height: height)
+    }
+
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
+        return 0
+    }
+
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
+        return 0
     }
 }
 

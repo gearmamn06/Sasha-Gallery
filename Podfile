@@ -8,6 +8,7 @@ target 'Sasha Gallery' do
   pod 'SwiftSoup'
   pod 'RxSwift', '~> 5'
   pod 'RxCocoa', '~> 5'
+  pod 'Kingfisher', '~> 5.0'
 
   # Pods for Sasha Gallery
 

@@ -15,6 +15,10 @@
 		2B0D3EF822CA442700054216 /* HTMLSourceTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B0D3EF722CA442700054216 /* HTMLSourceTest.swift */; };
 		2B0D3EFA22CA45B100054216 /* CommonError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B0D3EF922CA45B100054216 /* CommonError.swift */; };
 		2B0D3EFC22CA45D400054216 /* HTMLSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B0D3EFB22CA45D400054216 /* HTMLSource.swift */; };
+		2B1E039922CBBFB2000EC425 /* GalleryListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B1E039822CBBFB2000EC425 /* GalleryListViewController.swift */; };
+		2B1E039B22CBBFBF000EC425 /* GalleryListView.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2B1E039A22CBBFBF000EC425 /* GalleryListView.storyboard */; };
+		2B1E039D22CBBFCF000EC425 /* GalleryListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B1E039C22CBBFCF000EC425 /* GalleryListViewModel.swift */; };
+		2B1E039F22CBBFDC000EC425 /* GalleryListViewModelType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B1E039E22CBBFDC000EC425 /* GalleryListViewModelType.swift */; };
 		2BE1891922CA58D20047310D /* mainPage.html in Resources */ = {isa = PBXBuildFile; fileRef = 2BE1891822CA58D20047310D /* mainPage.html */; };
 		2BE1891B22CA58E90047310D /* LocalHTMLSourceReader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BE1891A22CA58E90047310D /* LocalHTMLSourceReader.swift */; };
 		2BE1891D22CA722C0047310D /* HTMLParsable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BE1891C22CA722C0047310D /* HTMLParsable.swift */; };
@@ -51,6 +55,10 @@
 		2B0D3EF722CA442700054216 /* HTMLSourceTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HTMLSourceTest.swift; sourceTree = "<group>"; };
 		2B0D3EF922CA45B100054216 /* CommonError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommonError.swift; sourceTree = "<group>"; };
 		2B0D3EFB22CA45D400054216 /* HTMLSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HTMLSource.swift; sourceTree = "<group>"; };
+		2B1E039822CBBFB2000EC425 /* GalleryListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GalleryListViewController.swift; sourceTree = "<group>"; };
+		2B1E039A22CBBFBF000EC425 /* GalleryListView.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = GalleryListView.storyboard; sourceTree = "<group>"; };
+		2B1E039C22CBBFCF000EC425 /* GalleryListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GalleryListViewModel.swift; sourceTree = "<group>"; };
+		2B1E039E22CBBFDC000EC425 /* GalleryListViewModelType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GalleryListViewModelType.swift; sourceTree = "<group>"; };
 		2BE1891822CA58D20047310D /* mainPage.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = mainPage.html; sourceTree = "<group>"; };
 		2BE1891A22CA58E90047310D /* LocalHTMLSourceReader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalHTMLSourceReader.swift; sourceTree = "<group>"; };
 		2BE1891C22CA722C0047310D /* HTMLParsable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HTMLParsable.swift; sourceTree = "<group>"; };
@@ -111,7 +119,7 @@
 			isa = PBXGroup;
 			children = (
 				2BE1892622CA86BF0047310D /* models */,
-				2BE1893222CB8E300047310D /* ui */,
+				2B1E039622CBBF83000EC425 /* features */,
 				2BE1893722CB8E980047310D /* comon */,
 				2B0D3EC422CA3CA200054216 /* AppDelegate.swift */,
 				2B0D3EC622CA3CA200054216 /* ViewController.swift */,
@@ -151,6 +159,25 @@
 			path = networkModuleTest;
 			sourceTree = "<group>";
 		};
+		2B1E039622CBBF83000EC425 /* features */ = {
+			isa = PBXGroup;
+			children = (
+				2B1E039722CBBF9B000EC425 /* galleryList */,
+			);
+			path = features;
+			sourceTree = "<group>";
+		};
+		2B1E039722CBBF9B000EC425 /* galleryList */ = {
+			isa = PBXGroup;
+			children = (
+				2B1E039E22CBBFDC000EC425 /* GalleryListViewModelType.swift */,
+				2B1E039C22CBBFCF000EC425 /* GalleryListViewModel.swift */,
+				2B1E039822CBBFB2000EC425 /* GalleryListViewController.swift */,
+				2B1E039A22CBBFBF000EC425 /* GalleryListView.storyboard */,
+			);
+			path = galleryList;
+			sourceTree = "<group>";
+		};
 		2BE1892622CA86BF0047310D /* models */ = {
 			isa = PBXGroup;
 			children = (
@@ -169,29 +196,6 @@
 				2BE1892E22CA90C40047310D /* GalleryImageListTest.swift */,
 			);
 			path = ModelTest;
-			sourceTree = "<group>";
-		};
-		2BE1893222CB8E300047310D /* ui */ = {
-			isa = PBXGroup;
-			children = (
-				2BE1893522CB8E700047310D /* GalleryList */,
-				2BE1893622CB8E830047310D /* detailPage */,
-			);
-			path = ui;
-			sourceTree = "<group>";
-		};
-		2BE1893522CB8E700047310D /* GalleryList */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = GalleryList;
-			sourceTree = "<group>";
-		};
-		2BE1893622CB8E830047310D /* detailPage */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = detailPage;
 			sourceTree = "<group>";
 		};
 		2BE1893722CB8E980047310D /* comon */ = {
@@ -309,6 +313,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2B1E039B22CBBFBF000EC425 /* GalleryListView.storyboard in Resources */,
 				2B0D3ECF22CA3CA400054216 /* LaunchScreen.storyboard in Resources */,
 				2B0D3ECC22CA3CA400054216 /* Assets.xcassets in Resources */,
 				2B0D3ECA22CA3CA200054216 /* Main.storyboard in Resources */,
@@ -399,6 +404,9 @@
 				2BE1891D22CA722C0047310D /* HTMLParsable.swift in Sources */,
 				2B0D3EFC22CA45D400054216 /* HTMLSource.swift in Sources */,
 				2BE1892A22CA8D390047310D /* GalleryImageList.swift in Sources */,
+				2B1E039F22CBBFDC000EC425 /* GalleryListViewModelType.swift in Sources */,
+				2B1E039D22CBBFCF000EC425 /* GalleryListViewModel.swift in Sources */,
+				2B1E039922CBBFB2000EC425 /* GalleryListViewController.swift in Sources */,
 				2B0D3EFA22CA45B100054216 /* CommonError.swift in Sources */,
 				2B0D3EC522CA3CA200054216 /* AppDelegate.swift in Sources */,
 			);

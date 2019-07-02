@@ -20,6 +20,7 @@
 		2B1E039D22CBBFCF000EC425 /* GalleryListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B1E039C22CBBFCF000EC425 /* GalleryListViewModel.swift */; };
 		2B1E039F22CBBFDC000EC425 /* GalleryListViewModelType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B1E039E22CBBFDC000EC425 /* GalleryListViewModelType.swift */; };
 		2B1E03A122CBC0CB000EC425 /* StoryboardLoadableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B1E03A022CBC0CB000EC425 /* StoryboardLoadableView.swift */; };
+		2B1E03A322CBDA35000EC425 /* GalleryListItemCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B1E03A222CBDA35000EC425 /* GalleryListItemCell.swift */; };
 		2BE1891922CA58D20047310D /* mainPage.html in Resources */ = {isa = PBXBuildFile; fileRef = 2BE1891822CA58D20047310D /* mainPage.html */; };
 		2BE1891B22CA58E90047310D /* LocalHTMLSourceReader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BE1891A22CA58E90047310D /* LocalHTMLSourceReader.swift */; };
 		2BE1891D22CA722C0047310D /* HTMLParsable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BE1891C22CA722C0047310D /* HTMLParsable.swift */; };
@@ -61,6 +62,7 @@
 		2B1E039C22CBBFCF000EC425 /* GalleryListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GalleryListViewModel.swift; sourceTree = "<group>"; };
 		2B1E039E22CBBFDC000EC425 /* GalleryListViewModelType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GalleryListViewModelType.swift; sourceTree = "<group>"; };
 		2B1E03A022CBC0CB000EC425 /* StoryboardLoadableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoryboardLoadableView.swift; sourceTree = "<group>"; };
+		2B1E03A222CBDA35000EC425 /* GalleryListItemCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GalleryListItemCell.swift; sourceTree = "<group>"; };
 		2BE1891822CA58D20047310D /* mainPage.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = mainPage.html; sourceTree = "<group>"; };
 		2BE1891A22CA58E90047310D /* LocalHTMLSourceReader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalHTMLSourceReader.swift; sourceTree = "<group>"; };
 		2BE1891C22CA722C0047310D /* HTMLParsable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HTMLParsable.swift; sourceTree = "<group>"; };
@@ -176,6 +178,7 @@
 				2B1E039C22CBBFCF000EC425 /* GalleryListViewModel.swift */,
 				2B1E039822CBBFB2000EC425 /* GalleryListViewController.swift */,
 				2B1E039A22CBBFBF000EC425 /* GalleryListView.storyboard */,
+				2B1E03A222CBDA35000EC425 /* GalleryListItemCell.swift */,
 			);
 			path = galleryList;
 			sourceTree = "<group>";
@@ -405,6 +408,7 @@
 				2BE1892822CA87080047310D /* GalleryImage.swift in Sources */,
 				2B0D3EC722CA3CA200054216 /* ViewController.swift in Sources */,
 				2BE1891D22CA722C0047310D /* HTMLParsable.swift in Sources */,
+				2B1E03A322CBDA35000EC425 /* GalleryListItemCell.swift in Sources */,
 				2B0D3EFC22CA45D400054216 /* HTMLSource.swift in Sources */,
 				2BE1892A22CA8D390047310D /* GalleryImageList.swift in Sources */,
 				2B1E039F22CBBFDC000EC425 /* GalleryListViewModelType.swift in Sources */,

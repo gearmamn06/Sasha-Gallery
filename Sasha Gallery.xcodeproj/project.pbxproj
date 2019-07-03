@@ -71,6 +71,7 @@
 		2B1E03AA22CCDFF2000EC425 /* MosaicFlowLayoutView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MosaicFlowLayoutView.swift; sourceTree = "<group>"; };
 		2B1E03AC22CCEA22000EC425 /* CGFloat+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CGFloat+Extensions.swift"; sourceTree = "<group>"; };
 		2B1E03AF22CCFF6C000EC425 /* ImageRatioFindTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageRatioFindTest.swift; sourceTree = "<group>"; };
+		2B1E03B122CD03EF000EC425 /* MyPlayground.playground */ = {isa = PBXFileReference; lastKnownFileType = file.playground; path = MyPlayground.playground; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		2BE1891822CA58D20047310D /* mainPage.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = mainPage.html; sourceTree = "<group>"; };
 		2BE1891A22CA58E90047310D /* LocalHTMLSourceReader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalHTMLSourceReader.swift; sourceTree = "<group>"; };
 		2BE1891C22CA722C0047310D /* HTMLParsable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HTMLParsable.swift; sourceTree = "<group>"; };
@@ -110,6 +111,7 @@
 		2B0D3EB822CA3CA200054216 = {
 			isa = PBXGroup;
 			children = (
+				2B1E03B122CD03EF000EC425 /* MyPlayground.playground */,
 				2B0D3EC322CA3CA200054216 /* Sasha Gallery */,
 				2B0D3ED822CA3CA400054216 /* Sasha GalleryTests */,
 				2B0D3EC222CA3CA200054216 /* Products */,

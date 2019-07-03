@@ -101,8 +101,12 @@ extension GalleryListViewModel: GalleryListViewModelOutput {
     var newCollectionViewLayout: Driver<UICollectionViewFlowLayout> {
         return Observable.combineLatest( _images, _currentLayoutStyle) { data, style in
             switch style {
-            case .grid: return GridFlowLayoutView()
-            case .mosaic: return MosaicFlowLayoutView(imageRatios: [])  // TODO: insert ratios
+            case .grid:
+                return GridFlowLayoutView()
+                
+            case .mosaic:
+                let ratios = data.map{ $0.imageRatio }
+                return MosaicFlowLayoutView(imageRatios: ratios)  // TODO: insert ratios
             }
         }
         .distinctUntilChanged()

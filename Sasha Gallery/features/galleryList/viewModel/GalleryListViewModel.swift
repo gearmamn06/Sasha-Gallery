@@ -145,7 +145,7 @@ private extension GalleryListViewModel {
             .subscribeOn(backgroundScheduler)
             .flatMapLatest { _ in
 //               source = "https://www.gettyimagesgallery.com/collection/sasha/"
-                return HTMLSource<GalleryImageList>(urlString: "https://www.gettyimagesgallery.com/collection/sasha/")
+                return HTMLProvider<GalleryImageList>(urlString: "https://www.gettyimagesgallery.com/collection/sasha/")
                     .loadHTML()
                     .asSignal(onErrorJustReturn: GalleryImageList.empty)
             }

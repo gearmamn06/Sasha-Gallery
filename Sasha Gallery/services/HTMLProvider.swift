@@ -13,7 +13,7 @@ import RxSwift
 
 // MARK; Properties & initializer
 
-struct HTMLSource<Model: HTMLParsable> {
+struct HTMLProvider<Model: HTMLParsable> {
     
     private let urlString: String
     
@@ -25,7 +25,7 @@ struct HTMLSource<Model: HTMLParsable> {
 
 // MARK: get HTML Source
 
-extension HTMLSource {
+extension HTMLProvider {
     
     func loadHTMLString(_ resultCallback: (Result<String, Error>) -> Void) {
         guard let url = URL(string: urlString) else {
@@ -46,7 +46,7 @@ extension HTMLSource {
 
 // MARK: get HTML Source and convert to desire model(Container)
 
-extension HTMLSource {
+extension HTMLProvider {
     
     func loadHTML( _ resultCallback: (Result<Model, Error>) -> Void) {
         self.loadHTMLString { result in
@@ -70,7 +70,7 @@ extension HTMLSource {
 
 
 
-extension HTMLSource {
+extension HTMLProvider {
     
     func loadHTML() -> Observable<Model> {
         return Observable.create { observer in

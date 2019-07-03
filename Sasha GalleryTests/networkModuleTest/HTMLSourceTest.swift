@@ -34,7 +34,7 @@ extension HTMLSourceTest {
         
         // given
         let sourceUrlString = "https://www.gettyimagesgallery.com/collection/sasha/"
-        let source = HTMLSource<HTMLMockUp>(urlString: sourceUrlString)
+        let source = HTMLProvider<HTMLMockUp>(urlString: sourceUrlString)
         
         // when
         var htmlString: String!
@@ -68,7 +68,7 @@ extension HTMLSourceTest {
     func testWrongURLHTMLSource() {
         
         let sourceUrlString = ""
-        let source = HTMLSource<HTMLMockUp>(urlString: sourceUrlString)
+        let source = HTMLProvider<HTMLMockUp>(urlString: sourceUrlString)
         
         // when
         var htmlString: String!
@@ -101,7 +101,7 @@ extension HTMLSourceTest {
     
     func testEmptyHTMLSource() {
         let sourceUrlString = "wrong"
-        let source = HTMLSource<HTMLMockUp>(urlString: sourceUrlString)
+        let source = HTMLProvider<HTMLMockUp>(urlString: sourceUrlString)
         
         // when
         var htmlString: String!
@@ -136,7 +136,7 @@ extension HTMLSourceTest {
         
         // given
         let sourceURLString = "https://www.gettyimagesgallery.com/collection/sasha/"
-        let source = HTMLSource<GalleryImageList>(urlString: sourceURLString)
+        let source = HTMLProvider<GalleryImageList>(urlString: sourceURLString)
         
         // when
         var galleryImageList: GalleryImageList!

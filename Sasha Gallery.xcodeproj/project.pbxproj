@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 50;
+	objectVersion = 51;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -12,22 +12,33 @@
 		2B0D3ECA22CA3CA200054216 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2B0D3EC822CA3CA200054216 /* Main.storyboard */; };
 		2B0D3ECC22CA3CA400054216 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2B0D3ECB22CA3CA400054216 /* Assets.xcassets */; };
 		2B0D3ECF22CA3CA400054216 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2B0D3ECD22CA3CA400054216 /* LaunchScreen.storyboard */; };
-		2B0D3EDA22CA3CA400054216 /* Sasha_GalleryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B0D3ED922CA3CA400054216 /* Sasha_GalleryTests.swift */; };
-		2B0D3EE522CA3CA400054216 /* Sasha_GalleryUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B0D3EE422CA3CA400054216 /* Sasha_GalleryUITests.swift */; };
+		2B0D3EF822CA442700054216 /* HTMLSourceTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B0D3EF722CA442700054216 /* HTMLSourceTest.swift */; };
+		2B0D3EFA22CA45B100054216 /* CommonError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B0D3EF922CA45B100054216 /* CommonError.swift */; };
+		2B0D3EFC22CA45D400054216 /* HTMLSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B0D3EFB22CA45D400054216 /* HTMLSource.swift */; };
+		2B1E039922CBBFB2000EC425 /* GalleryListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B1E039822CBBFB2000EC425 /* GalleryListViewController.swift */; };
+		2B1E039B22CBBFBF000EC425 /* GalleryListView.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2B1E039A22CBBFBF000EC425 /* GalleryListView.storyboard */; };
+		2B1E039D22CBBFCF000EC425 /* GalleryListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B1E039C22CBBFCF000EC425 /* GalleryListViewModel.swift */; };
+		2B1E039F22CBBFDC000EC425 /* GalleryListViewModelType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B1E039E22CBBFDC000EC425 /* GalleryListViewModelType.swift */; };
+		2B1E03A122CBC0CB000EC425 /* StoryboardLoadableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B1E03A022CBC0CB000EC425 /* StoryboardLoadableView.swift */; };
+		2B1E03A322CBDA35000EC425 /* GalleryListItemCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B1E03A222CBDA35000EC425 /* GalleryListItemCell.swift */; };
+		2B1E03AB22CCDFF2000EC425 /* MosaicFlowLayoutView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B1E03AA22CCDFF2000EC425 /* MosaicFlowLayoutView.swift */; };
+		2B1E03AD22CCEA22000EC425 /* CGFloat+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B1E03AC22CCEA22000EC425 /* CGFloat+Extensions.swift */; };
+		2B1E03B022CCFF6C000EC425 /* ImageRatioFindTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B1E03AF22CCFF6C000EC425 /* ImageRatioFindTest.swift */; };
+		2B1E03B322CD07C0000EC425 /* VerticalMosaicFlowLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B1E03B222CD07C0000EC425 /* VerticalMosaicFlowLayout.swift */; };
+		2B1E03B522CD07D2000EC425 /* HorizontalMosaicFlowLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B1E03B422CD07D2000EC425 /* HorizontalMosaicFlowLayout.swift */; };
+		2BE1891922CA58D20047310D /* mainPage.html in Resources */ = {isa = PBXBuildFile; fileRef = 2BE1891822CA58D20047310D /* mainPage.html */; };
+		2BE1891B22CA58E90047310D /* LocalHTMLSourceReader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BE1891A22CA58E90047310D /* LocalHTMLSourceReader.swift */; };
+		2BE1891D22CA722C0047310D /* HTMLParsable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BE1891C22CA722C0047310D /* HTMLParsable.swift */; };
+		2BE1892822CA87080047310D /* GalleryImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BE1892722CA87080047310D /* GalleryImage.swift */; };
+		2BE1892A22CA8D390047310D /* GalleryImageList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BE1892922CA8D390047310D /* GalleryImageList.swift */; };
+		2BE1892D22CA8E3A0047310D /* GalleryImageTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BE1892C22CA8E3A0047310D /* GalleryImageTest.swift */; };
+		2BE1892F22CA90C40047310D /* GalleryImageListTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BE1892E22CA90C40047310D /* GalleryImageListTest.swift */; };
 		B8235F06D85102C01D3A6A28 /* Pods_Sasha_Gallery.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 47EFC87C5114B0C625C0BE48 /* Pods_Sasha_Gallery.framework */; };
-		CB58A5704342A702A1D94132 /* Pods_Sasha_GalleryUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A0958BCA2A8D112FB987822B /* Pods_Sasha_GalleryUITests.framework */; };
 		E833A0941C086F5233986124 /* Pods_Sasha_GalleryTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8DFF7BB7498FC72FF5C73CEE /* Pods_Sasha_GalleryTests.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
 		2B0D3ED622CA3CA400054216 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 2B0D3EB922CA3CA200054216 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 2B0D3EC022CA3CA200054216;
-			remoteInfo = "Sasha Gallery";
-		};
-		2B0D3EE122CA3CA400054216 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 2B0D3EB922CA3CA200054216 /* Project object */;
 			proxyType = 1;
@@ -47,11 +58,29 @@
 		2B0D3ECE22CA3CA400054216 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		2B0D3ED022CA3CA400054216 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		2B0D3ED522CA3CA400054216 /* Sasha GalleryTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Sasha GalleryTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
-		2B0D3ED922CA3CA400054216 /* Sasha_GalleryTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Sasha_GalleryTests.swift; sourceTree = "<group>"; };
 		2B0D3EDB22CA3CA400054216 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		2B0D3EE022CA3CA400054216 /* Sasha GalleryUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Sasha GalleryUITests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
-		2B0D3EE422CA3CA400054216 /* Sasha_GalleryUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Sasha_GalleryUITests.swift; sourceTree = "<group>"; };
-		2B0D3EE622CA3CA400054216 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		2B0D3EF722CA442700054216 /* HTMLSourceTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HTMLSourceTest.swift; sourceTree = "<group>"; };
+		2B0D3EF922CA45B100054216 /* CommonError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommonError.swift; sourceTree = "<group>"; };
+		2B0D3EFB22CA45D400054216 /* HTMLSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HTMLSource.swift; sourceTree = "<group>"; };
+		2B1E039822CBBFB2000EC425 /* GalleryListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GalleryListViewController.swift; sourceTree = "<group>"; };
+		2B1E039A22CBBFBF000EC425 /* GalleryListView.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = GalleryListView.storyboard; sourceTree = "<group>"; };
+		2B1E039C22CBBFCF000EC425 /* GalleryListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GalleryListViewModel.swift; sourceTree = "<group>"; };
+		2B1E039E22CBBFDC000EC425 /* GalleryListViewModelType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GalleryListViewModelType.swift; sourceTree = "<group>"; };
+		2B1E03A022CBC0CB000EC425 /* StoryboardLoadableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoryboardLoadableView.swift; sourceTree = "<group>"; };
+		2B1E03A222CBDA35000EC425 /* GalleryListItemCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GalleryListItemCell.swift; sourceTree = "<group>"; };
+		2B1E03AA22CCDFF2000EC425 /* MosaicFlowLayoutView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MosaicFlowLayoutView.swift; sourceTree = "<group>"; };
+		2B1E03AC22CCEA22000EC425 /* CGFloat+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CGFloat+Extensions.swift"; sourceTree = "<group>"; };
+		2B1E03AF22CCFF6C000EC425 /* ImageRatioFindTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageRatioFindTest.swift; sourceTree = "<group>"; };
+		2B1E03B122CD03EF000EC425 /* MyPlayground.playground */ = {isa = PBXFileReference; lastKnownFileType = file.playground; path = MyPlayground.playground; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
+		2B1E03B222CD07C0000EC425 /* VerticalMosaicFlowLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VerticalMosaicFlowLayout.swift; sourceTree = "<group>"; };
+		2B1E03B422CD07D2000EC425 /* HorizontalMosaicFlowLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HorizontalMosaicFlowLayout.swift; sourceTree = "<group>"; };
+		2BE1891822CA58D20047310D /* mainPage.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = mainPage.html; sourceTree = "<group>"; };
+		2BE1891A22CA58E90047310D /* LocalHTMLSourceReader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalHTMLSourceReader.swift; sourceTree = "<group>"; };
+		2BE1891C22CA722C0047310D /* HTMLParsable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HTMLParsable.swift; sourceTree = "<group>"; };
+		2BE1892722CA87080047310D /* GalleryImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GalleryImage.swift; sourceTree = "<group>"; };
+		2BE1892922CA8D390047310D /* GalleryImageList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GalleryImageList.swift; sourceTree = "<group>"; };
+		2BE1892C22CA8E3A0047310D /* GalleryImageTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GalleryImageTest.swift; sourceTree = "<group>"; };
+		2BE1892E22CA90C40047310D /* GalleryImageListTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GalleryImageListTest.swift; sourceTree = "<group>"; };
 		47EFC87C5114B0C625C0BE48 /* Pods_Sasha_Gallery.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Sasha_Gallery.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		5A2A58620993085A4EE6068F /* Pods-Sasha GalleryTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Sasha GalleryTests.release.xcconfig"; path = "Target Support Files/Pods-Sasha GalleryTests/Pods-Sasha GalleryTests.release.xcconfig"; sourceTree = "<group>"; };
 		658C9AD5B6B04332F0D22AE2 /* Pods-Sasha GalleryTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Sasha GalleryTests.debug.xcconfig"; path = "Target Support Files/Pods-Sasha GalleryTests/Pods-Sasha GalleryTests.debug.xcconfig"; sourceTree = "<group>"; };
@@ -78,23 +107,15 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		2B0D3EDD22CA3CA400054216 /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				CB58A5704342A702A1D94132 /* Pods_Sasha_GalleryUITests.framework in Frameworks */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
 		2B0D3EB822CA3CA200054216 = {
 			isa = PBXGroup;
 			children = (
+				2B1E03B122CD03EF000EC425 /* MyPlayground.playground */,
 				2B0D3EC322CA3CA200054216 /* Sasha Gallery */,
 				2B0D3ED822CA3CA400054216 /* Sasha GalleryTests */,
-				2B0D3EE322CA3CA400054216 /* Sasha GalleryUITests */,
 				2B0D3EC222CA3CA200054216 /* Products */,
 				87BEFDF4A65FEF1807611718 /* Pods */,
 				91DF893D4886DFFE21750E48 /* Frameworks */,
@@ -106,7 +127,6 @@
 			children = (
 				2B0D3EC122CA3CA200054216 /* Sasha Gallery.app */,
 				2B0D3ED522CA3CA400054216 /* Sasha GalleryTests.xctest */,
-				2B0D3EE022CA3CA400054216 /* Sasha GalleryUITests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -114,6 +134,9 @@
 		2B0D3EC322CA3CA200054216 /* Sasha Gallery */ = {
 			isa = PBXGroup;
 			children = (
+				2BE1892622CA86BF0047310D /* models */,
+				2B1E039622CBBF83000EC425 /* features */,
+				2BE1893722CB8E980047310D /* comon */,
 				2B0D3EC422CA3CA200054216 /* AppDelegate.swift */,
 				2B0D3EC622CA3CA200054216 /* ViewController.swift */,
 				2B0D3EC822CA3CA200054216 /* Main.storyboard */,
@@ -127,19 +150,107 @@
 		2B0D3ED822CA3CA400054216 /* Sasha GalleryTests */ = {
 			isa = PBXGroup;
 			children = (
-				2B0D3ED922CA3CA400054216 /* Sasha_GalleryTests.swift */,
+				2BE1891822CA58D20047310D /* mainPage.html */,
+				2BE1891A22CA58E90047310D /* LocalHTMLSourceReader.swift */,
+				2B0D3EFF22CA4E0B00054216 /* networkModuleTest */,
+				2BE1892B22CA8E220047310D /* ModelTest */,
 				2B0D3EDB22CA3CA400054216 /* Info.plist */,
 			);
 			path = "Sasha GalleryTests";
 			sourceTree = "<group>";
 		};
-		2B0D3EE322CA3CA400054216 /* Sasha GalleryUITests */ = {
+		2B0D3EF222CA3DA300054216 /* helper */ = {
 			isa = PBXGroup;
 			children = (
-				2B0D3EE422CA3CA400054216 /* Sasha_GalleryUITests.swift */,
-				2B0D3EE622CA3CA400054216 /* Info.plist */,
+				2B0D3EFB22CA45D400054216 /* HTMLSource.swift */,
 			);
-			path = "Sasha GalleryUITests";
+			path = helper;
+			sourceTree = "<group>";
+		};
+		2B0D3EFF22CA4E0B00054216 /* networkModuleTest */ = {
+			isa = PBXGroup;
+			children = (
+				2B0D3EF722CA442700054216 /* HTMLSourceTest.swift */,
+			);
+			path = networkModuleTest;
+			sourceTree = "<group>";
+		};
+		2B1E039622CBBF83000EC425 /* features */ = {
+			isa = PBXGroup;
+			children = (
+				2B1E039722CBBF9B000EC425 /* galleryList */,
+			);
+			path = features;
+			sourceTree = "<group>";
+		};
+		2B1E039722CBBF9B000EC425 /* galleryList */ = {
+			isa = PBXGroup;
+			children = (
+				2B1E03A622CCDF97000EC425 /* viewModel */,
+				2B1E03A722CCDFA4000EC425 /* views */,
+			);
+			path = galleryList;
+			sourceTree = "<group>";
+		};
+		2B1E03A622CCDF97000EC425 /* viewModel */ = {
+			isa = PBXGroup;
+			children = (
+				2B1E039E22CBBFDC000EC425 /* GalleryListViewModelType.swift */,
+				2B1E039C22CBBFCF000EC425 /* GalleryListViewModel.swift */,
+			);
+			path = viewModel;
+			sourceTree = "<group>";
+		};
+		2B1E03A722CCDFA4000EC425 /* views */ = {
+			isa = PBXGroup;
+			children = (
+				2B1E039A22CBBFBF000EC425 /* GalleryListView.storyboard */,
+				2B1E039822CBBFB2000EC425 /* GalleryListViewController.swift */,
+				2B1E03A222CBDA35000EC425 /* GalleryListItemCell.swift */,
+				2B1E03B622CD09A4000EC425 /* flowlayout */,
+			);
+			path = views;
+			sourceTree = "<group>";
+		};
+		2B1E03B622CD09A4000EC425 /* flowlayout */ = {
+			isa = PBXGroup;
+			children = (
+				2B1E03AA22CCDFF2000EC425 /* MosaicFlowLayoutView.swift */,
+				2B1E03B222CD07C0000EC425 /* VerticalMosaicFlowLayout.swift */,
+				2B1E03B422CD07D2000EC425 /* HorizontalMosaicFlowLayout.swift */,
+			);
+			path = flowlayout;
+			sourceTree = "<group>";
+		};
+		2BE1892622CA86BF0047310D /* models */ = {
+			isa = PBXGroup;
+			children = (
+				2B0D3EF222CA3DA300054216 /* helper */,
+				2BE1891C22CA722C0047310D /* HTMLParsable.swift */,
+				2BE1892722CA87080047310D /* GalleryImage.swift */,
+				2BE1892922CA8D390047310D /* GalleryImageList.swift */,
+			);
+			path = models;
+			sourceTree = "<group>";
+		};
+		2BE1892B22CA8E220047310D /* ModelTest */ = {
+			isa = PBXGroup;
+			children = (
+				2BE1892C22CA8E3A0047310D /* GalleryImageTest.swift */,
+				2BE1892E22CA90C40047310D /* GalleryImageListTest.swift */,
+				2B1E03AF22CCFF6C000EC425 /* ImageRatioFindTest.swift */,
+			);
+			path = ModelTest;
+			sourceTree = "<group>";
+		};
+		2BE1893722CB8E980047310D /* comon */ = {
+			isa = PBXGroup;
+			children = (
+				2B1E03AC22CCEA22000EC425 /* CGFloat+Extensions.swift */,
+				2B0D3EF922CA45B100054216 /* CommonError.swift */,
+				2B1E03A022CBC0CB000EC425 /* StoryboardLoadableView.swift */,
+			);
+			path = comon;
 			sourceTree = "<group>";
 		};
 		87BEFDF4A65FEF1807611718 /* Pods */ = {
@@ -152,7 +263,6 @@
 				A8499B804692C070A49317D0 /* Pods-Sasha GalleryUITests.debug.xcconfig */,
 				272C0CADD4A5E6D5EEA2B9AA /* Pods-Sasha GalleryUITests.release.xcconfig */,
 			);
-			name = Pods;
 			path = Pods;
 			sourceTree = "<group>";
 		};
@@ -177,6 +287,7 @@
 				2B0D3EBD22CA3CA200054216 /* Sources */,
 				2B0D3EBE22CA3CA200054216 /* Frameworks */,
 				2B0D3EBF22CA3CA200054216 /* Resources */,
+				D56AA8009691536602E38A9C /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -206,25 +317,6 @@
 			productReference = 2B0D3ED522CA3CA400054216 /* Sasha GalleryTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
-		2B0D3EDF22CA3CA400054216 /* Sasha GalleryUITests */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = 2B0D3EEF22CA3CA400054216 /* Build configuration list for PBXNativeTarget "Sasha GalleryUITests" */;
-			buildPhases = (
-				4A4476AE8C08176F01930A9A /* [CP] Check Pods Manifest.lock */,
-				2B0D3EDC22CA3CA400054216 /* Sources */,
-				2B0D3EDD22CA3CA400054216 /* Frameworks */,
-				2B0D3EDE22CA3CA400054216 /* Resources */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-				2B0D3EE222CA3CA400054216 /* PBXTargetDependency */,
-			);
-			name = "Sasha GalleryUITests";
-			productName = "Sasha GalleryUITests";
-			productReference = 2B0D3EE022CA3CA400054216 /* Sasha GalleryUITests.xctest */;
-			productType = "com.apple.product-type.bundle.ui-testing";
-		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -239,10 +331,6 @@
 						CreatedOnToolsVersion = 10.2.1;
 					};
 					2B0D3ED422CA3CA400054216 = {
-						CreatedOnToolsVersion = 10.2.1;
-						TestTargetID = 2B0D3EC022CA3CA200054216;
-					};
-					2B0D3EDF22CA3CA400054216 = {
 						CreatedOnToolsVersion = 10.2.1;
 						TestTargetID = 2B0D3EC022CA3CA200054216;
 					};
@@ -263,7 +351,6 @@
 			targets = (
 				2B0D3EC022CA3CA200054216 /* Sasha Gallery */,
 				2B0D3ED422CA3CA400054216 /* Sasha GalleryTests */,
-				2B0D3EDF22CA3CA400054216 /* Sasha GalleryUITests */,
 			);
 		};
 /* End PBXProject section */
@@ -273,6 +360,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2B1E039B22CBBFBF000EC425 /* GalleryListView.storyboard in Resources */,
 				2B0D3ECF22CA3CA400054216 /* LaunchScreen.storyboard in Resources */,
 				2B0D3ECC22CA3CA400054216 /* Assets.xcassets in Resources */,
 				2B0D3ECA22CA3CA200054216 /* Main.storyboard in Resources */,
@@ -283,41 +371,13 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		2B0D3EDE22CA3CA400054216 /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
+				2BE1891922CA58D20047310D /* mainPage.html in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		4A4476AE8C08176F01930A9A /* [CP] Check Pods Manifest.lock */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-			);
-			inputPaths = (
-				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
-				"${PODS_ROOT}/Manifest.lock",
-			);
-			name = "[CP] Check Pods Manifest.lock";
-			outputFileListPaths = (
-			);
-			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-Sasha GalleryUITests-checkManifestLockResult.txt",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
-			showEnvVarsInLog = 0;
-		};
 		55DCB312BF1580C3EBD6A9D4 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -362,6 +422,23 @@
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
+		D56AA8009691536602E38A9C /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-Sasha Gallery/Pods-Sasha Gallery-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-Sasha Gallery/Pods-Sasha Gallery-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Sasha Gallery/Pods-Sasha Gallery-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
@@ -369,8 +446,22 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2BE1892822CA87080047310D /* GalleryImage.swift in Sources */,
 				2B0D3EC722CA3CA200054216 /* ViewController.swift in Sources */,
+				2BE1891D22CA722C0047310D /* HTMLParsable.swift in Sources */,
+				2B1E03A322CBDA35000EC425 /* GalleryListItemCell.swift in Sources */,
+				2B0D3EFC22CA45D400054216 /* HTMLSource.swift in Sources */,
+				2B1E03B322CD07C0000EC425 /* VerticalMosaicFlowLayout.swift in Sources */,
+				2BE1892A22CA8D390047310D /* GalleryImageList.swift in Sources */,
+				2B1E039F22CBBFDC000EC425 /* GalleryListViewModelType.swift in Sources */,
+				2B1E03AD22CCEA22000EC425 /* CGFloat+Extensions.swift in Sources */,
+				2B1E039D22CBBFCF000EC425 /* GalleryListViewModel.swift in Sources */,
+				2B1E03AB22CCDFF2000EC425 /* MosaicFlowLayoutView.swift in Sources */,
+				2B1E03A122CBC0CB000EC425 /* StoryboardLoadableView.swift in Sources */,
+				2B1E039922CBBFB2000EC425 /* GalleryListViewController.swift in Sources */,
+				2B0D3EFA22CA45B100054216 /* CommonError.swift in Sources */,
 				2B0D3EC522CA3CA200054216 /* AppDelegate.swift in Sources */,
+				2B1E03B522CD07D2000EC425 /* HorizontalMosaicFlowLayout.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -378,15 +469,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				2B0D3EDA22CA3CA400054216 /* Sasha_GalleryTests.swift in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		2B0D3EDC22CA3CA400054216 /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				2B0D3EE522CA3CA400054216 /* Sasha_GalleryUITests.swift in Sources */,
+				2B1E03B022CCFF6C000EC425 /* ImageRatioFindTest.swift in Sources */,
+				2BE1892D22CA8E3A0047310D /* GalleryImageTest.swift in Sources */,
+				2BE1891B22CA58E90047310D /* LocalHTMLSourceReader.swift in Sources */,
+				2BE1892F22CA90C40047310D /* GalleryImageListTest.swift in Sources */,
+				2B0D3EF822CA442700054216 /* HTMLSourceTest.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -397,11 +484,6 @@
 			isa = PBXTargetDependency;
 			target = 2B0D3EC022CA3CA200054216 /* Sasha Gallery */;
 			targetProxy = 2B0D3ED622CA3CA400054216 /* PBXContainerItemProxy */;
-		};
-		2B0D3EE222CA3CA400054216 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 2B0D3EC022CA3CA200054216 /* Sasha Gallery */;
-			targetProxy = 2B0D3EE122CA3CA400054216 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -476,7 +558,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 12.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
@@ -531,7 +613,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 12.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				SDKROOT = iphoneos;
@@ -549,6 +631,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 2ABNASUGL6;
 				INFOPLIST_FILE = "Sasha Gallery/Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -568,6 +651,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 2ABNASUGL6;
 				INFOPLIST_FILE = "Sasha Gallery/Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -623,48 +707,6 @@
 			};
 			name = Release;
 		};
-		2B0D3EF022CA3CA400054216 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			baseConfigurationReference = A8499B804692C070A49317D0 /* Pods-Sasha GalleryUITests.debug.xcconfig */;
-			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
-				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = 2ABNASUGL6;
-				INFOPLIST_FILE = "Sasha GalleryUITests/Info.plist";
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-					"@loader_path/Frameworks",
-				);
-				PRODUCT_BUNDLE_IDENTIFIER = "gearmamn06.Sasha-GalleryUITests";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_TARGET_NAME = "Sasha Gallery";
-			};
-			name = Debug;
-		};
-		2B0D3EF122CA3CA400054216 /* Release */ = {
-			isa = XCBuildConfiguration;
-			baseConfigurationReference = 272C0CADD4A5E6D5EEA2B9AA /* Pods-Sasha GalleryUITests.release.xcconfig */;
-			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
-				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = 2ABNASUGL6;
-				INFOPLIST_FILE = "Sasha GalleryUITests/Info.plist";
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-					"@loader_path/Frameworks",
-				);
-				PRODUCT_BUNDLE_IDENTIFIER = "gearmamn06.Sasha-GalleryUITests";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_TARGET_NAME = "Sasha Gallery";
-			};
-			name = Release;
-		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -691,15 +733,6 @@
 			buildConfigurations = (
 				2B0D3EED22CA3CA400054216 /* Debug */,
 				2B0D3EEE22CA3CA400054216 /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		2B0D3EEF22CA3CA400054216 /* Build configuration list for PBXNativeTarget "Sasha GalleryUITests" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				2B0D3EF022CA3CA400054216 /* Debug */,
-				2B0D3EF122CA3CA400054216 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

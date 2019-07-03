@@ -57,6 +57,14 @@ extension GalleryImage: HTMLParsable {
 }
 
 
+extension GalleryImage {
+    
+    var imageRatio: Float{
+        return 0
+    }
+}
+
+
 fileprivate extension String {
     
     func toDate() -> Date? {

@@ -165,9 +165,6 @@ fileprivate extension Array where Element == GalleryImage {
     }
 }
 
-
-
-
 fileprivate extension ListLayoutStyle {
     
     mutating func toggle() {

@@ -37,9 +37,9 @@ class GalleryListViewController: UIViewController {
 
 // MARK: setup navigaionBar
 
-private extension GalleryListViewController {
+extension GalleryListViewController {
     
-    func setUpNavigationBar() {
+    private func setUpNavigationBar() {
         
         // TODO: Change theme to dark
         
@@ -48,63 +48,71 @@ private extension GalleryListViewController {
         let sortButton = UIBarButtonItem(barButtonSystemItem: .organize,
                                          target: self, action: #selector(sortButtonDidTap))
         
-        // TODO: add layout style button
+        let layoutStyleToggleButton = UIBarButtonItem(barButtonSystemItem: .camera,
+                                                      target: self,
+                                                      action: #selector(toggleLayoutStyleButtonDidtap))
         
-        self.navigationItem.rightBarButtonItems = [sortButton]
+        self.navigationItem.rightBarButtonItems = [sortButton, layoutStyleToggleButton]
         
     }
     
-    @objc func sortButtonDidTap() {
-        let newOptions: [ListSortingOrder] = [.normal, .title, .newest]
-        var newOption = newOptions.randomElement()!
-        newOption.toggle()
-        viewModel.input.newSortingOrderDidSelect(to: newOption)
+    @objc private func toggleLayoutStyleButtonDidtap() {
+        viewModel.input.toggleLayoutStyle()
+    }
+    
+    @objc private func sortButtonDidTap() {
+//        let newOptions: [ListSortingOrder] = [.normal, .title, .newest]
+//        var newOption = newOptions.randomElement()!
+//        newOption.toggle()
+//        viewModel.input.newSortingOrderDidSelect(to: newOption)
     }
 }
 
 
 // MARK: setup collectionView
 
-private extension GalleryListViewController {
+extension GalleryListViewController {
     
-    
-    func setUpCollectionVew() {
+    private func setUpCollectionVew() {
         
         collectionView.register(GalleryListItemCell.self,
                                 forCellWithReuseIdentifier: "GalleryListItemCell")
         
-        
         viewModel.output.images.asObservable()
             .bind(to: collectionView.rx.items(cellIdentifier: "GalleryListItemCell", cellType: GalleryListItemCell.self))
             { _ , element, cell in
-                cell.setUpSubViews(url: element.imageURL)
+                cell.imageURL = element.imageURL
             }
             .disposed(by: bag)
-            
         
-        collectionView.rx.setDelegate(self).disposed(by: bag)
+        subscribeCollectionViewFlowLayout()
         
         setUpCollectionViewRefreshControl()
-        
         subscribeRefreshControl()
     }
 }
 
-extension GalleryListViewController: UICollectionViewDelegateFlowLayout {
 
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        let width = self.collectionView.frame.width / 2
-        let height = width
 
-        return CGSize(width: width, height: height)
+// MARK: CollectionViewFlowLayout changes
+
+extension GalleryListViewController {
+    
+    private func subscribeCollectionViewFlowLayout() {
+        viewModel.output.newCollectionViewLayout
+            .debug()
+            .drive(onNext: { [weak self] layout in
+                self?.collectionView.collectionViewLayout = layout
+                self?.collectionView.reloadData()
+            })
+            .disposed(by: bag)
     }
-
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
-        return 0
-    }
-
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
-        return 0
+    
+    override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
+        super.viewWillTransition(to: size, with: coordinator)
+        
+        // clear mosaicFlowLayout cache when screen rotation changed
+        (self.collectionView.collectionViewLayout as? MosaicFlowLayoutView)?.clearCache()
     }
 }
 
@@ -112,7 +120,7 @@ extension GalleryListViewController: UICollectionViewDelegateFlowLayout {
 
 // MARK: CollectionView refresh control setting
 
-private extension GalleryListViewController {
+extension GalleryListViewController {
     
     private func setUpCollectionViewRefreshControl() {
         let refreshControl = UIRefreshControl()
@@ -123,7 +131,6 @@ private extension GalleryListViewController {
     
     private func subscribeRefreshControl() {
         viewModel.output.acitivityIndicatorAnimating
-            .debug()
             .drive(onNext: { [weak self] animating in
                 if animating {
                     self?.collectionView.refreshControl?.beginRefreshing()
@@ -143,7 +150,6 @@ private extension GalleryListViewController {
     }
     
 }
-
 
 
 

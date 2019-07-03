@@ -16,8 +16,17 @@ final class GalleryListItemCell: UICollectionViewCell {
         let sender = UIImageView()
         sender.translatesAutoresizingMaskIntoConstraints = false
         sender.contentMode = .scaleAspectFill
+        sender.clipsToBounds = true
         return sender
     }()
+    
+    
+    var imageURL: URL? {
+        didSet {
+            guard let url = imageURL else { return }
+            self.imageView.kf.setImage(with: url)
+        }
+    }
     
     
     override init(frame: CGRect) {
@@ -37,15 +46,4 @@ final class GalleryListItemCell: UICollectionViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     
-}
-
-
-
-// MARK: setUp imageView
-
-extension GalleryListItemCell {
-    
-    func setUpSubViews(url: URL) {
-        self.imageView.kf.setImage(with: url)
-    }
 }

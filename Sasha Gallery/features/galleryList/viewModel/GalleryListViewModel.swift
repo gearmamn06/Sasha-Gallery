@@ -6,7 +6,7 @@
 //  Copyright © 2019 ParkHyunsoo. All rights reserved.
 //
 
-import Foundation
+import UIKit
 import RxSwift
 import RxCocoa
 
@@ -23,7 +23,9 @@ final class GalleryListViewModel: GalleryListViewModelType {
     
 //    private let _sortingButtonDidTap = PublishRelay<Void>()
     private let _sortingOption = BehaviorRelay<ListSortingOrder>(value: .normal)
-//    private let _currentLayoutStyle = BehaviorRelay
+    
+    private let _currentLayoutStyle =
+        BehaviorRelay<ListLayoutStyle>(value: .grid)
     
     private let _images = PublishRelay<[GalleryImage]>()
     
@@ -51,6 +53,12 @@ extension GalleryListViewModel: GalleryListViewModelInput {
     
     func newSortingOrderDidSelect(to: ListSortingOrder) {
         _sortingOption.accept(to)
+    }
+    
+    func toggleLayoutStyle() {
+        var newValue = _currentLayoutStyle.value
+        newValue.toggle()
+        _currentLayoutStyle.accept(newValue)
     }
    
 }
@@ -89,6 +97,17 @@ extension GalleryListViewModel: GalleryListViewModelOutput {
             .startWith(true)
             .asDriver(onErrorJustReturn: false)
     }
+    
+    var newCollectionViewLayout: Driver<UICollectionViewFlowLayout> {
+        return Observable.combineLatest( _images, _currentLayoutStyle) { data, style in
+            switch style {
+            case .grid: return GridFlowLayoutView()
+            case .mosaic: return MosaicFlowLayoutView(imageRatios: [])  // TODO: insert ratios
+            }
+        }
+        .distinctUntilChanged()
+        .asDriver(onErrorJustReturn: UICollectionViewFlowLayout())
+    }
 }
 
 
@@ -115,12 +134,12 @@ private extension GalleryListViewModel {
         _loadData
             .subscribeOn(backgroundScheduler)
             .flatMapLatest { _ in
+//               source = "https://www.gettyimagesgallery.com/collection/sasha/"
                 return HTMLSource<GalleryImageList>(urlString: "https://www.gettyimagesgallery.com/collection/sasha/")
                     .loadHTML()
                     .asSignal(onErrorJustReturn: GalleryImageList.empty)
             }
             .map{ $0.images }
-            .debug()
             .bind(to: _images)
             .disposed(by: bag)
     }
@@ -143,5 +162,18 @@ fileprivate extension Array where Element == GalleryImage {
     
     func sortByDate() -> Array {
         return self.sorted(by: { $0.date > $1.date })
+    }
+}
+
+
+
+
+fileprivate extension ListLayoutStyle {
+    
+    mutating func toggle() {
+        switch self {
+        case .grid: self = .mosaic
+        case .mosaic: self = .grid
+        }
     }
 }

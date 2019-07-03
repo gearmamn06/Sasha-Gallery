@@ -18,8 +18,9 @@ enum ListSortingOrder {
 }
 
 enum ListLayoutStyle {
-    case grid
-    case mosaic
+    case normal
+    case horizontal
+    case vertical
 }
 
 

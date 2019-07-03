@@ -25,7 +25,7 @@ final class GalleryListViewModel: GalleryListViewModelType {
     private let _sortingOption = BehaviorRelay<ListSortingOrder>(value: .normal)
     
     private let _currentLayoutStyle =
-        BehaviorRelay<ListLayoutStyle>(value: .grid)
+        BehaviorRelay<ListLayoutStyle>(value: .normal)
     
     private let _images = PublishRelay<[GalleryImage]>()
     
@@ -100,13 +100,11 @@ extension GalleryListViewModel: GalleryListViewModelOutput {
     
     var newCollectionViewLayout: Driver<UICollectionViewFlowLayout> {
         return Observable.combineLatest( _images, _currentLayoutStyle) { data, style in
+            let ratios = data.map{ $0.imageRatio }
             switch style {
-            case .grid:
-                return GridFlowLayoutView()
-                
-            case .mosaic:
-                let ratios = data.map{ $0.imageRatio }
-                return MosaicFlowLayoutView(imageRatios: ratios)  // TODO: insert ratios
+            case .normal: return MosaicFlowLayoutView(imageRatios: ratios)
+            case .horizontal: return HorizontalMosaicFlowLayout(imageRatios: ratios)
+            case .vertical: return VerticalMosaicFlowLayout(imageRatios: ratios)
             }
         }
         .distinctUntilChanged()
@@ -173,8 +171,9 @@ fileprivate extension ListLayoutStyle {
     
     mutating func toggle() {
         switch self {
-        case .grid: self = .mosaic
-        case .mosaic: self = .grid
+        case .normal: self = .horizontal
+        case .horizontal: self = .vertical
+        case .vertical: self = .normal
         }
     }
 }

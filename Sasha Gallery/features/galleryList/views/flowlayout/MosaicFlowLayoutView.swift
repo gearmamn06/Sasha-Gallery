@@ -9,10 +9,10 @@
 import UIKit
 
 
-class MosaicFlowLayoutView: UICollectionViewFlowLayout {
+open class MosaicFlowLayoutView: UICollectionViewFlowLayout {
     
     // properties for cellSizing
-    private let minColumnWidth: CGFloat = 150
+    var minColumnWidth: CGFloat = 150
     private var contentHeight: CGFloat = 0
     private var contentWidth: CGFloat {
         guard let collectionview = collectionView else { return 0 }
@@ -21,7 +21,7 @@ class MosaicFlowLayoutView: UICollectionViewFlowLayout {
         return collectionview.bounds.width - (insets.left + insets.right)
     }
     
-    override var collectionViewContentSize: CGSize {
+    open override var collectionViewContentSize: CGSize {
         return CGSize(width: contentWidth, height: contentHeight)
     }
     
@@ -34,7 +34,7 @@ class MosaicFlowLayoutView: UICollectionViewFlowLayout {
         super.init()
     }
     
-    required init?(coder aDecoder: NSCoder) {
+    required public init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 }
@@ -48,7 +48,7 @@ extension MosaicFlowLayoutView {
         self.cache.removeAll()
     }
     
-    override func prepare() {
+    override open func prepare() {
         
         guard cache.isEmpty, let collectionView = collectionView else { return }
         
@@ -86,7 +86,7 @@ extension MosaicFlowLayoutView {
     
     
     
-    override func layoutAttributesForElements(in rect: CGRect) -> [UICollectionViewLayoutAttributes]? {
+    override open func layoutAttributesForElements(in rect: CGRect) -> [UICollectionViewLayoutAttributes]? {
         
         var visibleLayoutAttributes = [UICollectionViewLayoutAttributes]()
         
@@ -100,7 +100,7 @@ extension MosaicFlowLayoutView {
     }
     
     
-    override func layoutAttributesForItem(at indexPath: IndexPath) -> UICollectionViewLayoutAttributes? {
+    override open func layoutAttributesForItem(at indexPath: IndexPath) -> UICollectionViewLayoutAttributes? {
         return cache[indexPath.item]
     }
 }

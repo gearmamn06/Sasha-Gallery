@@ -21,6 +21,7 @@ class GalleryListViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
      
+        setUpNavigationBar()
         setUpCollectionVew()
         
         viewModel.input.refreshList()
@@ -34,7 +35,36 @@ class GalleryListViewController: UIViewController {
 }
 
 
+// MARK: setup navigaionBar
+
+private extension GalleryListViewController {
+    
+    func setUpNavigationBar() {
+        
+        // TODO: Change theme to dark
+        
+        self.title = "Sasha Gallery"
+        
+        let sortButton = UIBarButtonItem(barButtonSystemItem: .organize,
+                                         target: self, action: #selector(sortButtonDidTap))
+        
+        // TODO: add layout style button
+        
+        self.navigationItem.rightBarButtonItems = [sortButton]
+        
+    }
+    
+    @objc func sortButtonDidTap() {
+        let newOptions: [ListSortingOrder] = [.normal, .title, .newest]
+        var newOption = newOptions.randomElement()!
+        newOption.toggle()
+        viewModel.input.newSortingOrderDidSelect(to: newOption)
+    }
+}
+
+
 // MARK: setup collectionView
+
 private extension GalleryListViewController {
     
     

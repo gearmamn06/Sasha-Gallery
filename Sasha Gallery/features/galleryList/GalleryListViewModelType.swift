@@ -15,6 +15,14 @@ enum ListSortingOrder {
     case normal
     case title
     case newest
+    
+    mutating func toggle() {
+        switch self {
+        case .normal: self = .title
+        case .title: self = .newest
+        case .newest: self = .normal
+        }
+    }
 }
 
 enum ListLayoutStyle {
@@ -32,7 +40,7 @@ protocol GalleryListViewModelInput {
     func refreshList()
     
 //    func sortingButtonDidTap() // -> 어떻게 정렬기준 보여줄지 결정 -> output 행동
-//    func newSortingOrderDidSelect(to: ListSortingOrder) // -> update dataSource
+    func newSortingOrderDidSelect(to: ListSortingOrder) // -> update dataSource
 //    func toggleLayoutStyle() // -> update layout
 }
 

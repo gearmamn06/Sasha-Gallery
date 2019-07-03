@@ -22,7 +22,7 @@ final class GalleryListViewModel: GalleryListViewModelType {
     private let _loadData = PublishRelay<Void>()
     
 //    private let _sortingButtonDidTap = PublishRelay<Void>()
-//    private let _sortingOption = BehaviorRelay<ListSortingOrder>(value: .normal)
+    private let _sortingOption = BehaviorRelay<ListSortingOrder>(value: .normal)
 //    private let _currentLayoutStyle = BehaviorRelay
     
     private let _images = PublishRelay<[GalleryImage]>()
@@ -50,7 +50,7 @@ extension GalleryListViewModel: GalleryListViewModelInput {
     }
     
     func newSortingOrderDidSelect(to: ListSortingOrder) {
-        
+        _sortingOption.accept(to)
     }
    
 }
@@ -63,9 +63,19 @@ extension GalleryListViewModel: GalleryListViewModelOutput {
     var images: Signal<[GalleryImage]> {
         return Observable.combineLatest(
                 _viewDidLayoutSubviews.take(1),
-                _images
+                _images,
+                _sortingOption
             )
-            .map{ _, imgs in imgs }
+            .map{ _, imgs, option in
+                switch option {
+                case .title:
+                    return imgs.sortByTitle()
+                case .newest:
+                    return imgs.sortByDate()
+                    
+                default: return imgs
+                }
+            }
             .asSignal(onErrorJustReturn: [])
     }
     
@@ -121,5 +131,17 @@ fileprivate extension GalleryImageList {
     
     static var empty: GalleryImageList {
         return GalleryImageList(images: [])
+    }
+}
+
+
+fileprivate extension Array where Element == GalleryImage {
+    
+    func sortByTitle() -> Array {
+        return self.sorted(by: { $0.title < $1.title })
+    }
+    
+    func sortByDate() -> Array {
+        return self.sorted(by: { $0.date > $1.date })
     }
 }

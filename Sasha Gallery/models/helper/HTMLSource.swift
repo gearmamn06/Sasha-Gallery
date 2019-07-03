@@ -8,11 +8,12 @@
 
 import Foundation
 import SwiftSoup
+import RxSwift
 
 
 // MARK; Properties & initializer
 
-struct HTMLSource {
+struct HTMLSource<Model: HTMLParsable> {
     
     private let urlString: String
     
@@ -47,7 +48,7 @@ extension HTMLSource {
 
 extension HTMLSource {
     
-    func loadHTML<Model: HTMLParsable>( _ resultCallback: (Result<Model, Error>) -> Void) {
+    func loadHTML( _ resultCallback: (Result<Model, Error>) -> Void) {
         self.loadHTMLString { result in
             switch result {
             case .success(let htmlString):
@@ -63,6 +64,31 @@ extension HTMLSource {
             case .failure(let error):
                 resultCallback(.failure(error))
             }
+        }
+    }
+}
+
+
+
+extension HTMLSource {
+    
+    func loadHTML() -> Observable<Model> {
+        return Observable.create { observer in
+            self.loadHTML { result in
+                
+                switch result {
+                case .success(let model):
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 3, execute: {
+                        observer.onNext(model)
+                        observer.onCompleted()
+                    })
+                    
+                case .failure(let error):
+                    observer.onError(error)
+                }
+            }
+            
+            return Disposables.create()
         }
     }
 }

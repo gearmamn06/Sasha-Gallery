@@ -8,6 +8,7 @@
 
 import XCTest
 @testable import Sasha_Gallery
+import SwiftSoup
 
 class HTMLSourceTest: XCTestCase {
     
@@ -17,6 +18,14 @@ class HTMLSourceTest: XCTestCase {
 }
 
 
+fileprivate struct HTMLMockUp: HTMLParsable {
+    init?(element: Element) {}
+    
+    static var cssQuery: String = ""
+    
+    static var className: String?
+}
+
 // MARK: test correct url and data source
 
 extension HTMLSourceTest {
@@ -25,7 +34,7 @@ extension HTMLSourceTest {
         
         // given
         let sourceUrlString = "https://www.gettyimagesgallery.com/collection/sasha/"
-        let source = HTMLSource(urlString: sourceUrlString)
+        let source = HTMLSource<HTMLMockUp>(urlString: sourceUrlString)
         
         // when
         var htmlString: String!
@@ -59,7 +68,7 @@ extension HTMLSourceTest {
     func testWrongURLHTMLSource() {
         
         let sourceUrlString = ""
-        let source = HTMLSource(urlString: sourceUrlString)
+        let source = HTMLSource<HTMLMockUp>(urlString: sourceUrlString)
         
         // when
         var htmlString: String!
@@ -92,7 +101,7 @@ extension HTMLSourceTest {
     
     func testEmptyHTMLSource() {
         let sourceUrlString = "wrong"
-        let source = HTMLSource(urlString: sourceUrlString)
+        let source = HTMLSource<HTMLMockUp>(urlString: sourceUrlString)
         
         // when
         var htmlString: String!
@@ -126,15 +135,15 @@ extension HTMLSourceTest {
     func test_loadRemoteGalleryImageList() {
         
         // given
-        let sourceURLString = URLStrings.galleryList
-        let source = HTMLSource(urlString: sourceURLString)
+        let sourceURLString = "https://www.gettyimagesgallery.com/collection/sasha/"
+        let source = HTMLSource<GalleryImageList>(urlString: sourceURLString)
         
         // when
         var galleryImageList: GalleryImageList!
         var error: Error!
         
         let promise = expectation(description: "load html and find galleryImage list model")
-        source.loadHTML { (result: Result<GalleryImageList, Error>) in
+        source.loadHTML { result in
             switch result {
             case .success(let model):
                 galleryImageList = model

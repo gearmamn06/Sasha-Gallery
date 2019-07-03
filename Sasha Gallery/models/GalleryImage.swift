@@ -57,6 +57,35 @@ extension GalleryImage: HTMLParsable {
 }
 
 
+extension GalleryImage {
+    
+    var imageRatio: Float{
+        
+        let urlString = imageURL.absoluteString
+        let fullRange = NSRange(urlString.startIndex..., in: urlString)
+        
+        let pattern = "[0-9]*x[0-9]*.jpg$"
+        if let regex = try? NSRegularExpression(pattern: pattern),
+            let result = regex.firstMatch(in: urlString, range: fullRange),
+            let range = Range(result.range, in: urlString) {
+            
+            let sizes = urlString[range]
+                .replacingOccurrences(of: ".jpg", with: "")
+                .split(separator: "x")
+            
+            if sizes.count == 2, let width = Int(sizes[0]),
+                let height = Int(sizes[1]), width > 0 {
+                
+                return Float(height) / Float(width)
+            }
+        }
+
+        
+        return 0
+    }
+}
+
+
 fileprivate extension String {
     
     func toDate() -> Date? {

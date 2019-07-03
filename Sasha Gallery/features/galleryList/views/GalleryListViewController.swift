@@ -54,6 +54,8 @@ extension GalleryListViewController {
         
         self.navigationItem.rightBarButtonItems = [sortButton, layoutStyleToggleButton]
         
+        subscribeSortOptionSelectionAlertController()
+        
     }
     
     @objc private func toggleLayoutStyleButtonDidtap() {
@@ -61,10 +63,35 @@ extension GalleryListViewController {
     }
     
     @objc private func sortButtonDidTap() {
-//        let newOptions: [ListSortingOrder] = [.normal, .title, .newest]
-//        var newOption = newOptions.randomElement()!
-//        newOption.toggle()
-//        viewModel.input.newSortingOrderDidSelect(to: newOption)
+        viewModel.input.sortingButtonDidTap()
+    }
+    
+    private func subscribeSortOptionSelectionAlertController() {
+        viewModel.output.showSortOrderSelectPopupWithCurrentValue
+            .debug()
+            .emit(onNext: { [weak self] description in
+                self?.showSortOrderSelectAlertController(currentOptionDescription: description)
+            })
+            .disposed(by: bag)
+    }
+    
+    private func showSortOrderSelectAlertController(currentOptionDescription description: String) {
+        let alert = UIAlertController(title: "정렬기준 변경",
+                                      message: "새로운 이미지 정렬 기준을 선택해주세요\n현재: \(description)",
+                                        preferredStyle: .actionSheet)
+        
+        let types: [ListSortingOrder] = [.normal, .title, .newest]
+        let actions = types.map { type in
+            UIAlertAction(title: type.description, style: .default) { _ in
+                self.viewModel.input.newSortingOrderDidSelect(to: type)
+            }
+        }
+        let cancel = UIAlertAction(title: "취소", style: .cancel, handler: nil)
+        (actions + [cancel]).forEach {
+            alert.addAction($0)
+        }
+        
+        self.present(alert, animated: true, completion: nil)
     }
 }
 

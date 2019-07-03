@@ -21,7 +21,7 @@ final class GalleryListViewModel: GalleryListViewModelType {
     private let _viewDidLayoutSubviews = PublishRelay<Void>()
     private let _loadData = PublishRelay<Void>()
     
-//    private let _sortingButtonDidTap = PublishRelay<Void>()
+    private let _sortingButtonDidTap = PublishRelay<Void>()
     private let _sortingOption = BehaviorRelay<ListSortingOrder>(value: .normal)
     
     private let _currentLayoutStyle =
@@ -48,7 +48,7 @@ extension GalleryListViewModel: GalleryListViewModelInput {
     }
     
     func sortingButtonDidTap() {
-        
+        _sortingButtonDidTap.accept(())
     }
     
     func newSortingOrderDidSelect(to: ListSortingOrder) {
@@ -109,6 +109,14 @@ extension GalleryListViewModel: GalleryListViewModelOutput {
         }
         .distinctUntilChanged()
         .asDriver(onErrorJustReturn: UICollectionViewFlowLayout())
+    }
+    
+    var showSortOrderSelectPopupWithCurrentValue: Signal<String> {
+        return _sortingButtonDidTap.compactMap { [weak self] in
+            return self?._sortingOption.value.description
+        }
+        .asSignal(onErrorJustReturn: "")
+        .filter{ !$0.isEmpty }
     }
 }
 
@@ -174,6 +182,17 @@ fileprivate extension ListLayoutStyle {
         case .normal: self = .horizontal
         case .horizontal: self = .vertical
         case .vertical: self = .normal
+        }
+    }
+}
+
+
+extension ListSortingOrder {
+    var description: String {
+        switch self {
+        case .normal: return "기본"
+        case .title: return "이름별"
+        case .newest: return "시간별"
         }
     }
 }

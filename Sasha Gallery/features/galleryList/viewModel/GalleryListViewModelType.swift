@@ -32,7 +32,9 @@ protocol GalleryListViewModelInput {
     // refresh datasource and update list
     func refreshList()
     
-//    func sortingButtonDidTap() // -> 어떻게 정렬기준 보여줄지 결정 -> output 행동
+    // 소팅옵션 변경 요청
+    func sortingButtonDidTap()
+    // 새로운 소팅기준 선택됨
     func newSortingOrderDidSelect(to: ListSortingOrder) // -> update dataSource
     
     // toogle current layout style
@@ -45,7 +47,7 @@ protocol GalleryListViewModelOutput {
     
     var images: Signal<[GalleryImage]> { get }
     
-//    var errorMessage: Signal<String> { get }
+    var showSortOrderSelectPopupWithCurrentValue: Signal<String> { get }
     
     var newCollectionViewLayout: Driver<UICollectionViewFlowLayout> { get }
 }

@@ -18,8 +18,8 @@ final class GalleryListViewModel: GalleryListViewModelType {
     private let bag = DisposeBag()
     private let backgroundScheduler = ConcurrentDispatchQueueScheduler(qos: .background)
     
-    private let _viewDidLayoutSubviews = PublishRelay<Void>()
-    private let _loadData = PublishRelay<Void>()
+    private let _viewIsReady = PublishRelay<Void>()
+    private let _requestLoadData = PublishRelay<Void>()
     
     private let _sortingButtonDidTap = PublishRelay<Void>()
     private let _sortingOption = BehaviorRelay<ListSortingOrder>(value: .normal)
@@ -40,11 +40,11 @@ final class GalleryListViewModel: GalleryListViewModelType {
 extension GalleryListViewModel: GalleryListViewModelInput {
     
     func viewDidLayoutSubviews() {
-        _viewDidLayoutSubviews.accept(())
+        _viewIsReady.accept(())
     }
     
     func refreshList() {
-        _loadData.accept(())
+        _requestLoadData.accept(())
     }
     
     func sortingButtonDidTap() {
@@ -70,7 +70,7 @@ extension GalleryListViewModel: GalleryListViewModelOutput {
     
     var images: Signal<[GalleryImage]> {
         return Observable.combineLatest(
-                _viewDidLayoutSubviews.take(1),
+                _viewIsReady.take(1),
                 _images,
                 _sortingOption
             )
@@ -90,7 +90,7 @@ extension GalleryListViewModel: GalleryListViewModelOutput {
     
     var acitivityIndicatorAnimating: Driver<Bool> {
         return Observable.from([
-            _loadData.map{ _ in true },
+            _requestLoadData.map{ _ in true },
             images.map{ _ in false }.asObservable()
             ])
             .merge()
@@ -141,7 +141,7 @@ private extension GalleryListViewModel {
     
     func bindRefresh() {
         
-        _loadData
+        _requestLoadData
             .subscribeOn(backgroundScheduler)
             .flatMapLatest { _ in
 //               source = "https://www.gettyimagesgallery.com/collection/sasha/"

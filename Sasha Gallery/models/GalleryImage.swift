@@ -57,6 +57,8 @@ extension GalleryImage: HTMLParsable {
 }
 
 
+// MARK: find image ratio using urlString suffix
+
 extension GalleryImage {
     
     var imageRatio: Float{

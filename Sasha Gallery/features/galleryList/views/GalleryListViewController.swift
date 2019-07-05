@@ -27,7 +27,7 @@ class GalleryListViewController: UIViewController {
         subscribeNextViewControllerPushing()
         
         DispatchQueue.global().async {
-            self.viewModel.input.refreshList()
+            self.viewModel.input.refreshList(shouldClearCache: false)
         }
     }
     
@@ -185,20 +185,18 @@ extension GalleryListViewController {
         collectionView.sendSubviewToBack(refreshControl)
     }
     
-    private func stopAndInitRefreshControl() {
-        self.collectionView.refreshControl?.endRefreshing()
-        self.collectionView.refreshControl?.removeFromSuperview()
+    private func subscribeRefreshControl() {
         
         createRefreshControl()
-    }
-    
-    private func subscribeRefreshControl() {
+        
         viewModel.output.acitivityIndicatorAnimating
             .drive(onNext: { [weak self] animating in
                 if animating {
-                    self?.createRefreshControl()
+                    self?.collectionView.refreshControl?.beginRefreshing()
+                    self?.navigationItem.rightBarButtonItems?.forEach{ $0.isEnabled = false }
                 }else{
-                    self?.stopAndInitRefreshControl()
+                    self?.collectionView.refreshControl?.endRefreshing()
+                    self?.navigationItem.rightBarButtonItems?.forEach{ $0.isEnabled = true }
                 }
             })
             .disposed(by: bag)
@@ -207,8 +205,7 @@ extension GalleryListViewController {
     
     @objc private func refresDidCall() {
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.5, execute: {
-            self.collectionView.refreshControl?.endRefreshing()
-            self.viewModel.input.refreshList()
+            self.viewModel.input.refreshList(shouldClearCache: true)
         })
     }
     

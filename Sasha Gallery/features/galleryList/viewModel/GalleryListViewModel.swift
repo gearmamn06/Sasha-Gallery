@@ -19,6 +19,7 @@ final class GalleryListViewModel: GalleryListViewModelType {
     
     private let _viewIsReady = PublishRelay<Void>()
     private let _requestLoadData = PublishRelay<Void>()
+    private let _isLoading = BehaviorRelay<Bool>(value: false)
     
     private let _sortingButtonDidTap = PublishRelay<Void>()
     private let _sortingOption = BehaviorRelay<ListSortingOrder>(value: .normal)
@@ -38,13 +39,17 @@ final class GalleryListViewModel: GalleryListViewModelType {
 
 
 // MARK: GalleryListViewModel Inputs
+
 extension GalleryListViewModel: GalleryListViewModelInput {
     
     func viewDidLayoutSubviews() {
         _viewIsReady.accept(())
     }
     
-    func refreshList() {
+    func refreshList(shouldClearCache: Bool) {
+        if shouldClearCache {
+            HTMLCache.shared.clear()
+        }
         _requestLoadData.accept(())
     }
     
@@ -94,12 +99,7 @@ extension GalleryListViewModel: GalleryListViewModelOutput {
     
     
     var acitivityIndicatorAnimating: Driver<Bool> {
-        return Observable.from([
-            _requestLoadData.map{ _ in true },
-            images.map{ _ in false }.asObservable()
-            ])
-            .merge()
-            .startWith(true)
+        return _isLoading
             .asDriver(onErrorJustReturn: false)
     }
     
@@ -109,7 +109,6 @@ extension GalleryListViewModel: GalleryListViewModelOutput {
             return (style.buttonTitle, MosaicFlowLayoutView(minColumnWidth: style.rawValue,
                                                             imageRatios: ratios))
         }
-//        .distinctUntilChanged()
         .asDriver(onErrorJustReturn: (ListLayoutStyle.normal.buttonTitle,
                                       UICollectionViewFlowLayout()))
     }
@@ -121,6 +120,7 @@ extension GalleryListViewModel: GalleryListViewModelOutput {
         .asSignal(onErrorJustReturn: "")
         .filter{ !$0.isEmpty }
     }
+    
     
     var nextPushViewController: Signal<UIViewController?> {
         return _selectImageIndexPath.compactMap { [weak self] (indexPath: IndexPath) -> GalleryImage? in
@@ -160,13 +160,18 @@ private extension GalleryListViewModel {
     func bindRefresh() {
         
         _requestLoadData
+            .do(onNext: { [weak self] in
+                self?._isLoading.accept(true)
+            })
             .flatMapLatest { _ in
-//               source = "https://www.gettyimagesgallery.com/collection/sasha/"
                 return HTMLProvider<GalleryImageList>(urlString: "https://www.gettyimagesgallery.com/collection/sasha/")
                     .loadHTML()
                     .asSignal(onErrorJustReturn: GalleryImageList.empty)
             }
             .map{ $0.images }
+            .do(onNext: { [weak self] _ in
+                self?._isLoading.accept(false)
+            })
             .bind(to: _images)
             .disposed(by: bag)
     }

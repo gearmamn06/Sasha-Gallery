@@ -23,12 +23,14 @@ class ImageDetailViewController: UIViewController {
         super.viewDidLoad()
         
         let pageURL = galleryImage?.pageURL ?? URL(string: "fail")!
-        viewModel = ImageDetailViewModel(pageURL: pageURL)
+        viewModel = ImageDetailViewModel(pageURL: pageURL, ratio: galleryImage?.imageRatio ?? 0.6)
         
         setUpNavigationbar()
         setUpTableView()
         
-        viewModel.input.refresh()
+        DispatchQueue.global().async {
+            self.viewModel.input.refresh()
+        }
     }
     
     override func viewDidLayoutSubviews() {

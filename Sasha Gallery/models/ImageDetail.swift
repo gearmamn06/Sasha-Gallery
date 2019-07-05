@@ -115,3 +115,61 @@ extension ImageDetail.ProductMeta: HTMLParsable {
         self.values = values
     }
 }
+
+
+
+extension ImageDetail.ProductMeta {
+    private init() {
+        self.title = ""
+        self.values = []
+    }
+    
+    static var empty: ImageDetail.ProductMeta {
+        return ImageDetail.ProductMeta()
+    }
+    
+    var isEmpty: Bool {
+        return self.title.isEmpty
+            && values.isEmpty
+    }
+}
+
+
+extension ImageDetail {
+    
+    private init() {
+        self.productName = ""
+        self.photographer = ""
+        self.productImageURL = URL.empty
+        self.collection = ImageDetail.ProductMeta.empty
+        self.description = ""
+    }
+    
+    static var empty: ImageDetail {
+        return ImageDetail()
+    }
+    
+    var isEmpty: Bool {
+        return productName.isEmpty
+            && photographer.isEmpty
+            && productImageURL.isEmpty
+            && collection.isEmpty
+            && description.isEmpty
+    }
+}
+
+
+fileprivate extension URL {
+    
+    private static var emptyURLKey: String {
+        return "thisisemptyurl"
+    }
+    
+    static var empty: URL {
+        return URL(string: emptyURLKey)!
+    }
+    
+    var isEmpty: Bool {
+        return self.absoluteString == URL.emptyURLKey
+    }
+}

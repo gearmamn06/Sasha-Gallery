@@ -24,9 +24,11 @@ class ImageDetailViewModel: ImageDetailViewModelType {
     
     
     private let pageURL: URL
+    private let ratio: Float
     
-    init(pageURL: URL) {
+    init(pageURL: URL, ratio: Float) {
         self.pageURL = pageURL
+        self.ratio = ratio
     }
 }
 
@@ -64,13 +66,14 @@ extension ImageDetailViewModel: ImageDetailViewModelOutput {
             .asDriver(onErrorJustReturn: ImageDetail.empty)
     }
     
-    var items: Driver<[ImageDetailCellViewModel]> {
+    var items: Driver<[ImageDetailCellViewModel?]> {
         return Observable.combineLatest(
             _viewIsReady.take(1),
             _imageDetail.asObservable()
         )
-        .map { _, detail in
-            return CellViewModel.from(fromImageDetail: detail)
+        .compactMap { [weak self] _ , detail in
+            guard let self = self else { return nil }
+            return CellViewModel.from(fromImageDetail: detail, ratio: self.ratio)
         }
         .asDriver(onErrorJustReturn: [])
     }
@@ -97,34 +100,5 @@ extension ImageDetailViewModel {
     
     var output: ImageDetailViewModelOutput {
         return self
-    }
-}
-
-
-
-fileprivate extension ImageDetail.ProductMeta {
-    private init() {
-        self.title = ""
-        self.values = []
-    }
-    
-    static var empty: ImageDetail.ProductMeta {
-        return ImageDetail.ProductMeta()
-    }
-}
-
-
-fileprivate extension ImageDetail {
-    
-    private init() {
-        self.productName = ""
-        self.photographer = ""
-        self.productImageURL = URL(string: "www")!
-        self.collection = ImageDetail.ProductMeta.empty
-        self.description = ""
-    }
-    
-    static var empty: ImageDetail {
-        return ImageDetail()
     }
 }

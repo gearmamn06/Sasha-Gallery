@@ -16,7 +16,6 @@ import RxCocoa
 final class GalleryListViewModel: GalleryListViewModelType {
     
     private let bag = DisposeBag()
-    private let backgroundScheduler = ConcurrentDispatchQueueScheduler(qos: .background)
     
     private let _viewIsReady = PublishRelay<Void>()
     private let _requestLoadData = PublishRelay<Void>()
@@ -27,7 +26,7 @@ final class GalleryListViewModel: GalleryListViewModelType {
     private let _currentLayoutStyle =
         BehaviorRelay<ListLayoutStyle>(value: .normal)
     
-    private let _images = PublishRelay<[GalleryImage]>()
+    private let _images = BehaviorRelay<[GalleryImage]>(value: [])
     
     init() {
         
@@ -71,7 +70,7 @@ extension GalleryListViewModel: GalleryListViewModelOutput {
     var images: Signal<[GalleryImage]> {
         return Observable.combineLatest(
                 _viewIsReady.take(1),
-                _images,
+                _images.skip(1),
                 _sortingOption
             )
             .map{ _, imgs, option in
@@ -99,7 +98,7 @@ extension GalleryListViewModel: GalleryListViewModelOutput {
     }
     
     var newCollectionViewLayout: Driver<UICollectionViewFlowLayout> {
-        return Observable.combineLatest( _images, _currentLayoutStyle) { data, style in
+        return Observable.combineLatest( _images.skip(1), _currentLayoutStyle) { data, style in
             let ratios = data.map{ $0.imageRatio }
             switch style {
             case .normal: return MosaicFlowLayoutView(imageRatios: ratios)
@@ -142,7 +141,6 @@ private extension GalleryListViewModel {
     func bindRefresh() {
         
         _requestLoadData
-            .subscribeOn(backgroundScheduler)
             .flatMapLatest { _ in
 //               source = "https://www.gettyimagesgallery.com/collection/sasha/"
                 return HTMLProvider<GalleryImageList>(urlString: "https://www.gettyimagesgallery.com/collection/sasha/")

@@ -157,19 +157,3 @@ extension ImageDetail {
             && description.isEmpty
     }
 }
-
-
-fileprivate extension URL {
-    
-    private static var emptyURLKey: String {
-        return "thisisemptyurl"
-    }
-    
-    static var empty: URL {
-        return URL(string: emptyURLKey)!
-    }
-    
-    var isEmpty: Bool {
-        return self.absoluteString == URL.emptyURLKey
-    }
-}

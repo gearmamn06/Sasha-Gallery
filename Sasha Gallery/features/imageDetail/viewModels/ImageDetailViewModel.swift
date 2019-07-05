@@ -21,7 +21,8 @@ class ImageDetailViewModel: ImageDetailViewModelType {
     
     private let _viewIsReady = PublishRelay<Void>()
     private let _requestLoadData = PublishRelay<Void>()
-    
+    private let _tappedMetaLink = PublishRelay<URL>()
+    private let _requestEnquire = PublishRelay<Void>()
     
     private let pageURL: URL
     private let ratio: Float
@@ -30,6 +31,20 @@ class ImageDetailViewModel: ImageDetailViewModelType {
         self.pageURL = pageURL
         self.ratio = ratio
     }
+    
+    private lazy var _imageDetail: Signal<ImageDetail> = {
+        return _requestLoadData
+            .compactMap { [weak self] _ in
+                return self?.pageURL
+            }
+            .flatMapLatest { url in
+                return HTMLProvider<ImageDetail>(urlString: url.absoluteString)
+                    .loadHTML()
+                    .asSignal(onErrorJustReturn: ImageDetail.empty)
+            }
+            .asSignal(onErrorJustReturn: .empty)
+            .asSharedSequence()
+    }()
 }
 
 
@@ -45,26 +60,20 @@ extension ImageDetailViewModel: ImageDetailViewModelInput {
     func refresh() {
         _requestLoadData.accept(())
     }
+    
+    func metaTagDidTap(link: URL) {
+        _tappedMetaLink.accept(link)
+    }
+    
+    func enquireButtonDidTap() {
+        _requestEnquire.accept(())
+    }
 }
 
 
 // MARK: ImageDetailViewModel Output
 
 extension ImageDetailViewModel: ImageDetailViewModelOutput {
-    
-    private var _imageDetail: Driver<ImageDetail> {
-        return _requestLoadData
-            .compactMap { [weak self] _ in
-                return self?.pageURL
-            }
-            .flatMapLatest { url in
-                return HTMLProvider<ImageDetail>(urlString: url.absoluteString)
-                    .loadHTML()
-                    .asSignal(onErrorJustReturn: ImageDetail.empty)
-            }
-            .startWith(ImageDetail.empty)
-            .asDriver(onErrorJustReturn: ImageDetail.empty)
-    }
     
     var items: Driver<[ImageDetailCellViewModel?]> {
         return Observable.combineLatest(
@@ -75,17 +84,33 @@ extension ImageDetailViewModel: ImageDetailViewModelOutput {
             guard let self = self else { return nil }
             return CellViewModel.from(fromImageDetail: detail, ratio: self.ratio)
         }
+        .startWith([nil, nil, nil, nil])
         .asDriver(onErrorJustReturn: [])
     }
     
-    var showLoadingEffect: Driver<Bool> {
+    var enquireButtonEnability: Driver<Bool> {
         return Observable.from([
-            _requestLoadData.map{ _ in true },
-            items.map{ _ in false }.asObservable()
+            _requestLoadData.map{ _ in false },
+            items.skip(1)
+                .map{ values in
+                    let isAllDefaultValue = values.compactMap{ $0 }.isEmpty
+                    return !isAllDefaultValue
+                }.asObservable()
             ])
         .merge()
-        .startWith(true)
+        .startWith(false)
         .asDriver(onErrorJustReturn: false)
+    }
+    
+    var openURLPage: Signal<URL> {
+        return Observable.from([
+            _requestEnquire.compactMap{ [weak self] _ in
+                return self?.pageURL
+            }.asObservable(),
+            _tappedMetaLink.asObservable()
+        ])
+        .merge()
+        .asSignal(onErrorJustReturn: URL.empty)
     }
 }
 

@@ -53,8 +53,8 @@ class ImageDetailHeaderCell: UITableViewCell, ImageDetailViewCellType {
         NSLayoutConstraint.activate([
             titleLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 16),
             titleLabel.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -16),
-            titleLabel.topAnchor.constraint(equalTo: topAnchor, constant: 8),
-            titleLabel.bottomAnchor.constraint(equalTo: photograperLabel.topAnchor, constant: -8)
+            titleLabel.topAnchor.constraint(equalTo: topAnchor, constant: 28),
+            titleLabel.bottomAnchor.constraint(equalTo: photograperLabel.topAnchor, constant: -16)
             ])
         
         NSLayoutConstraint.activate([

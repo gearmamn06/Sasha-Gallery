@@ -27,6 +27,7 @@ class ImageDetailViewController: UIViewController {
         
         setUpNavigationbar()
         setUpTableView()
+        subscribeOpenWebpage()
         
         DispatchQueue.global().async {
             self.viewModel.input.refresh()
@@ -47,6 +48,22 @@ extension ImageDetailViewController {
     
     private func setUpNavigationbar() {
         self.title = galleryImage?.title ?? "Unknown"
+        let enquireButton = UIBarButtonItem(title: "Enquire", style: .plain,
+                                            target: nil, action: nil)
+        enquireButton.rx.tap.asDriver()
+            .drive(onNext: { [weak self] in
+                self?.viewModel.input.enquireButtonDidTap()
+            })
+            .disposed(by: bag)
+        
+        self.navigationItem.rightBarButtonItem = enquireButton
+        
+        viewModel.output.enquireButtonEnability
+            .debug()
+            .drive(onNext: { [weak self] isEnable in
+                self?.navigationItem.rightBarButtonItem?.isEnabled = isEnable
+            })
+            .disposed(by: bag)
     }
 }
 
@@ -82,6 +99,9 @@ extension ImageDetailViewController {
                 case 2:
                     let cell: ImageDetailMetaDataCell = tableview.dequeuImageDetailCell()
                     cell.cellViewModel = element
+                    cell.linkDidTap = { [weak self] url in
+                        self?.viewModel.input.metaTagDidTap(link: url)
+                    }
                     return cell
                     
                 default:
@@ -93,6 +113,21 @@ extension ImageDetailViewController {
             .disposed(by: bag)
     }
 }
+
+
+
+extension ImageDetailViewController {
+    
+    private func subscribeOpenWebpage() {
+        
+        viewModel.output.openURLPage
+            .emit(onNext: { url in
+                UIApplication.shared.open(url)
+            })
+            .disposed(by: bag)
+    }
+}
+
 
 
 // fileprivate extensions

@@ -43,17 +43,18 @@ protocol ImageDetailViewModelInput {
     
     func refresh()
     
-//    func metaTagDidTap()
+    func metaTagDidTap(link: URL)
     
-//    func enquire()
+    func enquireButtonDidTap()
 }
 
 protocol ImageDetailViewModelOutput {
 //
     var items: Driver<[ImageDetailCellViewModel?]> { get }
-//
-//
-//    func openWebPage(url: URL)
+    
+    var enquireButtonEnability: Driver<Bool> { get }
+
+    var openURLPage: Signal<URL> { get }
 }
 
 

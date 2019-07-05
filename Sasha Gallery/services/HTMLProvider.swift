@@ -28,6 +28,7 @@ struct HTMLProvider<Model: HTMLParsable> {
 extension HTMLProvider {
     
     func loadHTMLString(_ resultCallback: (Result<String, Error>) -> Void) {
+        
         guard let url = URL(string: urlString) else {
             resultCallback(.failure(CommonError.wrongURL))
             return
@@ -48,7 +49,15 @@ extension HTMLProvider {
 
 extension HTMLProvider {
     
-    func loadHTML( _ resultCallback: (Result<Model, Error>) -> Void) {
+    func loadHTML(withOutCache: Bool = false, _ resultCallback: (Result<Model, Error>) -> Void) {
+        
+        // check cache exists
+        if !withOutCache, let cached: Model = HTMLCache.shared.get(key: urlString)  {
+            resultCallback(.success(cached))
+            return
+        }
+        
+        let urlString = self.urlString
         self.loadHTMLString { result in
             switch result {
             case .success(let htmlString):
@@ -58,7 +67,16 @@ extension HTMLProvider {
                 }
                 
                 let findResult = Model.find(inParent: document)
-                resultCallback(findResult)
+                switch findResult {
+                case .success(let model):
+                    // save cache data
+                    HTMLCache.shared.put(key: urlString, value: model)
+                    
+                    resultCallback(.success(model))
+                    
+                case .failure(let error):
+                    resultCallback(.failure(error))
+                }
                 
                 
             case .failure(let error):
@@ -78,10 +96,8 @@ extension HTMLProvider {
                 
                 switch result {
                 case .success(let model):
-                    DispatchQueue.main.asyncAfter(deadline: .now() + 3, execute: {
-                        observer.onNext(model)
-                        observer.onCompleted()
-                    })
+                    observer.onNext(model)
+                    observer.onCompleted()
                     
                 case .failure(let error):
                     observer.onError(error)

@@ -15,6 +15,8 @@ class GalleryListViewController: UIViewController {
     
     @IBOutlet weak var collectionView: UICollectionView!
     
+    var collectionURL: URL!
+    
     private let viewModel: GalleryListViewModelType = GalleryListViewModel()
     private let bag = DisposeBag()
     
@@ -63,8 +65,6 @@ class GalleryListViewController: UIViewController {
 extension GalleryListViewController {
     
     private func setUpNavigationBar() {
-        
-        self.title = "Sasha Gallery"
         
         let sortButton = UIBarButtonItem(image: #imageLiteral(resourceName: "29"), style: .plain, target: nil, action: nil)
         

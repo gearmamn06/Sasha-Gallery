@@ -15,7 +15,6 @@ extension UITextView {
             let range = attrText.string.range(of: tag) else { return }
         
         let nsRange = NSRange(range, in: attrText.string)
-        print(nsRange)
         
         let fullAttributedText = NSMutableAttributedString(attributedString: attrText)
         fullAttributedText.addAttribute(.link, value: url, range: nsRange)

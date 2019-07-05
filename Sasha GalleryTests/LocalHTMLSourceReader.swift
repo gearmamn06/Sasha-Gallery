@@ -12,9 +12,8 @@ import Foundation
 
 class LocalHTMLSourceReader {
     
-    class func read() -> String {
+    class func read(fileName: String) -> String {
         
-        let fileName = "mainPage"
         let bundle = Bundle(for: LocalHTMLSourceReader.self)
         let path = bundle.path(forResource: fileName, ofType: "html")!
         let fileUrl = URL(fileURLWithPath: path)

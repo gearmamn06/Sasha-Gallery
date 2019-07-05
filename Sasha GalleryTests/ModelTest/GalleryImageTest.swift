@@ -17,7 +17,7 @@ class GalleryImageTest: XCTestCase {
     
     override func setUp() {
         
-        let htmlString = LocalHTMLSourceReader.read()
+        let htmlString = LocalHTMLSourceReader.read(fileName: "mainPage")
         let html = try! SwiftSoup.parse(htmlString)
         node = try! html.select("div.grid-item").first()!
     }

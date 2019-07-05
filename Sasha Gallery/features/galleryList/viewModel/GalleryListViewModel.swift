@@ -16,10 +16,9 @@ import RxCocoa
 final class GalleryListViewModel: GalleryListViewModelType {
     
     private let bag = DisposeBag()
-    private let backgroundScheduler = ConcurrentDispatchQueueScheduler(qos: .background)
     
-    private let _viewDidLayoutSubviews = PublishRelay<Void>()
-    private let _loadData = PublishRelay<Void>()
+    private let _viewIsReady = PublishRelay<Void>()
+    private let _requestLoadData = PublishRelay<Void>()
     
     private let _sortingButtonDidTap = PublishRelay<Void>()
     private let _sortingOption = BehaviorRelay<ListSortingOrder>(value: .normal)
@@ -27,7 +26,9 @@ final class GalleryListViewModel: GalleryListViewModelType {
     private let _currentLayoutStyle =
         BehaviorRelay<ListLayoutStyle>(value: .normal)
     
-    private let _images = PublishRelay<[GalleryImage]>()
+    private let _images = BehaviorRelay<[GalleryImage]>(value: [])
+    
+    private let _selectImageIndexPath = PublishRelay<IndexPath>()
     
     init() {
         
@@ -40,11 +41,11 @@ final class GalleryListViewModel: GalleryListViewModelType {
 extension GalleryListViewModel: GalleryListViewModelInput {
     
     func viewDidLayoutSubviews() {
-        _viewDidLayoutSubviews.accept(())
+        _viewIsReady.accept(())
     }
     
     func refreshList() {
-        _loadData.accept(())
+        _requestLoadData.accept(())
     }
     
     func sortingButtonDidTap() {
@@ -60,6 +61,10 @@ extension GalleryListViewModel: GalleryListViewModelInput {
         newValue.toggle()
         _currentLayoutStyle.accept(newValue)
     }
+    
+    func imageDidSelect(atIndexPath indexPath: IndexPath) {
+        _selectImageIndexPath.accept(indexPath)
+    }
    
 }
 
@@ -70,8 +75,8 @@ extension GalleryListViewModel: GalleryListViewModelOutput {
     
     var images: Signal<[GalleryImage]> {
         return Observable.combineLatest(
-                _viewDidLayoutSubviews.take(1),
-                _images,
+                _viewIsReady.take(1),
+                _images.skip(1),
                 _sortingOption
             )
             .map{ _, imgs, option in
@@ -90,7 +95,7 @@ extension GalleryListViewModel: GalleryListViewModelOutput {
     
     var acitivityIndicatorAnimating: Driver<Bool> {
         return Observable.from([
-            _loadData.map{ _ in true },
+            _requestLoadData.map{ _ in true },
             images.map{ _ in false }.asObservable()
             ])
             .merge()
@@ -99,7 +104,7 @@ extension GalleryListViewModel: GalleryListViewModelOutput {
     }
     
     var newCollectionViewLayout: Driver<UICollectionViewFlowLayout> {
-        return Observable.combineLatest( _images, _currentLayoutStyle) { data, style in
+        return Observable.combineLatest( _images.skip(1), _currentLayoutStyle) { data, style in
             let ratios = data.map{ $0.imageRatio }
             switch style {
             case .normal: return MosaicFlowLayoutView(imageRatios: ratios)
@@ -117,6 +122,21 @@ extension GalleryListViewModel: GalleryListViewModelOutput {
         }
         .asSignal(onErrorJustReturn: "")
         .filter{ !$0.isEmpty }
+    }
+    
+    var nextPushViewController: Signal<UIViewController?> {
+        return _selectImageIndexPath.compactMap { [weak self] (indexPath: IndexPath) -> GalleryImage? in
+            if let self = self, (0..<self._images.value.count) ~= indexPath.row {
+                return self._images.value[indexPath.row]
+            }
+            return nil
+        }
+        .map { image in
+            let nextViewController = ImageDetailViewController.instance
+            nextViewController.galleryImage = image
+            return nextViewController
+        }
+        .asSignal(onErrorJustReturn: nil)
     }
 }
 
@@ -141,8 +161,7 @@ private extension GalleryListViewModel {
     
     func bindRefresh() {
         
-        _loadData
-            .subscribeOn(backgroundScheduler)
+        _requestLoadData
             .flatMapLatest { _ in
 //               source = "https://www.gettyimagesgallery.com/collection/sasha/"
                 return HTMLProvider<GalleryImageList>(urlString: "https://www.gettyimagesgallery.com/collection/sasha/")

@@ -38,6 +38,7 @@
 		2B1E03D922CFACF6000EC425 /* URL+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B1E03D822CFACF6000EC425 /* URL+Extension.swift */; };
 		2B1E03DB22CFC045000EC425 /* HTMLCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B1E03DA22CFC045000EC425 /* HTMLCache.swift */; };
 		2B1E03DE22CFC501000EC425 /* HTMLCacheTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B1E03DD22CFC501000EC425 /* HTMLCacheTest.swift */; };
+		2B1E03E322CFE65C000EC425 /* UIColor+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B1E03E222CFE65C000EC425 /* UIColor+Extension.swift */; };
 		2BE1891922CA58D20047310D /* mainPage.html in Resources */ = {isa = PBXBuildFile; fileRef = 2BE1891822CA58D20047310D /* mainPage.html */; };
 		2BE1891B22CA58E90047310D /* LocalHTMLSourceReader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BE1891A22CA58E90047310D /* LocalHTMLSourceReader.swift */; };
 		2BE1891D22CA722C0047310D /* HTMLParsable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BE1891C22CA722C0047310D /* HTMLParsable.swift */; };
@@ -97,6 +98,7 @@
 		2B1E03D822CFACF6000EC425 /* URL+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "URL+Extension.swift"; sourceTree = "<group>"; };
 		2B1E03DA22CFC045000EC425 /* HTMLCache.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HTMLCache.swift; sourceTree = "<group>"; };
 		2B1E03DD22CFC501000EC425 /* HTMLCacheTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HTMLCacheTest.swift; sourceTree = "<group>"; };
+		2B1E03E222CFE65C000EC425 /* UIColor+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+Extension.swift"; sourceTree = "<group>"; };
 		2BE1891822CA58D20047310D /* mainPage.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = mainPage.html; sourceTree = "<group>"; };
 		2BE1891A22CA58E90047310D /* LocalHTMLSourceReader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalHTMLSourceReader.swift; sourceTree = "<group>"; };
 		2BE1891C22CA722C0047310D /* HTMLParsable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HTMLParsable.swift; sourceTree = "<group>"; };
@@ -291,6 +293,7 @@
 				2B1E03AC22CCEA22000EC425 /* CGFloat+Extensions.swift */,
 				2B1E03D422CFA21D000EC425 /* UITextView+Extension.swift */,
 				2B1E03D822CFACF6000EC425 /* URL+Extension.swift */,
+				2B1E03E222CFE65C000EC425 /* UIColor+Extension.swift */,
 			);
 			path = extensions;
 			sourceTree = "<group>";
@@ -552,6 +555,7 @@
 				2B1E03A122CBC0CB000EC425 /* StoryboardLoadableView.swift in Sources */,
 				2B1E039922CBBFB2000EC425 /* GalleryListViewController.swift in Sources */,
 				2B0D3EFA22CA45B100054216 /* CommonError.swift in Sources */,
+				2B1E03E322CFE65C000EC425 /* UIColor+Extension.swift in Sources */,
 				2B0D3EC522CA3CA200054216 /* AppDelegate.swift in Sources */,
 				2B1E03DB22CFC045000EC425 /* HTMLCache.swift in Sources */,
 			);

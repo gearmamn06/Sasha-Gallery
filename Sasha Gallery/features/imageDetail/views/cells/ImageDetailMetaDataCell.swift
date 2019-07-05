@@ -49,10 +49,7 @@ class ImageDetailMetaDataCell: UITableViewCell, ImageDetailViewCellType {
                     }
                     return "\(names), \(name)"
                 })
-                hyperLinkTextView.attributedText = NSAttributedString(string: linkNames,
-                                                                      attributes: [
-                                                                        .foregroundColor: UIColor.black
-                    ])
+                hyperLinkTextView.attributedText = NSAttributedString(string: linkNames)
                 hyperLinks.forEach {
                     hyperLinkTextView.embedHyperLinks(tag: $0.0, url: $0.1)
                 }

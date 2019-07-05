@@ -25,13 +25,10 @@ class ImageDetailViewController: UIViewController {
         let pageURL = galleryImage?.pageURL ?? URL(string: "fail")!
         viewModel = ImageDetailViewModel(pageURL: pageURL, ratio: galleryImage?.imageRatio ?? 0.6)
         
+        setTheme()
         setUpNavigationbar()
         setUpTableView()
         subscribeOpenWebpage()
-        
-        self.view.backgroundColor = UIColor.black
-        self.tableView.backgroundColor = UIColor.black
-        self.tableView.separatorStyle = .none
         
         DispatchQueue.global().async {
             self.viewModel.input.refresh()
@@ -41,6 +38,13 @@ class ImageDetailViewController: UIViewController {
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         viewModel.input.viewDidLayoutSubviews()
+    }
+    
+    
+    private func setTheme() {
+        self.view.backgroundColor = UIColor.black
+        self.tableView.backgroundColor = UIColor.black
+        self.tableView.separatorStyle = .none
     }
     
 }
@@ -54,6 +58,8 @@ extension ImageDetailViewController {
         self.title = galleryImage?.title ?? "Unknown"
         let enquireButton = UIBarButtonItem(title: "Enquire", style: .plain,
                                             target: nil, action: nil)
+        enquireButton.tintColor = UIColor.controlAccentBlue
+        
         enquireButton.rx.tap.asDriver()
             .drive(onNext: { [weak self] in
                 self?.viewModel.input.enquireButtonDidTap()

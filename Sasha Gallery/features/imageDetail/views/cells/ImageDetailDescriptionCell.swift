@@ -17,6 +17,7 @@ class ImageDetailDescriptionCell: UITableViewCell, ImageDetailViewCellType {
         label.lineBreakMode = .byWordWrapping
         label.numberOfLines = 0
         label.font = UIFont.systemFont(ofSize: 14)
+        label.textColor = UIColor.lightGray
         return label
     }()
     
@@ -38,6 +39,7 @@ class ImageDetailDescriptionCell: UITableViewCell, ImageDetailViewCellType {
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: .default, reuseIdentifier: reuseIdentifier)
         self.selectionStyle = .none
+        self.backgroundColor = UIColor.black
         
         addSubview(descriptionLabel)
         NSLayoutConstraint.activate([

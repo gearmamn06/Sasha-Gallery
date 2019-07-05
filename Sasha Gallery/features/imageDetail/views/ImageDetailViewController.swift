@@ -25,6 +25,7 @@ class ImageDetailViewController: UIViewController {
         let pageURL = galleryImage?.pageURL ?? URL(string: "fail")!
         viewModel = ImageDetailViewModel(pageURL: pageURL, ratio: galleryImage?.imageRatio ?? 0.6)
         
+        setTheme()
         setUpNavigationbar()
         setUpTableView()
         subscribeOpenWebpage()
@@ -39,6 +40,13 @@ class ImageDetailViewController: UIViewController {
         viewModel.input.viewDidLayoutSubviews()
     }
     
+    
+    private func setTheme() {
+        self.view.backgroundColor = UIColor.black
+        self.tableView.backgroundColor = UIColor.black
+        self.tableView.separatorStyle = .none
+    }
+    
 }
 
 
@@ -50,6 +58,8 @@ extension ImageDetailViewController {
         self.title = galleryImage?.title ?? "Unknown"
         let enquireButton = UIBarButtonItem(title: "Enquire", style: .plain,
                                             target: nil, action: nil)
+        enquireButton.tintColor = UIColor.controlAccentBlue
+        
         enquireButton.rx.tap.asDriver()
             .drive(onNext: { [weak self] in
                 self?.viewModel.input.enquireButtonDidTap()
@@ -59,7 +69,6 @@ extension ImageDetailViewController {
         self.navigationItem.rightBarButtonItem = enquireButton
         
         viewModel.output.enquireButtonEnability
-            .debug()
             .drive(onNext: { [weak self] isEnable in
                 self?.navigationItem.rightBarButtonItem?.isEnabled = isEnable
             })
@@ -83,7 +92,6 @@ extension ImageDetailViewController {
         tableView.register(cellType: ImageDetailDescriptionCell.self)
         
         viewModel.output.items.asObservable()
-            .debug()
             .bind(to: tableView.rx.items) { tableview, index, element in
                 switch index {
                 case 0:

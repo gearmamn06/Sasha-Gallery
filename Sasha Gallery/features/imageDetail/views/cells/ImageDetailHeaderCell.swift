@@ -18,6 +18,7 @@ class ImageDetailHeaderCell: UITableViewCell, ImageDetailViewCellType {
         label.lineBreakMode = .byWordWrapping
         label.numberOfLines = 0
         label.font = UIFont.systemFont(ofSize: 20, weight: .bold)
+        label.textColor = UIColor.white
         return label
     }()
     
@@ -27,6 +28,7 @@ class ImageDetailHeaderCell: UITableViewCell, ImageDetailViewCellType {
         label.lineBreakMode = .byWordWrapping
         label.numberOfLines = 0
         label.font = UIFont.systemFont(ofSize: 14, weight: .bold)
+        label.textColor = UIColor.white
         return label
     }()
     
@@ -46,6 +48,7 @@ class ImageDetailHeaderCell: UITableViewCell, ImageDetailViewCellType {
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: .default, reuseIdentifier: reuseIdentifier)
         self.selectionStyle = .none
+        self.backgroundColor = UIColor.black
         
         addSubview(titleLabel)
         addSubview(photograperLabel)
@@ -60,7 +63,7 @@ class ImageDetailHeaderCell: UITableViewCell, ImageDetailViewCellType {
         NSLayoutConstraint.activate([
             photograperLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 16),
             photograperLabel.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -16),
-            photograperLabel.bottomAnchor.constraint(lessThanOrEqualTo: bottomAnchor, constant: -8)
+            photograperLabel.bottomAnchor.constraint(lessThanOrEqualTo: bottomAnchor, constant: -16)
             ])
     }
 

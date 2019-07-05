@@ -103,17 +103,15 @@ extension GalleryListViewModel: GalleryListViewModelOutput {
             .asDriver(onErrorJustReturn: false)
     }
     
-    var newCollectionViewLayout: Driver<UICollectionViewFlowLayout> {
+    var newCollectionViewFlowLayout: Driver<(String, UICollectionViewFlowLayout)> {
         return Observable.combineLatest( _images.skip(1), _currentLayoutStyle) { data, style in
             let ratios = data.map{ $0.imageRatio }
-            switch style {
-            case .normal: return MosaicFlowLayoutView(imageRatios: ratios)
-            case .horizontal: return HorizontalMosaicFlowLayout(imageRatios: ratios)
-            case .vertical: return VerticalMosaicFlowLayout(imageRatios: ratios)
-            }
+            return (style.buttonTitle, MosaicFlowLayoutView(minColumnWidth: style.rawValue,
+                                                            imageRatios: ratios))
         }
-        .distinctUntilChanged()
-        .asDriver(onErrorJustReturn: UICollectionViewFlowLayout())
+//        .distinctUntilChanged()
+        .asDriver(onErrorJustReturn: (ListLayoutStyle.normal.buttonTitle,
+                                      UICollectionViewFlowLayout()))
     }
     
     var showSortOrderSelectPopupWithCurrentValue: Signal<String> {
@@ -198,9 +196,17 @@ fileprivate extension ListLayoutStyle {
     
     mutating func toggle() {
         switch self {
-        case .normal: self = .horizontal
-        case .horizontal: self = .vertical
-        case .vertical: self = .normal
+        case .normal: self = .zoomIn
+        case .zoomIn: self = .zoomOut
+        case .zoomOut: self = .normal
+        }
+    }
+    
+    var buttonTitle: String {
+        switch self {
+        case .normal: return "2xn"
+        case .zoomIn: return "1xn"
+        case .zoomOut: return "nxn"
         }
     }
 }

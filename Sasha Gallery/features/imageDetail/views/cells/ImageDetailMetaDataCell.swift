@@ -17,6 +17,7 @@ class ImageDetailMetaDataCell: UITableViewCell, ImageDetailViewCellType {
         label.lineBreakMode = .byWordWrapping
         label.numberOfLines = 0
         label.font = UIFont.systemFont(ofSize: 15, weight: .bold)
+        label.textColor = UIColor.white
         return label
     }()
     
@@ -25,8 +26,10 @@ class ImageDetailMetaDataCell: UITableViewCell, ImageDetailViewCellType {
         textView.translatesAutoresizingMaskIntoConstraints = false
         textView.isEditable = false
         textView.isSelectable = true
-        textView.contentInset = .zero
         textView.isScrollEnabled = false
+        textView.backgroundColor = UIColor.clear
+        textView.textContainer.lineFragmentPadding = 0
+        textView.textContainerInset = .zero
         textView.font = UIFont.systemFont(ofSize: 14, weight: .medium)
         textView.textColor = UIColor.black
         return textView
@@ -46,10 +49,7 @@ class ImageDetailMetaDataCell: UITableViewCell, ImageDetailViewCellType {
                     }
                     return "\(names), \(name)"
                 })
-                hyperLinkTextView.attributedText = NSAttributedString(string: linkNames,
-                                                                      attributes: [
-                                                                        .foregroundColor: UIColor.black
-                    ])
+                hyperLinkTextView.attributedText = NSAttributedString(string: linkNames)
                 hyperLinks.forEach {
                     hyperLinkTextView.embedHyperLinks(tag: $0.0, url: $0.1)
                 }
@@ -67,6 +67,7 @@ class ImageDetailMetaDataCell: UITableViewCell, ImageDetailViewCellType {
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: .default, reuseIdentifier: reuseIdentifier)
         self.selectionStyle = .none
+        self.backgroundColor = UIColor.black
         
         addSubview(titleLabel)
         addSubview(hyperLinkTextView)

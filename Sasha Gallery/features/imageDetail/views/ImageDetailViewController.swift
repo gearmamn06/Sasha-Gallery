@@ -16,13 +16,14 @@ class ImageDetailViewController: UIViewController {
     private let bag = DisposeBag()
     
     var viewModel: ImageDetailViewModelType!
-    var productName: String!
+    var galleryImage: GalleryImage!
     
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        viewModel = ImageDetailViewModel(productName: productName ?? "")
+        let pageURL = galleryImage?.pageURL ?? URL(string: "fail")!
+        viewModel = ImageDetailViewModel(pageURL: pageURL)
         
         setUpNavigationbar()
         setUpTableView()
@@ -43,7 +44,7 @@ class ImageDetailViewController: UIViewController {
 extension ImageDetailViewController {
     
     private func setUpNavigationbar() {
-        self.title = productName
+        self.title = galleryImage?.title ?? "Unknown"
     }
 }
 
@@ -65,9 +66,27 @@ extension ImageDetailViewController {
         viewModel.output.items.asObservable()
             .debug()
             .bind(to: tableView.rx.items) { tableview, index, element in
-                let cell: ImageDetailViewCell = tableview.dequeImageDetailCell(at: index)
-                cell.cellViewModel = element
-                return cell
+                switch index {
+                case 0:
+                    let cell: ImageDetailImageCell = tableview.dequeuImageDetailCell()
+                    cell.cellViewModel = element
+                    return cell
+                    
+                case 1:
+                    let cell: ImageDetailHeaderCell = tableview.dequeuImageDetailCell()
+                    cell.cellViewModel = element
+                    return cell
+                    
+                case 2:
+                    let cell: ImageDetailMetaDataCell = tableview.dequeuImageDetailCell()
+                    cell.cellViewModel = element
+                    return cell
+                    
+                default:
+                    let cell: ImageDetailDescriptionCell = tableview.dequeuImageDetailCell()
+                    cell.cellViewModel = element
+                    return cell
+                }
             }
             .disposed(by: bag)
     }
@@ -76,7 +95,7 @@ extension ImageDetailViewController {
 
 // fileprivate extensions
 
-fileprivate extension ImageDetailViewCell {
+fileprivate extension ImageDetailViewCellType {
     
     static var reuseIdentifier: String {
         return String(describing: self)
@@ -91,9 +110,17 @@ fileprivate extension UITableView {
         self.register(cellType, forCellReuseIdentifier: cellName)
     }
     
-    func dequeImageDetailCell<T: ImageDetailViewCell>(at index: Int) -> T {
-        let cell = self.dequeueReusableCell(withIdentifier: T.reuseIdentifier)
-            as! T
+    func dequeuImageDetailCell<Cell: ImageDetailViewCellType & UITableViewCell>() -> Cell {
+        let cell = self.dequeueReusableCell(withIdentifier: Cell.reuseIdentifier) as! Cell
         return cell
     }
+}
+
+
+extension ImageDetailViewController: StoryboardLoadableView {
+    
+    static var storyboardName: String {
+        return "ImageDetailView"
+    }
+    
 }

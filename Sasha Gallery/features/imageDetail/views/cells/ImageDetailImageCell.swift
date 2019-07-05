@@ -9,10 +9,10 @@
 import UIKit
 
 
-class ImageDetailImageCell: ImageDetailViewCell {
+class ImageDetailImageCell: UITableViewCell, ImageDetailViewCellType {
     
     
-    override var cellViewModel: ImageDetailCellViewModel? {
+    var cellViewModel: ImageDetailCellViewModel? {
         didSet {
             guard let viewModel = cellViewModel else {
                 // TODO: set loading effect or not..

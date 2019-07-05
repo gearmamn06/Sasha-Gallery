@@ -39,6 +39,9 @@ protocol GalleryListViewModelInput {
     
     // toogle current layout style
     func toggleLayoutStyle() // -> update layout
+    
+    // some image selected
+    func imageDidSelect(atIndexPath indexPath: IndexPath)
 }
 
 protocol GalleryListViewModelOutput {
@@ -50,6 +53,8 @@ protocol GalleryListViewModelOutput {
     var showSortOrderSelectPopupWithCurrentValue: Signal<String> { get }
     
     var newCollectionViewLayout: Driver<UICollectionViewFlowLayout> { get }
+    
+    var nextPushViewController: Signal<UIViewController?> { get }
 }
 
 

@@ -9,7 +9,9 @@
 import UIKit
 
 
-class ImageDetailDescriptionCell: ImageDetailViewCell {
+class ImageDetailDescriptionCell: UITableViewCell, ImageDetailViewCellType {
+    var cellViewModel: ImageDetailCellViewModel?
+    
     
     
 }

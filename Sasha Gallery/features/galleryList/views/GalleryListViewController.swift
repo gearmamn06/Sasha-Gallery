@@ -24,6 +24,8 @@ class GalleryListViewController: UIViewController {
         setUpNavigationBar()
         setUpCollectionVew()
         
+        subscribeNextViewControllerPushing()
+        
         viewModel.input.refreshList()
     }
     
@@ -112,6 +114,12 @@ extension GalleryListViewController {
             }
             .disposed(by: bag)
         
+        collectionView.rx.itemSelected
+            .subscribe(onNext: { [weak self] indexPath in
+                self?.viewModel.input.imageDidSelect(atIndexPath: indexPath)
+            })
+            .disposed(by: bag)
+        
         subscribeCollectionViewFlowLayout()
         
         setUpCollectionViewRefreshControl()
@@ -176,6 +184,20 @@ extension GalleryListViewController {
         })
     }
     
+}
+
+
+extension GalleryListViewController {
+    
+    private func subscribeNextViewControllerPushing() {
+        
+        viewModel.output.nextPushViewController
+            .emit(onNext: { [weak self] nextViewController in
+                guard let self = self, let next = nextViewController else { return }
+                self.navigationController?.pushViewController(next, animated: true)
+            })
+            .disposed(by: bag)
+    }
 }
 
 

@@ -9,7 +9,10 @@
 import UIKit
 
 
-class ImageDetailHeaderCell: ImageDetailViewCell {
+class ImageDetailHeaderCell: UITableViewCell, ImageDetailViewCellType {
+    
+    var cellViewModel: ImageDetailCellViewModel? 
+    
     
     private var titleLabel: UILabel = {
         let label = UILabel()

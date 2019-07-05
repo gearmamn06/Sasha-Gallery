@@ -28,6 +28,8 @@ final class GalleryListViewModel: GalleryListViewModelType {
     
     private let _images = BehaviorRelay<[GalleryImage]>(value: [])
     
+    private let _selectImageIndexPath = PublishRelay<IndexPath>()
+    
     init() {
         
         bindRefresh()
@@ -58,6 +60,10 @@ extension GalleryListViewModel: GalleryListViewModelInput {
         var newValue = _currentLayoutStyle.value
         newValue.toggle()
         _currentLayoutStyle.accept(newValue)
+    }
+    
+    func imageDidSelect(atIndexPath indexPath: IndexPath) {
+        _selectImageIndexPath.accept(indexPath)
     }
    
 }
@@ -116,6 +122,21 @@ extension GalleryListViewModel: GalleryListViewModelOutput {
         }
         .asSignal(onErrorJustReturn: "")
         .filter{ !$0.isEmpty }
+    }
+    
+    var nextPushViewController: Signal<UIViewController?> {
+        return _selectImageIndexPath.compactMap { [weak self] (indexPath: IndexPath) -> GalleryImage? in
+            if let self = self, (0..<self._images.value.count) ~= indexPath.row {
+                return self._images.value[indexPath.row]
+            }
+            return nil
+        }
+        .map { image in
+            let nextViewController = ImageDetailViewController.instance
+            nextViewController.galleryImage = image
+            return nextViewController
+        }
+        .asSignal(onErrorJustReturn: nil)
     }
 }
 

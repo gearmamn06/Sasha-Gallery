@@ -8,7 +8,7 @@
 
 import UIKit
 
-class ImageDetailViewCell: UITableViewCell {
+protocol ImageDetailViewCellType: class {
     
-    var cellViewModel: ImageDetailCellViewModel?
+    var cellViewModel: ImageDetailCellViewModel? { get set }
 }

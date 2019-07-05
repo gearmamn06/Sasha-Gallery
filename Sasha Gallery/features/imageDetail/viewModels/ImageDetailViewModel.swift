@@ -17,13 +17,16 @@ fileprivate typealias CellViewModel = ImageDetailCellViewModel
 
 class ImageDetailViewModel: ImageDetailViewModelType {
     
+    private let bag = DisposeBag()
+    
     private let _viewIsReady = PublishRelay<Void>()
     private let _requestLoadData = PublishRelay<Void>()
     
     
-    private let productName: String
-    init(productName: String) {
-        self.productName = productName
+    private let pageURL: URL
+    
+    init(pageURL: URL) {
+        self.pageURL = pageURL
     }
 }
 
@@ -49,13 +52,15 @@ extension ImageDetailViewModel: ImageDetailViewModelOutput {
     
     private var _imageDetail: Driver<ImageDetail> {
         return _requestLoadData
-            .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .background))
-            .flatMapLatest { _ in
-                return HTMLProvider<ImageDetail>(urlString: "")
+            .compactMap { [weak self] _ in
+                return self?.pageURL
+            }
+            .flatMapLatest { url in
+                return HTMLProvider<ImageDetail>(urlString: url.absoluteString)
                     .loadHTML()
                     .asSignal(onErrorJustReturn: ImageDetail.empty)
             }
-//            .startWith(ImageDetail.empty)
+            .startWith(ImageDetail.empty)
             .asDriver(onErrorJustReturn: ImageDetail.empty)
     }
     

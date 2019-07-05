@@ -32,16 +32,28 @@ class HTMLCache {
 
 extension HTMLCache {
     
-    subscript(key: String) -> HTMLParsable? {
-        get {
-            return self.storage.object(forKey: key as NSString) as? HTMLParsable
-        }
-        set {
-            if let newValue = newValue {
-                self.storage.setObject(newValue as AnyObject, forKey: key as NSString)
-            }else{
-                self.storage.removeObject(forKey: key as NSString)
-            }
+//    subscript(key: String) -> HTMLParsable? {
+//        get {
+//            return self.storage.object(forKey: key as NSString) as? HTMLParsable
+//        }
+//        set {
+//            if let newValue = newValue {
+//                self.storage.setObject(newValue as AnyObject, forKey: key as NSString)
+//            }else{
+//                self.storage.removeObject(forKey: key as NSString)
+//            }
+//        }
+//    }
+    
+    func get<T: HTMLParsable>(key: String) -> T? {
+        return self.storage.object(forKey: key as NSString) as? T
+    }
+    
+    func put<T: HTMLParsable>(key: String, value: T?) {
+        if let value = value {
+            storage.setObject(value as AnyObject, forKey: key as NSString)
+        }else{
+            storage.removeObject(forKey: key as NSString)
         }
     }
     

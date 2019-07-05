@@ -97,8 +97,8 @@ extension HTMLCacheTest {
         copied.identifier = 124124
         
         // when
-        HTMLCache.test_shared[key] = html
-        let cache = HTMLCache.test_shared[key]
+        HTMLCache.test_shared.put(key: key, value: html)
+        let cache: TestHTML? = HTMLCache.test_shared.get(key: key)
         
         // then
         XCTAssertNotNil(cache)

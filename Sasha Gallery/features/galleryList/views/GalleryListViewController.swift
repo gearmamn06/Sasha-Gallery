@@ -26,7 +26,9 @@ class GalleryListViewController: UIViewController {
         
         subscribeNextViewControllerPushing()
         
-        viewModel.input.refreshList()
+        DispatchQueue.global().async {
+            self.viewModel.input.refreshList()
+        }
     }
     
     

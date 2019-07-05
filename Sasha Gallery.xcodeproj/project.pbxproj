@@ -40,6 +40,8 @@
 		2B1E03D222CF7D91000EC425 /* ImageDetailDescriptionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B1E03D122CF7D91000EC425 /* ImageDetailDescriptionCell.swift */; };
 		2B1E03D522CFA21D000EC425 /* UITextView+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B1E03D422CFA21D000EC425 /* UITextView+Extension.swift */; };
 		2B1E03D922CFACF6000EC425 /* URL+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B1E03D822CFACF6000EC425 /* URL+Extension.swift */; };
+		2B1E03DB22CFC045000EC425 /* HTMLCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B1E03DA22CFC045000EC425 /* HTMLCache.swift */; };
+		2B1E03DE22CFC501000EC425 /* HTMLCacheTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B1E03DD22CFC501000EC425 /* HTMLCacheTest.swift */; };
 		2BE1891922CA58D20047310D /* mainPage.html in Resources */ = {isa = PBXBuildFile; fileRef = 2BE1891822CA58D20047310D /* mainPage.html */; };
 		2BE1891B22CA58E90047310D /* LocalHTMLSourceReader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BE1891A22CA58E90047310D /* LocalHTMLSourceReader.swift */; };
 		2BE1891D22CA722C0047310D /* HTMLParsable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BE1891C22CA722C0047310D /* HTMLParsable.swift */; };
@@ -101,6 +103,8 @@
 		2B1E03D122CF7D91000EC425 /* ImageDetailDescriptionCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageDetailDescriptionCell.swift; sourceTree = "<group>"; };
 		2B1E03D422CFA21D000EC425 /* UITextView+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UITextView+Extension.swift"; sourceTree = "<group>"; };
 		2B1E03D822CFACF6000EC425 /* URL+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "URL+Extension.swift"; sourceTree = "<group>"; };
+		2B1E03DA22CFC045000EC425 /* HTMLCache.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HTMLCache.swift; sourceTree = "<group>"; };
+		2B1E03DD22CFC501000EC425 /* HTMLCacheTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HTMLCacheTest.swift; sourceTree = "<group>"; };
 		2BE1891822CA58D20047310D /* mainPage.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = mainPage.html; sourceTree = "<group>"; };
 		2BE1891A22CA58E90047310D /* LocalHTMLSourceReader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalHTMLSourceReader.swift; sourceTree = "<group>"; };
 		2BE1891C22CA722C0047310D /* HTMLParsable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HTMLParsable.swift; sourceTree = "<group>"; };
@@ -180,6 +184,7 @@
 				2BE1891822CA58D20047310D /* mainPage.html */,
 				2B1E03BB22CE4856000EC425 /* imageDetail.html */,
 				2BE1891A22CA58E90047310D /* LocalHTMLSourceReader.swift */,
+				2B1E03DC22CFC4EB000EC425 /* cacheTest */,
 				2B0D3EFF22CA4E0B00054216 /* networkModuleTest */,
 				2BE1892B22CA8E220047310D /* ModelTest */,
 				2B0D3EDB22CA3CA400054216 /* Info.plist */,
@@ -190,6 +195,7 @@
 		2B0D3EF222CA3DA300054216 /* services */ = {
 			isa = PBXGroup;
 			children = (
+				2B1E03DA22CFC045000EC425 /* HTMLCache.swift */,
 				2B0D3EFB22CA45D400054216 /* HTMLProvider.swift */,
 			);
 			path = services;
@@ -299,6 +305,14 @@
 				2B1E03D822CFACF6000EC425 /* URL+Extension.swift */,
 			);
 			path = extensions;
+			sourceTree = "<group>";
+		};
+		2B1E03DC22CFC4EB000EC425 /* cacheTest */ = {
+			isa = PBXGroup;
+			children = (
+				2B1E03DD22CFC501000EC425 /* HTMLCacheTest.swift */,
+			);
+			path = cacheTest;
 			sourceTree = "<group>";
 		};
 		2BE1892622CA86BF0047310D /* models */ = {
@@ -555,6 +569,7 @@
 				2B0D3EFA22CA45B100054216 /* CommonError.swift in Sources */,
 				2B0D3EC522CA3CA200054216 /* AppDelegate.swift in Sources */,
 				2B1E03B522CD07D2000EC425 /* HorizontalMosaicFlowLayout.swift in Sources */,
+				2B1E03DB22CFC045000EC425 /* HTMLCache.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -564,6 +579,7 @@
 			files = (
 				2B1E03B022CCFF6C000EC425 /* ImageRatioFindTest.swift in Sources */,
 				2BE1892D22CA8E3A0047310D /* GalleryImageTest.swift in Sources */,
+				2B1E03DE22CFC501000EC425 /* HTMLCacheTest.swift in Sources */,
 				2B1E03BA22CE4770000EC425 /* ImageDetailTest.swift in Sources */,
 				2BE1891B22CA58E90047310D /* LocalHTMLSourceReader.swift in Sources */,
 				2BE1892F22CA90C40047310D /* GalleryImageListTest.swift in Sources */,

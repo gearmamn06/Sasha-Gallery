@@ -65,7 +65,7 @@ extension ImageDetailViewModel: ImageDetailViewModelOutput {
             _imageDetail.asObservable()
         )
         .map { _, detail in
-            return CellViewModel.make(fromImageDetail: detail)
+            return CellViewModel.from(fromImageDetail: detail)
         }
         .asDriver(onErrorJustReturn: [])
     }

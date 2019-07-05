@@ -9,6 +9,7 @@ target 'Sasha Gallery' do
   pod 'RxSwift', '~> 5'
   pod 'RxCocoa', '~> 5'
   pod 'Kingfisher', '~> 5.0'
+  pod 'SkeletonView'
 
   # Pods for Sasha Gallery
 

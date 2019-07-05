@@ -12,16 +12,17 @@ import RxCocoa
 
 
 enum ImageDetailCellViewModel {
-    case productTitle(_ value: String)
-    case photographer(_ value: String)
-    case collection(title: String, values: [(String, URL)])
+    case productImage(url: URL)
+    case header(productName: String, photographer: String)
+    case metaData(title: String, values: [(String, URL)])
     case description(_ value: String)
     
-    static func make(fromImageDetail detail: ImageDetail) -> [ImageDetailCellViewModel] {
+    static func from(fromImageDetail detail: ImageDetail) -> [ImageDetailCellViewModel] {
         return [
-            .productTitle(detail.productName),
-            .photographer(detail.photographer),
-            .collection(title: detail.collection.title,
+            .productImage(url: detail.productImageURL),
+            .header(productName: detail.productName,
+                    photographer: detail.photographer),
+            .metaData(title: detail.collection.title,
                         values: detail.collection.values),
             .description(detail.description)
         ]

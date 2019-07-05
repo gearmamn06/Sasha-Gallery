@@ -6,12 +6,14 @@ PODS:
   - RxRelay (5.0.0):
     - RxSwift (~> 5)
   - RxSwift (5.0.0)
+  - SkeletonView (1.6)
   - SwiftSoup (2.2.0)
 
 DEPENDENCIES:
   - Kingfisher (~> 5.0)
   - RxCocoa (~> 5)
   - RxSwift (~> 5)
+  - SkeletonView
   - SwiftSoup
 
 SPEC REPOS:
@@ -20,6 +22,7 @@ SPEC REPOS:
     - RxCocoa
     - RxRelay
     - RxSwift
+    - SkeletonView
     - SwiftSoup
 
 SPEC CHECKSUMS:
@@ -27,8 +30,9 @@ SPEC CHECKSUMS:
   RxCocoa: fcf32050ac00d801f34a7f71d5e8e7f23026dcd8
   RxRelay: 4f7409406a51a55cd88483f21ed898c234d60f18
   RxSwift: 8b0671caa829a763bbce7271095859121cbd895f
+  SkeletonView: 6c2bf622c352c7e36b4f3c8d73afc46d6c9360d6
   SwiftSoup: 230991361c5ba249d140161860a3864a28b63860
 
-PODFILE CHECKSUM: 6aa809eae7b15446eb3ebaf37c71bc42f6414f5e
+PODFILE CHECKSUM: a83ce199dec27b133cacb1a9f6bb3765e06dc9e6
 
 COCOAPODS: 1.7.3

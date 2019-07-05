@@ -16,7 +16,7 @@ class GalleryImageListTest: XCTestCase {
     var html: Element!
     
     override func setUp() {
-        let htmlString = LocalHTMLSourceReader.read()
+        let htmlString = LocalHTMLSourceReader.read(fileName: "mainPage")
         self.html = try! SwiftSoup.parse(htmlString)
     }
     

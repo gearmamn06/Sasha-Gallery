@@ -29,6 +29,10 @@ class ImageDetailViewController: UIViewController {
         setUpTableView()
         subscribeOpenWebpage()
         
+        self.view.backgroundColor = UIColor.black
+        self.tableView.backgroundColor = UIColor.black
+        self.tableView.separatorStyle = .none
+        
         DispatchQueue.global().async {
             self.viewModel.input.refresh()
         }
@@ -59,7 +63,6 @@ extension ImageDetailViewController {
         self.navigationItem.rightBarButtonItem = enquireButton
         
         viewModel.output.enquireButtonEnability
-            .debug()
             .drive(onNext: { [weak self] isEnable in
                 self?.navigationItem.rightBarButtonItem?.isEnabled = isEnable
             })
@@ -83,7 +86,6 @@ extension ImageDetailViewController {
         tableView.register(cellType: ImageDetailDescriptionCell.self)
         
         viewModel.output.items.asObservable()
-            .debug()
             .bind(to: tableView.rx.items) { tableview, index, element in
                 switch index {
                 case 0:

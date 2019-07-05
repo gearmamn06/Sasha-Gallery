@@ -8,8 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		2B0D3EC522CA3CA200054216 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B0D3EC422CA3CA200054216 /* AppDelegate.swift */; };
-		2B0D3EC722CA3CA200054216 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B0D3EC622CA3CA200054216 /* ViewController.swift */; };
-		2B0D3ECA22CA3CA200054216 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2B0D3EC822CA3CA200054216 /* Main.storyboard */; };
 		2B0D3ECC22CA3CA400054216 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2B0D3ECB22CA3CA400054216 /* Assets.xcassets */; };
 		2B0D3ECF22CA3CA400054216 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2B0D3ECD22CA3CA400054216 /* LaunchScreen.storyboard */; };
 		2B0D3EF822CA442700054216 /* HTMLSourceTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B0D3EF722CA442700054216 /* HTMLSourceTest.swift */; };
@@ -24,8 +22,6 @@
 		2B1E03AB22CCDFF2000EC425 /* MosaicFlowLayoutView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B1E03AA22CCDFF2000EC425 /* MosaicFlowLayoutView.swift */; };
 		2B1E03AD22CCEA22000EC425 /* CGFloat+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B1E03AC22CCEA22000EC425 /* CGFloat+Extensions.swift */; };
 		2B1E03B022CCFF6C000EC425 /* ImageRatioFindTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B1E03AF22CCFF6C000EC425 /* ImageRatioFindTest.swift */; };
-		2B1E03B322CD07C0000EC425 /* VerticalMosaicFlowLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B1E03B222CD07C0000EC425 /* VerticalMosaicFlowLayout.swift */; };
-		2B1E03B522CD07D2000EC425 /* HorizontalMosaicFlowLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B1E03B422CD07D2000EC425 /* HorizontalMosaicFlowLayout.swift */; };
 		2B1E03B822CD1A8A000EC425 /* ImageDetail.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B1E03B722CD1A8A000EC425 /* ImageDetail.swift */; };
 		2B1E03BA22CE4770000EC425 /* ImageDetailTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B1E03B922CE4770000EC425 /* ImageDetailTest.swift */; };
 		2B1E03BC22CE4856000EC425 /* imageDetail.html in Resources */ = {isa = PBXBuildFile; fileRef = 2B1E03BB22CE4856000EC425 /* imageDetail.html */; };
@@ -68,8 +64,6 @@
 		272C0CADD4A5E6D5EEA2B9AA /* Pods-Sasha GalleryUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Sasha GalleryUITests.release.xcconfig"; path = "Target Support Files/Pods-Sasha GalleryUITests/Pods-Sasha GalleryUITests.release.xcconfig"; sourceTree = "<group>"; };
 		2B0D3EC122CA3CA200054216 /* Sasha Gallery.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Sasha Gallery.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		2B0D3EC422CA3CA200054216 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		2B0D3EC622CA3CA200054216 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
-		2B0D3EC922CA3CA200054216 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		2B0D3ECB22CA3CA400054216 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		2B0D3ECE22CA3CA400054216 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		2B0D3ED022CA3CA400054216 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -87,8 +81,6 @@
 		2B1E03AA22CCDFF2000EC425 /* MosaicFlowLayoutView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MosaicFlowLayoutView.swift; sourceTree = "<group>"; };
 		2B1E03AC22CCEA22000EC425 /* CGFloat+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CGFloat+Extensions.swift"; sourceTree = "<group>"; };
 		2B1E03AF22CCFF6C000EC425 /* ImageRatioFindTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageRatioFindTest.swift; sourceTree = "<group>"; };
-		2B1E03B222CD07C0000EC425 /* VerticalMosaicFlowLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VerticalMosaicFlowLayout.swift; sourceTree = "<group>"; };
-		2B1E03B422CD07D2000EC425 /* HorizontalMosaicFlowLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HorizontalMosaicFlowLayout.swift; sourceTree = "<group>"; };
 		2B1E03B722CD1A8A000EC425 /* ImageDetail.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageDetail.swift; sourceTree = "<group>"; };
 		2B1E03B922CE4770000EC425 /* ImageDetailTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageDetailTest.swift; sourceTree = "<group>"; };
 		2B1E03BB22CE4856000EC425 /* imageDetail.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = imageDetail.html; sourceTree = "<group>"; };
@@ -169,8 +161,6 @@
 				2B1E039622CBBF83000EC425 /* features */,
 				2BE1893722CB8E980047310D /* comon */,
 				2B0D3EC422CA3CA200054216 /* AppDelegate.swift */,
-				2B0D3EC622CA3CA200054216 /* ViewController.swift */,
-				2B0D3EC822CA3CA200054216 /* Main.storyboard */,
 				2B0D3ECB22CA3CA400054216 /* Assets.xcassets */,
 				2B0D3ECD22CA3CA400054216 /* LaunchScreen.storyboard */,
 				2B0D3ED022CA3CA400054216 /* Info.plist */,
@@ -251,8 +241,6 @@
 			isa = PBXGroup;
 			children = (
 				2B1E03AA22CCDFF2000EC425 /* MosaicFlowLayoutView.swift */,
-				2B1E03B222CD07C0000EC425 /* VerticalMosaicFlowLayout.swift */,
-				2B1E03B422CD07D2000EC425 /* HorizontalMosaicFlowLayout.swift */,
 			);
 			path = flowlayout;
 			sourceTree = "<group>";
@@ -458,7 +446,6 @@
 				2B0D3ECF22CA3CA400054216 /* LaunchScreen.storyboard in Resources */,
 				2B0D3ECC22CA3CA400054216 /* Assets.xcassets in Resources */,
 				2B1E03C322CE60F6000EC425 /* ImageDetailView.storyboard in Resources */,
-				2B0D3ECA22CA3CA200054216 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -543,13 +530,11 @@
 			buildActionMask = 2147483647;
 			files = (
 				2BE1892822CA87080047310D /* GalleryImage.swift in Sources */,
-				2B0D3EC722CA3CA200054216 /* ViewController.swift in Sources */,
 				2B1E03CC22CF7CCA000EC425 /* ImageDetailImageCell.swift in Sources */,
 				2BE1891D22CA722C0047310D /* HTMLParsable.swift in Sources */,
 				2B1E03A322CBDA35000EC425 /* GalleryListItemCell.swift in Sources */,
 				2B1E03B822CD1A8A000EC425 /* ImageDetail.swift in Sources */,
 				2B0D3EFC22CA45D400054216 /* HTMLProvider.swift in Sources */,
-				2B1E03B322CD07C0000EC425 /* VerticalMosaicFlowLayout.swift in Sources */,
 				2B1E03C122CE60CE000EC425 /* ImageDetailViewController.swift in Sources */,
 				2B1E03D522CFA21D000EC425 /* UITextView+Extension.swift in Sources */,
 				2B1E03CA22CE72DB000EC425 /* ImageDetailHeaderCell.swift in Sources */,
@@ -568,7 +553,6 @@
 				2B1E039922CBBFB2000EC425 /* GalleryListViewController.swift in Sources */,
 				2B0D3EFA22CA45B100054216 /* CommonError.swift in Sources */,
 				2B0D3EC522CA3CA200054216 /* AppDelegate.swift in Sources */,
-				2B1E03B522CD07D2000EC425 /* HorizontalMosaicFlowLayout.swift in Sources */,
 				2B1E03DB22CFC045000EC425 /* HTMLCache.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -598,14 +582,6 @@
 /* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
-		2B0D3EC822CA3CA200054216 /* Main.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				2B0D3EC922CA3CA200054216 /* Base */,
-			);
-			name = Main.storyboard;
-			sourceTree = "<group>";
-		};
 		2B0D3ECD22CA3CA400054216 /* LaunchScreen.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (

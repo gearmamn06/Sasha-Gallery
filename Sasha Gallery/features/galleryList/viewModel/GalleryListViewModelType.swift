@@ -17,10 +17,10 @@ enum ListSortingOrder {
     case newest
 }
 
-enum ListLayoutStyle {
-    case normal
-    case horizontal
-    case vertical
+enum ListLayoutStyle: CGFloat {
+    case zoomIn = 300
+    case normal = 150
+    case zoomOut = 100
 }
 
 
@@ -52,7 +52,7 @@ protocol GalleryListViewModelOutput {
     
     var showSortOrderSelectPopupWithCurrentValue: Signal<String> { get }
     
-    var newCollectionViewLayout: Driver<UICollectionViewFlowLayout> { get }
+    var newCollectionViewFlowLayout: Driver<(String, UICollectionViewFlowLayout)> { get }
     
     var nextPushViewController: Signal<UIViewController?> { get }
 }

@@ -57,6 +57,7 @@ class ImageDetailImageCell: UITableViewCell, ImageDetailViewCellType {
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: .default, reuseIdentifier: reuseIdentifier)
         self.selectionStyle = .none
+        self.backgroundColor = UIColor.black
         
         addSubview(productImageView)
         productImageView.contentMode = .scaleAspectFill

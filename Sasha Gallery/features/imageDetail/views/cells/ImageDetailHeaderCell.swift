@@ -11,55 +11,60 @@ import UIKit
 
 class ImageDetailHeaderCell: UITableViewCell, ImageDetailViewCellType {
     
-    var cellViewModel: ImageDetailCellViewModel? 
-    
-    
+
     private var titleLabel: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
+        label.lineBreakMode = .byWordWrapping
+        label.numberOfLines = 0
         label.font = UIFont.systemFont(ofSize: 20, weight: .bold)
-        label.textColor = UIColor.black
         return label
     }()
     
     private var photograperLabel: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
-        label.font = UIFont.systemFont(ofSize: 16, weight: .medium)
+        label.lineBreakMode = .byWordWrapping
+        label.numberOfLines = 0
+        label.font = UIFont.systemFont(ofSize: 14, weight: .bold)
         return label
     }()
     
+    var cellViewModel: ImageDetailCellViewModel? {
+        didSet {
+            guard let viewModel = cellViewModel else  { return }
+            switch viewModel {
+            case .header(let name, let photographer):
+                titleLabel.text = name
+                photograperLabel.text = photographer
+                
+            default: break
+            }
+        }
+    }
+    
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: .default, reuseIdentifier: reuseIdentifier)
-        setUpSubviews()
+        self.selectionStyle = .none
+        
+        addSubview(titleLabel)
+        addSubview(photograperLabel)
+        
+        NSLayoutConstraint.activate([
+            titleLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 16),
+            titleLabel.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -16),
+            titleLabel.topAnchor.constraint(equalTo: topAnchor, constant: 8),
+            titleLabel.bottomAnchor.constraint(equalTo: photograperLabel.topAnchor, constant: -8)
+            ])
+        
+        NSLayoutConstraint.activate([
+            photograperLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 16),
+            photograperLabel.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -16),
+            photograperLabel.bottomAnchor.constraint(lessThanOrEqualTo: bottomAnchor, constant: -8)
+            ])
     }
 
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 }
-
-
-private extension ImageDetailHeaderCell {
-    
-    private func setUpSubviews() {
-        addSubview(titleLabel)
-        NSLayoutConstraint.activate([
-            titleLabel.leadingAnchor.constraint(equalToSystemSpacingAfter: leadingAnchor, multiplier: 24),
-            titleLabel.trailingAnchor.constraint(equalToSystemSpacingAfter: trailingAnchor, multiplier: -24),
-            titleLabel.topAnchor.constraint(equalTo: topAnchor, constant: 4)
-            ])
-        
-        addSubview(photograperLabel)
-        NSLayoutConstraint.activate([
-            photograperLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 24),
-            photograperLabel.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -24),
-            photograperLabel.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: 12),
-            photograperLabel.bottomAnchor.constraint(lessThanOrEqualTo: bottomAnchor, constant: 16)
-            ])
-    }
-}
-
-
-
-

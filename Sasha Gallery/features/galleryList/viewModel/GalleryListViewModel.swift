@@ -9,6 +9,7 @@
 import UIKit
 import RxSwift
 import RxCocoa
+import Kingfisher
 
 
 //MARK: private and internal properties
@@ -20,6 +21,8 @@ final class GalleryListViewModel: GalleryListViewModelType {
     private let _viewIsReady = PublishRelay<Void>()
     private let _requestLoadData = PublishRelay<Bool>()
     private let _isLoading = BehaviorRelay<Bool>(value: false)
+    
+    private let _requestPreFetch = PublishRelay<[IndexPath]>()
     
     private let _sortingButtonDidTap = PublishRelay<Void>()
     private let _sortingOption = BehaviorRelay<ListSortingOrder>(value: .normal)
@@ -37,6 +40,7 @@ final class GalleryListViewModel: GalleryListViewModelType {
         self.collectionURL = collectionURL
         
         bindRefresh()
+        subscribePreFetchRequest()
     }
 }
 
@@ -51,6 +55,10 @@ extension GalleryListViewModel: GalleryListViewModelInput {
     
     func refreshList(withOutCache: Bool) {
         _requestLoadData.accept(withOutCache)
+    }
+    
+    func requestPreFetches(atIndxPaths: [IndexPath]) {
+        _requestPreFetch.accept(atIndxPaths)
     }
     
     func sortingButtonDidTap() {
@@ -156,6 +164,7 @@ private extension GalleryListViewModel {
         
         let urlString = self.collectionURL.absoluteString
         
+        // subscribe data load request -> refresh dataSource
         _requestLoadData
             .do(onNext: { [weak self] _ in
                 self?._isLoading.accept(true)
@@ -172,8 +181,40 @@ private extension GalleryListViewModel {
             .bind(to: _images)
             .disposed(by: bag)
     }
+    
+    private func subscribePreFetchRequest() {
+        
+        // map indexPath to request image url
+        let prefetcInfos: Signal<[URL]> = _requestPreFetch
+            .compactMap { [weak self] indexPaths in
+                guard let self = self else { return nil }
+                
+                var sender = [URL]()
+                let models = self._images.value
+                
+                for indexPath in indexPaths {
+                    guard (0..<models.count) ~= indexPath.row else { continue }
+                    let model = models[indexPath.row]
+                    sender.append(model.imageURL)
+                }
+                
+                return sender
+            }
+            .asSignal(onErrorJustReturn: [])
+            .filter{ !$0.isEmpty }
+        
+        // subscribe requested image urls -> start preFetch
+        prefetcInfos
+            .emit(onNext: { requestURLs in
+                let preFetcher = ImagePrefetcher(resources: requestURLs)
+                preFetcher.start()
+            })
+            .disposed(by: bag)
+    }
 }
 
+
+// MARK: fileprivate extensions
 
 fileprivate extension GalleryImageList {
     

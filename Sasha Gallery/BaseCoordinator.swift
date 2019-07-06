@@ -13,8 +13,10 @@ import RxCocoa
 
 // MARK: BaseCoordinatorDelegate: child viewController -> request
 
-protocol BaseCoordinatorDelegate: class {
-    func requestNextNavigationFlow(_ next: BaseCoordinator.NavigationFlow)
+protocol BaseCoordinatorInterface: class {
+    
+    func pushGalleryCollectionView(collectionTitle: String, collectionURL: URL)
+    func pushImageDetailView(imageTitle: String, webPageURL: URL, imageRatio: Float)
 }
 
 
@@ -22,9 +24,9 @@ protocol BaseCoordinatorDelegate: class {
 
 class BaseCoordinator {
     
-    enum NavigationFlow: Equatable {
+    fileprivate enum NavigationFlow: Equatable {
         case collection(title: String, collectionURL: URL)
-        case imageDetail(_ imageModel: GalleryImage)
+        case imageDetail(imageTitle: String, webPageURL: URL, imageRatio: Float)
         
         static var initialFlow: NavigationFlow {
             return .collection(title: "Sasha",
@@ -60,18 +62,12 @@ class BaseCoordinator {
 }
 
 
-// MARK: receive nextNavigationFlow request and handle it
+// MARK: received nextNavigationFlow request and handle it
 
-extension BaseCoordinator: BaseCoordinatorDelegate {
-    
-    func requestNextNavigationFlow(_ next: BaseCoordinator.NavigationFlow) {
-        nextNavigationFlow.accept(next)
-    }
-    
+extension BaseCoordinator: BaseCoordinatorInterface {
     
     private func subscribeNextNavigationFlow() {
         nextNavigationFlow
-            .distinctUntilChanged()
             .subscribeOn(MainScheduler.instance)
             .subscribe(onNext: { [weak self] nextFlow in
                 guard let self = self else { return }
@@ -86,18 +82,37 @@ extension BaseCoordinator: BaseCoordinatorDelegate {
                     self.navigationController.pushViewController(nextViewController,
                                                                   animated: true)
                     
-                case .imageDetail(let imageModel):
-                    let ratio = imageModel.imageRatio == 0 ? 0.6 : imageModel.imageRatio
-                    let viewModel = ImageDetailViewModel(imageInfo: ((pageURL: imageModel.pageURL,
+                case .imageDetail(let title, let url, let ratio):
+                    let ratio = ratio == 0 ? 0.6 : ratio
+                    let viewModel = ImageDetailViewModel(imageInfo: ((pageURL: url,
                                                                       imageRatio: ratio)))
                     let nextViewController = ImageDetailViewController.instance
                     nextViewController.injectDependency(viewModel: viewModel, delegate: self)
-                    nextViewController.title = imageModel.title
+                    nextViewController.title = title
                     
                     self.navigationController.pushViewController(nextViewController,
                                                                  animated: true)
                 }
             })
             .disposed(by: bag)
+    }
+}
+
+
+
+// MARK: receive push request from child viewController
+
+extension BaseCoordinator {
+    
+    func pushGalleryCollectionView(collectionTitle: String, collectionURL: URL) {
+        let flow = NavigationFlow.collection(title: collectionTitle, collectionURL: collectionURL)
+        nextNavigationFlow.accept(flow)
+    }
+    
+    func pushImageDetailView(imageTitle: String, webPageURL: URL, imageRatio: Float) {
+        let flow = NavigationFlow.imageDetail(imageTitle: imageTitle,
+                                              webPageURL: webPageURL,
+                                              imageRatio: imageRatio)
+        nextNavigationFlow.accept(flow)
     }
 }

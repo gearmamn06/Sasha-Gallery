@@ -13,15 +13,19 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
 
+    private var coordinator: BaseCoordinator!
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
+        
         window = UIWindow(frame: UIScreen.main.bounds)
         let navigationController = UINavigationController(navigationBarClass: nil,
                                                           toolbarClass: nil)
         navigationController.navigationBar.barStyle = .black
         window?.rootViewController = navigationController
         window?.makeKeyAndVisible()
+        
+        coordinator = BaseCoordinator(navigationViewController: navigationController)
         
         return true
     }

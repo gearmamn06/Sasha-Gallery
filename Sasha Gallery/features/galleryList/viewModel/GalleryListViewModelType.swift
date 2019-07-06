@@ -63,7 +63,7 @@ protocol GalleryListViewModelOutput {
     
     var newCollectionViewFlowLayout: Driver<(String, UICollectionViewFlowLayout)> { get }
     
-    var nextPushViewController: Signal<UIViewController?> { get }
+    var requestPushImageDetailView: Signal<GalleryImage?> { get }
 }
 
 

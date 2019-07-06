@@ -16,10 +16,10 @@ class ImageDetailViewController: UIViewController {
     private let bag = DisposeBag()
     
     private var viewModel: ImageDetailViewModelType!
-    private weak var delegate: BaseCoordinatorDelegate!
+    private weak var delegate: BaseCoordinatorInterface!
     
     func injectDependency(viewModel: ImageDetailViewModelType,
-                          delegate: BaseCoordinatorDelegate) {
+                          delegate: BaseCoordinatorInterface) {
         self.viewModel = viewModel
         self.delegate = delegate
     }

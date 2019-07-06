@@ -125,18 +125,12 @@ extension GalleryListViewModel: GalleryListViewModelOutput {
     }
     
     
-    var nextPushViewController: Signal<UIViewController?> {
+    var requestPushImageDetailView: Signal<GalleryImage?> {
         return _selectImageIndexPath.compactMap { [weak self] (indexPath: IndexPath) -> GalleryImage? in
             if let self = self, (0..<self._images.value.count) ~= indexPath.row {
                 return self._images.value[indexPath.row]
             }
             return nil
-        }
-        .map { image in
-            let nextViewController = ImageDetailViewController.instance
-            nextViewController.galleryImage = image
-            return nextViewController
-            
         }
         .asSignal(onErrorJustReturn: nil)
     }

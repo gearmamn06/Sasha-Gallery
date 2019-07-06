@@ -95,7 +95,7 @@ extension ImageDetailViewController {
         tableView.register(cellType: ImageDetailDescriptionCell.self)
         
         viewModel.output.items.asObservable()
-            .bind(to: tableView.rx.items) { tableview, index, element in
+            .bind(to: tableView.rx.items) { [weak self] tableview, index, element in
                 switch index {
                 case 0:
                     let cell: ImageDetailImageCell = tableview.dequeuImageDetailCell()

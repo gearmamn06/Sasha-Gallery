@@ -12,7 +12,7 @@ import UIKit
 open class MosaicFlowLayoutView: UICollectionViewFlowLayout {
     
     // properties for cellSizing
-    var minColumnWidth: CGFloat = 150
+    private var minColumnWidth: CGFloat = 150
     private var contentHeight: CGFloat = 0
     private var contentWidth: CGFloat {
         guard let collectionview = collectionView else { return 0 }
@@ -29,7 +29,8 @@ open class MosaicFlowLayoutView: UICollectionViewFlowLayout {
     
     private let imageRatios: [Float]
     
-    init(imageRatios: [Float]) {
+    init(minColumnWidth: CGFloat, imageRatios: [Float]) {
+        self.minColumnWidth = minColumnWidth
         self.imageRatios = imageRatios
         super.init()
     }

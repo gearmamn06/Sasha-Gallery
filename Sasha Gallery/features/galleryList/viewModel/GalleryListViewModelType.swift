@@ -11,18 +11,25 @@ import RxSwift
 import RxCocoa
 
 
+// MARK: 메인리스트에 리스트를 보일 순서
+
 enum ListSortingOrder {
     case normal
     case title
     case newest
 }
 
-enum ListLayoutStyle {
-    case normal
-    case horizontal
-    case vertical
+
+// MARK: 메인리스트 콜렉션뷰 레이아웃의 셀 크기를 결정
+
+enum ListLayoutStyle: CGFloat {
+    case zoomIn = 300
+    case normal = 150
+    case zoomOut = 100
 }
 
+
+// MARK: GalleryListViewModel - input
 
 protocol GalleryListViewModelInput {
     
@@ -30,7 +37,7 @@ protocol GalleryListViewModelInput {
     func viewDidLayoutSubviews()
     
     // refresh datasource and update list
-    func refreshList()
+    func refreshList(shouldClearCache: Bool)
     
     // 소팅옵션 변경 요청
     func sortingButtonDidTap()
@@ -44,6 +51,8 @@ protocol GalleryListViewModelInput {
     func imageDidSelect(atIndexPath indexPath: IndexPath)
 }
 
+// MARK: GalleryListViewModel - output
+
 protocol GalleryListViewModelOutput {
     
     var acitivityIndicatorAnimating: Driver<Bool> { get }
@@ -52,11 +61,13 @@ protocol GalleryListViewModelOutput {
     
     var showSortOrderSelectPopupWithCurrentValue: Signal<String> { get }
     
-    var newCollectionViewLayout: Driver<UICollectionViewFlowLayout> { get }
+    var newCollectionViewFlowLayout: Driver<(String, UICollectionViewFlowLayout)> { get }
     
     var nextPushViewController: Signal<UIViewController?> { get }
 }
 
+
+// MARK: GalleryListViewModelType = input + output
 
 protocol GalleryListViewModelType {
     

@@ -117,6 +117,7 @@ extension ImageDetail.ProductMeta: HTMLParsable {
 }
 
 
+// MARK: extension for empty instance
 
 extension ImageDetail.ProductMeta {
     private init() {

@@ -19,6 +19,7 @@ final class GalleryListViewModel: GalleryListViewModelType {
     
     private let _viewIsReady = PublishRelay<Void>()
     private let _requestLoadData = PublishRelay<Void>()
+    private let _isLoading = BehaviorRelay<Bool>(value: false)
     
     private let _sortingButtonDidTap = PublishRelay<Void>()
     private let _sortingOption = BehaviorRelay<ListSortingOrder>(value: .normal)
@@ -38,13 +39,17 @@ final class GalleryListViewModel: GalleryListViewModelType {
 
 
 // MARK: GalleryListViewModel Inputs
+
 extension GalleryListViewModel: GalleryListViewModelInput {
     
     func viewDidLayoutSubviews() {
         _viewIsReady.accept(())
     }
     
-    func refreshList() {
+    func refreshList(shouldClearCache: Bool) {
+        if shouldClearCache {
+            HTMLCache.shared.clear()
+        }
         _requestLoadData.accept(())
     }
     
@@ -94,26 +99,18 @@ extension GalleryListViewModel: GalleryListViewModelOutput {
     
     
     var acitivityIndicatorAnimating: Driver<Bool> {
-        return Observable.from([
-            _requestLoadData.map{ _ in true },
-            images.map{ _ in false }.asObservable()
-            ])
-            .merge()
-            .startWith(true)
+        return _isLoading
             .asDriver(onErrorJustReturn: false)
     }
     
-    var newCollectionViewLayout: Driver<UICollectionViewFlowLayout> {
+    var newCollectionViewFlowLayout: Driver<(String, UICollectionViewFlowLayout)> {
         return Observable.combineLatest( _images.skip(1), _currentLayoutStyle) { data, style in
             let ratios = data.map{ $0.imageRatio }
-            switch style {
-            case .normal: return MosaicFlowLayoutView(imageRatios: ratios)
-            case .horizontal: return HorizontalMosaicFlowLayout(imageRatios: ratios)
-            case .vertical: return VerticalMosaicFlowLayout(imageRatios: ratios)
-            }
+            return (style.buttonTitle, MosaicFlowLayoutView(minColumnWidth: style.rawValue,
+                                                            imageRatios: ratios))
         }
-        .distinctUntilChanged()
-        .asDriver(onErrorJustReturn: UICollectionViewFlowLayout())
+        .asDriver(onErrorJustReturn: (ListLayoutStyle.normal.buttonTitle,
+                                      UICollectionViewFlowLayout()))
     }
     
     var showSortOrderSelectPopupWithCurrentValue: Signal<String> {
@@ -123,6 +120,7 @@ extension GalleryListViewModel: GalleryListViewModelOutput {
         .asSignal(onErrorJustReturn: "")
         .filter{ !$0.isEmpty }
     }
+    
     
     var nextPushViewController: Signal<UIViewController?> {
         return _selectImageIndexPath.compactMap { [weak self] (indexPath: IndexPath) -> GalleryImage? in
@@ -162,13 +160,18 @@ private extension GalleryListViewModel {
     func bindRefresh() {
         
         _requestLoadData
+            .do(onNext: { [weak self] in
+                self?._isLoading.accept(true)
+            })
             .flatMapLatest { _ in
-//               source = "https://www.gettyimagesgallery.com/collection/sasha/"
                 return HTMLProvider<GalleryImageList>(urlString: "https://www.gettyimagesgallery.com/collection/sasha/")
                     .loadHTML()
                     .asSignal(onErrorJustReturn: GalleryImageList.empty)
             }
             .map{ $0.images }
+            .do(onNext: { [weak self] _ in
+                self?._isLoading.accept(false)
+            })
             .bind(to: _images)
             .disposed(by: bag)
     }
@@ -198,9 +201,17 @@ fileprivate extension ListLayoutStyle {
     
     mutating func toggle() {
         switch self {
-        case .normal: self = .horizontal
-        case .horizontal: self = .vertical
-        case .vertical: self = .normal
+        case .normal: self = .zoomIn
+        case .zoomIn: self = .zoomOut
+        case .zoomOut: self = .normal
+        }
+    }
+    
+    var buttonTitle: String {
+        switch self {
+        case .normal: return "2xn"
+        case .zoomIn: return "1xn"
+        case .zoomOut: return "nxn"
         }
     }
 }

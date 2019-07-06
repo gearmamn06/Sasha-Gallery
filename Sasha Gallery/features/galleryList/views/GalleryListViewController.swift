@@ -15,24 +15,47 @@ class GalleryListViewController: UIViewController {
     
     @IBOutlet weak var collectionView: UICollectionView!
     
+    var collectionURL: URL!
+    
     private let viewModel: GalleryListViewModelType = GalleryListViewModel()
     private let bag = DisposeBag()
     
     override func viewDidLoad() {
         super.viewDidLoad()
-     
+        
         setUpNavigationBar()
         setUpCollectionVew()
         
         subscribeNextViewControllerPushing()
         
-        viewModel.input.refreshList()
+        DispatchQueue.global().async {
+            self.viewModel.input.refreshList(shouldClearCache: false)
+        }
     }
     
     
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         viewModel.input.viewDidLayoutSubviews()
+    }
+    
+    
+    override func viewWillAppear(_ animated: Bool) {
+        setUpTheme()
+    }
+    
+    
+    private func setUpTheme() {
+        
+        self.view.backgroundColor = UIColor.black
+        self.collectionView.backgroundColor = UIColor.black
+        navigationController?.navigationBar.barStyle = .blackTranslucent
+        navigationController?.navigationBar.tintColor = UIColor.white
+        navigationController?.navigationBar.titleTextAttributes = [
+            .foregroundColor: UIColor.white,
+            .font: UIFont.systemFont(ofSize: 20, weight: .heavy)
+        ]
+        
     }
 }
 
@@ -43,34 +66,31 @@ extension GalleryListViewController {
     
     private func setUpNavigationBar() {
         
-        // TODO: Change theme to dark
+        let sortButton = UIBarButtonItem(image: #imageLiteral(resourceName: "29"), style: .plain, target: nil, action: nil)
         
-        self.title = "Sasha Gallery"
-        
-        let sortButton = UIBarButtonItem(barButtonSystemItem: .organize,
-                                         target: self, action: #selector(sortButtonDidTap))
-        
-        let layoutStyleToggleButton = UIBarButtonItem(barButtonSystemItem: .camera,
-                                                      target: self,
-                                                      action: #selector(toggleLayoutStyleButtonDidtap))
+        let layoutStyleToggleButton = UIBarButtonItem(title: "2xn", style: .plain,
+                                                      target: nil, action: nil)
         
         self.navigationItem.rightBarButtonItems = [sortButton, layoutStyleToggleButton]
+        
+        sortButton.rx.tap
+            .subscribe(onNext: { [weak self] _ in
+                self?.viewModel.input.sortingButtonDidTap()
+            })
+            .disposed(by: bag)
+        
+        layoutStyleToggleButton.rx.tap
+            .subscribe(onNext: { [weak self] _ in
+                self?.viewModel.input.toggleLayoutStyle()
+            })
+            .disposed(by: bag)
         
         subscribeSortOptionSelectionAlertController()
         
     }
     
-    @objc private func toggleLayoutStyleButtonDidtap() {
-        viewModel.input.toggleLayoutStyle()
-    }
-    
-    @objc private func sortButtonDidTap() {
-        viewModel.input.sortingButtonDidTap()
-    }
-    
     private func subscribeSortOptionSelectionAlertController() {
         viewModel.output.showSortOrderSelectPopupWithCurrentValue
-            .debug()
             .emit(onNext: { [weak self] description in
                 self?.showSortOrderSelectAlertController(currentOptionDescription: description)
             })
@@ -122,7 +142,6 @@ extension GalleryListViewController {
         
         subscribeCollectionViewFlowLayout()
         
-        setUpCollectionViewRefreshControl()
         subscribeRefreshControl()
     }
 }
@@ -134,11 +153,12 @@ extension GalleryListViewController {
 extension GalleryListViewController {
     
     private func subscribeCollectionViewFlowLayout() {
-        viewModel.output.newCollectionViewLayout
-            .debug()
-            .drive(onNext: { [weak self] layout in
-                self?.collectionView.collectionViewLayout = layout
+        viewModel.output.newCollectionViewFlowLayout
+            .drive(onNext: { [weak self] info in
+                self?.collectionView.collectionViewLayout = info.1
                 self?.collectionView.reloadData()
+                
+                self?.navigationItem.rightBarButtonItems?.last?.title = info.0
             })
             .disposed(by: bag)
     }
@@ -157,7 +177,8 @@ extension GalleryListViewController {
 
 extension GalleryListViewController {
     
-    private func setUpCollectionViewRefreshControl() {
+    private func createRefreshControl() {
+        
         let refreshControl = UIRefreshControl()
         refreshControl.addTarget(self, action: #selector(refresDidCall), for: .valueChanged)
         collectionView.refreshControl = refreshControl
@@ -165,12 +186,17 @@ extension GalleryListViewController {
     }
     
     private func subscribeRefreshControl() {
+        
+        createRefreshControl()
+        
         viewModel.output.acitivityIndicatorAnimating
             .drive(onNext: { [weak self] animating in
                 if animating {
                     self?.collectionView.refreshControl?.beginRefreshing()
+                    self?.navigationItem.rightBarButtonItems?.forEach{ $0.isEnabled = false }
                 }else{
                     self?.collectionView.refreshControl?.endRefreshing()
+                    self?.navigationItem.rightBarButtonItems?.forEach{ $0.isEnabled = true }
                 }
             })
             .disposed(by: bag)
@@ -179,8 +205,7 @@ extension GalleryListViewController {
     
     @objc private func refresDidCall() {
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.5, execute: {
-            self.collectionView.refreshControl?.endRefreshing()
-            self.viewModel.input.refreshList()
+            self.viewModel.input.refreshList(shouldClearCache: true)
         })
     }
     

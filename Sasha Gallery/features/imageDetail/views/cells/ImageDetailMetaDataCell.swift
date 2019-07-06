@@ -41,6 +41,10 @@ class ImageDetailMetaDataCell: UITableViewCell, ImageDetailViewCellType {
             guard let viewModel = cellViewModel else { return }
             switch viewModel {
             case .metaData(let title, let hyperLinks):
+                
+                // clear url: String(name) map
+                linkTagNameMap.removeAll()
+                
                 titleLabel.text = title
                 
                 let linkNames = hyperLinks.map{ $0.0 }.reduce("", { names, name in
@@ -52,6 +56,7 @@ class ImageDetailMetaDataCell: UITableViewCell, ImageDetailViewCellType {
                 hyperLinkTextView.attributedText = NSAttributedString(string: linkNames)
                 hyperLinks.forEach {
                     hyperLinkTextView.embedHyperLinks(tag: $0.0, url: $0.1)
+                    linkTagNameMap[$0.1] = $0.0
                 }
                 
                 hyperLinkTextView.delegate = self
@@ -61,8 +66,8 @@ class ImageDetailMetaDataCell: UITableViewCell, ImageDetailViewCellType {
         }
     }
     
-    
-    var linkDidTap: ((URL) -> Void)?
+    private var linkTagNameMap: [URL: String] = [:]
+    var linkDidTap: ((String, URL) -> Void)?
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: .default, reuseIdentifier: reuseIdentifier)
@@ -96,7 +101,10 @@ class ImageDetailMetaDataCell: UITableViewCell, ImageDetailViewCellType {
 extension ImageDetailMetaDataCell: UITextViewDelegate {
     
     func textView(_ textView: UITextView, shouldInteractWith URL: URL, in characterRange: NSRange, interaction: UITextItemInteraction) -> Bool {
-        self.linkDidTap?(URL)
+        guard let name = linkTagNameMap[URL] else {
+            return true
+        }
+        self.linkDidTap?(name, URL)
         return false
     }
 }

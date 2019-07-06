@@ -18,7 +18,7 @@ final class GalleryListViewModel: GalleryListViewModelType {
     private let bag = DisposeBag()
     
     private let _viewIsReady = PublishRelay<Void>()
-    private let _requestLoadData = PublishRelay<Void>()
+    private let _requestLoadData = PublishRelay<Bool>()
     private let _isLoading = BehaviorRelay<Bool>(value: false)
     
     private let _sortingButtonDidTap = PublishRelay<Void>()
@@ -31,7 +31,10 @@ final class GalleryListViewModel: GalleryListViewModelType {
     
     private let _selectImageIndexPath = PublishRelay<IndexPath>()
     
-    init() {
+    var collectionURL: URL
+    
+    init(collectionURL: URL) {
+        self.collectionURL = collectionURL
         
         bindRefresh()
     }
@@ -46,11 +49,8 @@ extension GalleryListViewModel: GalleryListViewModelInput {
         _viewIsReady.accept(())
     }
     
-    func refreshList(shouldClearCache: Bool) {
-        if shouldClearCache {
-            HTMLCache.shared.clear()
-        }
-        _requestLoadData.accept(())
+    func refreshList(withOutCache: Bool) {
+        _requestLoadData.accept(withOutCache)
     }
     
     func sortingButtonDidTap() {
@@ -122,17 +122,12 @@ extension GalleryListViewModel: GalleryListViewModelOutput {
     }
     
     
-    var nextPushViewController: Signal<UIViewController?> {
+    var requestPushImageDetailView: Signal<GalleryImage?> {
         return _selectImageIndexPath.compactMap { [weak self] (indexPath: IndexPath) -> GalleryImage? in
             if let self = self, (0..<self._images.value.count) ~= indexPath.row {
                 return self._images.value[indexPath.row]
             }
             return nil
-        }
-        .map { image in
-            let nextViewController = ImageDetailViewController.instance
-            nextViewController.galleryImage = image
-            return nextViewController
         }
         .asSignal(onErrorJustReturn: nil)
     }
@@ -159,13 +154,15 @@ private extension GalleryListViewModel {
     
     func bindRefresh() {
         
+        let urlString = self.collectionURL.absoluteString
+        
         _requestLoadData
-            .do(onNext: { [weak self] in
+            .do(onNext: { [weak self] _ in
                 self?._isLoading.accept(true)
             })
-            .flatMapLatest { _ in
-                return HTMLProvider<GalleryImageList>(urlString: "https://www.gettyimagesgallery.com/collection/sasha/")
-                    .loadHTML()
+            .flatMapLatest { flag in
+                return HTMLProvider<GalleryImageList>(urlString: urlString)
+                    .loadHTML(withOutCache: flag)
                     .asSignal(onErrorJustReturn: GalleryImageList.empty)
             }
             .map{ $0.images }

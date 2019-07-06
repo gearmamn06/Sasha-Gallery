@@ -15,10 +15,16 @@ class GalleryListViewController: UIViewController {
     
     @IBOutlet weak var collectionView: UICollectionView!
     
-    var collectionURL: URL!
-    
-    private let viewModel: GalleryListViewModelType = GalleryListViewModel()
     private let bag = DisposeBag()
+    private var viewModel: GalleryListViewModelType!
+    private weak var delegate: BaseCoordinatorInterface!
+    
+    
+    func injectDependency(_ viewModel: GalleryListViewModelType,
+                          delegate: BaseCoordinatorInterface) {
+        self.viewModel = viewModel
+        self.delegate = delegate
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -29,7 +35,7 @@ class GalleryListViewController: UIViewController {
         subscribeNextViewControllerPushing()
         
         DispatchQueue.global().async {
-            self.viewModel.input.refreshList(shouldClearCache: false)
+            self.viewModel.input.refreshList(withOutCache: false)
         }
     }
     
@@ -205,7 +211,7 @@ extension GalleryListViewController {
     
     @objc private func refresDidCall() {
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.5, execute: {
-            self.viewModel.input.refreshList(shouldClearCache: true)
+            self.viewModel.input.refreshList(withOutCache: true)
         })
     }
     
@@ -216,10 +222,12 @@ extension GalleryListViewController {
     
     private func subscribeNextViewControllerPushing() {
         
-        viewModel.output.nextPushViewController
-            .emit(onNext: { [weak self] nextViewController in
-                guard let self = self, let next = nextViewController else { return }
-                self.navigationController?.pushViewController(next, animated: true)
+        viewModel.output.requestPushImageDetailView
+            .emit(onNext: { [weak self] _image in
+                guard let self = self, let image = _image else { return }
+                self.delegate?.pushImageDetailView(imageTitle: image.title,
+                                                  webPageURL: image.pageURL,
+                                                  imageRatio: image.imageRatio)
             })
             .disposed(by: bag)
     }

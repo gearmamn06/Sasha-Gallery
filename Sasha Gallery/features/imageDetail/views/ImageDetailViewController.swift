@@ -15,20 +15,24 @@ class ImageDetailViewController: UIViewController {
     @IBOutlet weak var tableView: UITableView!
     private let bag = DisposeBag()
     
-    var viewModel: ImageDetailViewModelType!
-    var galleryImage: GalleryImage!
+    private var viewModel: ImageDetailViewModelType!
+    private weak var delegate: BaseCoordinatorInterface!
+    
+    func injectDependency(viewModel: ImageDetailViewModelType,
+                          delegate: BaseCoordinatorInterface) {
+        self.viewModel = viewModel
+        self.delegate = delegate
+    }
     
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        let pageURL = galleryImage?.pageURL ?? URL(string: "fail")!
-        viewModel = ImageDetailViewModel(pageURL: pageURL, ratio: galleryImage?.imageRatio ?? 0.6)
-        
         setTheme()
         setUpNavigationbar()
         setUpTableView()
         subscribeOpenWebpage()
+        subscribePushCollectionView()
         
         DispatchQueue.global().async {
             self.viewModel.input.refresh()
@@ -55,7 +59,6 @@ class ImageDetailViewController: UIViewController {
 extension ImageDetailViewController {
     
     private func setUpNavigationbar() {
-        self.title = galleryImage?.title ?? "Unknown"
         let enquireButton = UIBarButtonItem(title: "Enquire", style: .plain,
                                             target: nil, action: nil)
         enquireButton.tintColor = UIColor.controlAccentBlue
@@ -92,7 +95,7 @@ extension ImageDetailViewController {
         tableView.register(cellType: ImageDetailDescriptionCell.self)
         
         viewModel.output.items.asObservable()
-            .bind(to: tableView.rx.items) { tableview, index, element in
+            .bind(to: tableView.rx.items) { [weak self] tableview, index, element in
                 switch index {
                 case 0:
                     let cell: ImageDetailImageCell = tableview.dequeuImageDetailCell()
@@ -107,8 +110,8 @@ extension ImageDetailViewController {
                 case 2:
                     let cell: ImageDetailMetaDataCell = tableview.dequeuImageDetailCell()
                     cell.cellViewModel = element
-                    cell.linkDidTap = { [weak self] url in
-                        self?.viewModel.input.metaTagDidTap(link: url)
+                    cell.linkDidTap = { [weak self] name, url in
+                        self?.viewModel.input.metaTagDidTap(meta: (key: name, link: url))
                     }
                     return cell
                     
@@ -131,6 +134,18 @@ extension ImageDetailViewController {
         viewModel.output.openURLPage
             .emit(onNext: { url in
                 UIApplication.shared.open(url)
+            })
+            .disposed(by: bag)
+    }
+    
+    
+    private func subscribePushCollectionView() {
+        
+        viewModel.output.requestPushCollectionView
+            .emit(onNext: { [weak self] info in
+                
+                self?.delegate?.pushGalleryCollectionView(collectionTitle: info.titile,
+                                                          collectionURL: info.url)
             })
             .disposed(by: bag)
     }

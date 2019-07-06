@@ -11,39 +11,13 @@ import RxSwift
 import RxCocoa
 
 
-enum ImageDetailCellViewModel {
-    case productImage(url: URL, ratio: Float)
-    case header(productName: String, photographer: String)
-    case metaData(title: String, values: [(String, URL)])
-    case description(_ value: String)
-    
-    static func from(fromImageDetail detail: ImageDetail, ratio: Float) -> [ImageDetailCellViewModel?] {
-        if detail.isEmpty {
-            return [nil, nil, nil, nil]
-        }
-        return [
-            .productImage(url: detail.productImageURL, ratio: ratio),
-            .header(productName: detail.productName,
-                    photographer: detail.photographer),
-            .metaData(title: detail.collection.title,
-                        values: detail.collection.values),
-            .description(detail.description)
-        ]
-    }
-    
-    static var defaults: [ImageDetailCellViewModel?] {
-        return [nil, nil, nil, nil]
-    }
-}
-
-
 protocol ImageDetailViewModelInput {
     
     func viewDidLayoutSubviews()
     
     func refresh()
     
-    func metaTagDidTap(link: URL)
+    func metaTagDidTap(meta: (key: String, link: URL))
     
     func enquireButtonDidTap()
 }
@@ -55,10 +29,16 @@ protocol ImageDetailViewModelOutput {
     var enquireButtonEnability: Driver<Bool> { get }
 
     var openURLPage: Signal<URL> { get }
+    
+    var requestPushCollectionView: Signal<(titile: String, url: URL)> { get }
 }
 
 
 protocol ImageDetailViewModelType {
+    
+    var imageInfo: (pageURL: URL, imageRatio: Float) { get set }
+    
+    init(imageInfo: (pageURL: URL, imageRatio: Float))
     
     var input: ImageDetailViewModelInput { get }
     var output: ImageDetailViewModelOutput { get }

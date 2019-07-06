@@ -37,7 +37,7 @@ protocol GalleryListViewModelInput {
     func viewDidLayoutSubviews()
     
     // refresh datasource and update list
-    func refreshList(shouldClearCache: Bool)
+    func refreshList(withOutCache: Bool)
     
     // 소팅옵션 변경 요청
     func sortingButtonDidTap()
@@ -63,13 +63,17 @@ protocol GalleryListViewModelOutput {
     
     var newCollectionViewFlowLayout: Driver<(String, UICollectionViewFlowLayout)> { get }
     
-    var nextPushViewController: Signal<UIViewController?> { get }
+    var requestPushImageDetailView: Signal<GalleryImage?> { get }
 }
 
 
 // MARK: GalleryListViewModelType = input + output
 
 protocol GalleryListViewModelType {
+    
+    var collectionURL: URL { get set }
+    
+    init(collectionURL: URL)
     
     var input: GalleryListViewModelInput { get }
     var output: GalleryListViewModelOutput { get }

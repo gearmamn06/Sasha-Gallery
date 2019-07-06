@@ -83,7 +83,8 @@ extension GalleryImage {
         }
 
         
-        return 0
+        // return default image ratio
+        return 1
     }
 }
 

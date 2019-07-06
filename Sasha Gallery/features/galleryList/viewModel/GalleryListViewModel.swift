@@ -136,6 +136,7 @@ extension GalleryListViewModel: GalleryListViewModelOutput {
             let nextViewController = ImageDetailViewController.instance
             nextViewController.galleryImage = image
             return nextViewController
+            
         }
         .asSignal(onErrorJustReturn: nil)
     }

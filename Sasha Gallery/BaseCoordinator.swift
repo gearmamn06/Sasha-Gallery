@@ -60,6 +60,7 @@ class BaseCoordinator {
 }
 
 
+// MARK: receive nextNavigationFlow request and handle it
 
 extension BaseCoordinator: BaseCoordinatorDelegate {
     
@@ -85,8 +86,16 @@ extension BaseCoordinator: BaseCoordinatorDelegate {
                     self.navigationController.pushViewController(nextViewController,
                                                                   animated: true)
                     
-                case .imageDetail(let model):
+                case .imageDetail(let imageModel):
+                    let ratio = imageModel.imageRatio == 0 ? 0.6 : imageModel.imageRatio
+                    let viewModel = ImageDetailViewModel(imageInfo: ((pageURL: imageModel.pageURL,
+                                                                      imageRatio: ratio)))
+                    let nextViewController = ImageDetailViewController.instance
+                    nextViewController.injectDependency(viewModel: viewModel, delegate: self)
+                    nextViewController.title = imageModel.title
                     
+                    self.navigationController.pushViewController(nextViewController,
+                                                                 animated: true)
                 }
             })
             .disposed(by: bag)

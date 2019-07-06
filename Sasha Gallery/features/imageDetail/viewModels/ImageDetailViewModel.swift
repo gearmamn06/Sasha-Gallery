@@ -15,7 +15,7 @@ fileprivate typealias CellViewModel = ImageDetailCellViewModel
 
 // MARK: private and internal properties
 
-class ImageDetailViewModel: ImageDetailViewModelType {
+final class ImageDetailViewModel: ImageDetailViewModelType {
     
     private let bag = DisposeBag()
     
@@ -23,19 +23,18 @@ class ImageDetailViewModel: ImageDetailViewModelType {
     private let _requestLoadData = PublishRelay<Void>()
     private let _tappedMetaLink = PublishRelay<URL>()
     private let _requestEnquire = PublishRelay<Void>()
+
+    var imageInfo: (pageURL: URL, imageRatio: Float)
     
-    private let pageURL: URL
-    private let ratio: Float
-    
-    init(pageURL: URL, ratio: Float) {
-        self.pageURL = pageURL
-        self.ratio = ratio
+    init(imageInfo: (pageURL: URL, imageRatio: Float)) {
+        self.imageInfo = imageInfo
     }
+
     
     private lazy var _imageDetail: Signal<ImageDetail> = {
         return _requestLoadData
             .compactMap { [weak self] _ in
-                return self?.pageURL
+                return self?.imageInfo.pageURL
             }
             .flatMapLatest { url in
                 return HTMLProvider<ImageDetail>(urlString: url.absoluteString)
@@ -82,7 +81,8 @@ extension ImageDetailViewModel: ImageDetailViewModelOutput {
         )
         .compactMap { [weak self] _ , detail in
             guard let self = self else { return nil }
-            return CellViewModel.from(fromImageDetail: detail, ratio: self.ratio)
+            return CellViewModel.from(fromImageDetail: detail,
+                                      ratio: self.imageInfo.imageRatio)
         }
         .startWith([nil, nil, nil, nil])
         .asDriver(onErrorJustReturn: [])
@@ -105,7 +105,7 @@ extension ImageDetailViewModel: ImageDetailViewModelOutput {
     var openURLPage: Signal<URL> {
         return Observable.from([
             _requestEnquire.compactMap{ [weak self] _ in
-                return self?.pageURL
+                return self?.imageInfo.pageURL
             }.asObservable(),
             _tappedMetaLink.asObservable()
         ])

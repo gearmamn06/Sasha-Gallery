@@ -15,15 +15,18 @@ class ImageDetailViewController: UIViewController {
     @IBOutlet weak var tableView: UITableView!
     private let bag = DisposeBag()
     
-    var viewModel: ImageDetailViewModelType!
-    var galleryImage: GalleryImage!
+    private var viewModel: ImageDetailViewModelType!
+    private weak var delegate: BaseCoordinatorDelegate!
+    
+    func injectDependency(viewModel: ImageDetailViewModelType,
+                          delegate: BaseCoordinatorDelegate) {
+        self.viewModel = viewModel
+        self.delegate = delegate
+    }
     
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        let pageURL = galleryImage?.pageURL ?? URL(string: "fail")!
-        viewModel = ImageDetailViewModel(pageURL: pageURL, ratio: galleryImage?.imageRatio ?? 0.6)
         
         setTheme()
         setUpNavigationbar()
@@ -55,7 +58,6 @@ class ImageDetailViewController: UIViewController {
 extension ImageDetailViewController {
     
     private func setUpNavigationbar() {
-        self.title = galleryImage?.title ?? "Unknown"
         let enquireButton = UIBarButtonItem(title: "Enquire", style: .plain,
                                             target: nil, action: nil)
         enquireButton.tintColor = UIColor.controlAccentBlue

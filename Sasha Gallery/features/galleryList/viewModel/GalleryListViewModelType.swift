@@ -37,7 +37,7 @@ protocol GalleryListViewModelInput {
     func viewDidLayoutSubviews()
     
     // refresh datasource and update list
-    func refreshList(shouldClearCache: Bool)
+    func refreshList(withOutCache: Bool)
     
     // 소팅옵션 변경 요청
     func sortingButtonDidTap()

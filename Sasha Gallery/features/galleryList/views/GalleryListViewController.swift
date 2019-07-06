@@ -35,7 +35,7 @@ class GalleryListViewController: UIViewController {
         subscribeNextViewControllerPushing()
         
         DispatchQueue.global().async {
-            self.viewModel.input.refreshList(shouldClearCache: false)
+            self.viewModel.input.refreshList(withOutCache: false)
         }
     }
     
@@ -211,7 +211,7 @@ extension GalleryListViewController {
     
     @objc private func refresDidCall() {
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.5, execute: {
-            self.viewModel.input.refreshList(shouldClearCache: true)
+            self.viewModel.input.refreshList(withOutCache: true)
         })
     }
     

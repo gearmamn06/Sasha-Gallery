@@ -18,7 +18,7 @@ final class GalleryListViewModel: GalleryListViewModelType {
     private let bag = DisposeBag()
     
     private let _viewIsReady = PublishRelay<Void>()
-    private let _requestLoadData = PublishRelay<Void>()
+    private let _requestLoadData = PublishRelay<Bool>()
     private let _isLoading = BehaviorRelay<Bool>(value: false)
     
     private let _sortingButtonDidTap = PublishRelay<Void>()
@@ -49,11 +49,8 @@ extension GalleryListViewModel: GalleryListViewModelInput {
         _viewIsReady.accept(())
     }
     
-    func refreshList(shouldClearCache: Bool) {
-        if shouldClearCache {
-            HTMLCache.shared.clear()
-        }
-        _requestLoadData.accept(())
+    func refreshList(withOutCache: Bool) {
+        _requestLoadData.accept(withOutCache)
     }
     
     func sortingButtonDidTap() {
@@ -160,12 +157,12 @@ private extension GalleryListViewModel {
         let urlString = self.collectionURL.absoluteString
         
         _requestLoadData
-            .do(onNext: { [weak self] in
+            .do(onNext: { [weak self] _ in
                 self?._isLoading.accept(true)
             })
-            .flatMapLatest { _ in
+            .flatMapLatest { flag in
                 return HTMLProvider<GalleryImageList>(urlString: urlString)
-                    .loadHTML()
+                    .loadHTML(withOutCache: flag)
                     .asSignal(onErrorJustReturn: GalleryImageList.empty)
             }
             .map{ $0.images }

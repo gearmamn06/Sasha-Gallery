@@ -90,9 +90,9 @@ extension HTMLProvider {
 
 extension HTMLProvider {
     
-    func loadHTML() -> Observable<Model> {
+    func loadHTML(withOutCache: Bool = false) -> Observable<Model> {
         return Observable.create { observer in
-            self.loadHTML { result in
+            self.loadHTML(withOutCache: withOutCache) { result in
                 
                 switch result {
                 case .success(let model):

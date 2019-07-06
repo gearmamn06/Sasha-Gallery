@@ -24,7 +24,12 @@ final class GalleryListItemCell: UICollectionViewCell {
     var imageURL: URL? {
         didSet {
             guard let url = imageURL else { return }
-            self.imageView.kf.setImage(with: url)
+            
+            let processor = DownsamplingImageProcessor(size: self.bounds.size)
+            self.imageView.kf.setImage(with: url, placeholder: nil, options: [
+                    .processor(processor),
+                    .scaleFactor(UIScreen.main.scale)
+                ])
         }
     }
     

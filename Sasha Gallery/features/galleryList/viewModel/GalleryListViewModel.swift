@@ -31,7 +31,10 @@ final class GalleryListViewModel: GalleryListViewModelType {
     
     private let _selectImageIndexPath = PublishRelay<IndexPath>()
     
-    init() {
+    var collectionURL: URL
+    
+    init(collectionURL: URL) {
+        self.collectionURL = collectionURL
         
         bindRefresh()
     }

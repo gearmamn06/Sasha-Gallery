@@ -71,6 +71,10 @@ protocol GalleryListViewModelOutput {
 
 protocol GalleryListViewModelType {
     
+    var collectionURL: URL { get set }
+    
+    init(collectionURL: URL)
+    
     var input: GalleryListViewModelInput { get }
     var output: GalleryListViewModelOutput { get }
 }

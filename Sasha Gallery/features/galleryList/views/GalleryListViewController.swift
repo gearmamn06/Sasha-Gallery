@@ -15,10 +15,16 @@ class GalleryListViewController: UIViewController {
     
     @IBOutlet weak var collectionView: UICollectionView!
     
-    var collectionURL: URL!
-    
-    private let viewModel: GalleryListViewModelType = GalleryListViewModel()
     private let bag = DisposeBag()
+    private var viewModel: GalleryListViewModelType!
+    private weak var delegate: BaseCoordinatorDelegate!
+    
+    
+    func injectDependency(_ viewModel: GalleryListViewModelType,
+                          delegate: BaseCoordinatorDelegate) {
+        self.viewModel = viewModel
+        self.delegate = delegate
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()

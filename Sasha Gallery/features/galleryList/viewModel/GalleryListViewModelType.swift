@@ -63,13 +63,17 @@ protocol GalleryListViewModelOutput {
     
     var newCollectionViewFlowLayout: Driver<(String, UICollectionViewFlowLayout)> { get }
     
-    var nextPushViewController: Signal<UIViewController?> { get }
+    var requestPushImageDetailView: Signal<GalleryImage?> { get }
 }
 
 
 // MARK: GalleryListViewModelType = input + output
 
 protocol GalleryListViewModelType {
+    
+    var collectionURL: URL { get set }
+    
+    init(collectionURL: URL)
     
     var input: GalleryListViewModelInput { get }
     var output: GalleryListViewModelOutput { get }

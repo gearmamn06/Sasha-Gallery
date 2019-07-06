@@ -15,10 +15,16 @@ class GalleryListViewController: UIViewController {
     
     @IBOutlet weak var collectionView: UICollectionView!
     
-    var collectionURL: URL!
-    
-    private let viewModel: GalleryListViewModelType = GalleryListViewModel()
     private let bag = DisposeBag()
+    private var viewModel: GalleryListViewModelType!
+    private weak var delegate: BaseCoordinatorInterface!
+    
+    
+    func injectDependency(_ viewModel: GalleryListViewModelType,
+                          delegate: BaseCoordinatorInterface) {
+        self.viewModel = viewModel
+        self.delegate = delegate
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -216,10 +222,12 @@ extension GalleryListViewController {
     
     private func subscribeNextViewControllerPushing() {
         
-        viewModel.output.nextPushViewController
-            .emit(onNext: { [weak self] nextViewController in
-                guard let self = self, let next = nextViewController else { return }
-                self.navigationController?.pushViewController(next, animated: true)
+        viewModel.output.requestPushImageDetailView
+            .emit(onNext: { [weak self] _image in
+                guard let self = self, let image = _image else { return }
+                self.delegate?.pushImageDetailView(imageTitle: image.title,
+                                                  webPageURL: image.pageURL,
+                                                  imageRatio: image.imageRatio)
             })
             .disposed(by: bag)
     }

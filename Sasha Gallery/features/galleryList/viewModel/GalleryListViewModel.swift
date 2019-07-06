@@ -31,7 +31,10 @@ final class GalleryListViewModel: GalleryListViewModelType {
     
     private let _selectImageIndexPath = PublishRelay<IndexPath>()
     
-    init() {
+    var collectionURL: URL
+    
+    init(collectionURL: URL) {
+        self.collectionURL = collectionURL
         
         bindRefresh()
     }
@@ -122,17 +125,12 @@ extension GalleryListViewModel: GalleryListViewModelOutput {
     }
     
     
-    var nextPushViewController: Signal<UIViewController?> {
+    var requestPushImageDetailView: Signal<GalleryImage?> {
         return _selectImageIndexPath.compactMap { [weak self] (indexPath: IndexPath) -> GalleryImage? in
             if let self = self, (0..<self._images.value.count) ~= indexPath.row {
                 return self._images.value[indexPath.row]
             }
             return nil
-        }
-        .map { image in
-            let nextViewController = ImageDetailViewController.instance
-            nextViewController.galleryImage = image
-            return nextViewController
         }
         .asSignal(onErrorJustReturn: nil)
     }
@@ -159,12 +157,14 @@ private extension GalleryListViewModel {
     
     func bindRefresh() {
         
+        let urlString = self.collectionURL.absoluteString
+        
         _requestLoadData
             .do(onNext: { [weak self] in
                 self?._isLoading.accept(true)
             })
             .flatMapLatest { _ in
-                return HTMLProvider<GalleryImageList>(urlString: "https://www.gettyimagesgallery.com/collection/sasha/")
+                return HTMLProvider<GalleryImageList>(urlString: urlString)
                     .loadHTML()
                     .asSignal(onErrorJustReturn: GalleryImageList.empty)
             }

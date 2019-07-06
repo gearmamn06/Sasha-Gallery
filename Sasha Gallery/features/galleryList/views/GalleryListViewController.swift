@@ -225,7 +225,7 @@ extension GalleryListViewController {
         viewModel.output.requestPushImageDetailView
             .emit(onNext: { [weak self] _image in
                 guard let self = self, let image = _image else { return }
-                self.delegate.pushImageDetailView(imageTitle: image.title,
+                self.delegate?.pushImageDetailView(imageTitle: image.title,
                                                   webPageURL: image.pageURL,
                                                   imageRatio: image.imageRatio)
             })

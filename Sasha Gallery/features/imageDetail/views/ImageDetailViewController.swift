@@ -32,6 +32,7 @@ class ImageDetailViewController: UIViewController {
         setUpNavigationbar()
         setUpTableView()
         subscribeOpenWebpage()
+        subscribePushCollectionView()
         
         DispatchQueue.global().async {
             self.viewModel.input.refresh()
@@ -109,8 +110,8 @@ extension ImageDetailViewController {
                 case 2:
                     let cell: ImageDetailMetaDataCell = tableview.dequeuImageDetailCell()
                     cell.cellViewModel = element
-                    cell.linkDidTap = { [weak self] url in
-                        self?.viewModel.input.metaTagDidTap(link: url)
+                    cell.linkDidTap = { [weak self] name, url in
+                        self?.viewModel.input.metaTagDidTap(meta: (key: name, link: url))
                     }
                     return cell
                     
@@ -133,6 +134,18 @@ extension ImageDetailViewController {
         viewModel.output.openURLPage
             .emit(onNext: { url in
                 UIApplication.shared.open(url)
+            })
+            .disposed(by: bag)
+    }
+    
+    
+    private func subscribePushCollectionView() {
+        
+        viewModel.output.requestPushCollectionView
+            .emit(onNext: { [weak self] info in
+                
+                self?.delegate?.pushGalleryCollectionView(collectionTitle: info.titile,
+                                                          collectionURL: info.url)
             })
             .disposed(by: bag)
     }

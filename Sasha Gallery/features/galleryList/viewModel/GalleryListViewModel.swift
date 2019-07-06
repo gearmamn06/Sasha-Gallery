@@ -157,12 +157,14 @@ private extension GalleryListViewModel {
     
     func bindRefresh() {
         
+        let urlString = self.collectionURL.absoluteString
+        
         _requestLoadData
             .do(onNext: { [weak self] in
                 self?._isLoading.accept(true)
             })
             .flatMapLatest { _ in
-                return HTMLProvider<GalleryImageList>(urlString: "https://www.gettyimagesgallery.com/collection/sasha/")
+                return HTMLProvider<GalleryImageList>(urlString: urlString)
                     .loadHTML()
                     .asSignal(onErrorJustReturn: GalleryImageList.empty)
             }

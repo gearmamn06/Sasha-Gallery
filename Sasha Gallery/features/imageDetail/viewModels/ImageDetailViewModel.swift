@@ -21,7 +21,7 @@ final class ImageDetailViewModel: ImageDetailViewModelType {
     
     private let _viewIsReady = PublishRelay<Void>()
     private let _requestLoadData = PublishRelay<Void>()
-    private let _tappedMetaLink = PublishRelay<URL>()
+    private let _tappedMetaLink = PublishRelay<(String, URL)>()
     private let _requestEnquire = PublishRelay<Void>()
 
     var imageInfo: (pageURL: URL, imageRatio: Float)
@@ -60,8 +60,8 @@ extension ImageDetailViewModel: ImageDetailViewModelInput {
         _requestLoadData.accept(())
     }
     
-    func metaTagDidTap(link: URL) {
-        _tappedMetaLink.accept(link)
+    func metaTagDidTap(meta: (key: String, link: URL)) {
+        _tappedMetaLink.accept((meta.key, meta.link))
     }
     
     func enquireButtonDidTap() {
@@ -86,6 +86,7 @@ extension ImageDetailViewModel: ImageDetailViewModelOutput {
         }
         .startWith([nil, nil, nil, nil])
         .asDriver(onErrorJustReturn: [])
+        .filter{ !$0.isEmpty }
     }
     
     var enquireButtonEnability: Driver<Bool> {
@@ -103,14 +104,17 @@ extension ImageDetailViewModel: ImageDetailViewModelOutput {
     }
     
     var openURLPage: Signal<URL> {
-        return Observable.from([
-            _requestEnquire.compactMap{ [weak self] _ in
-                return self?.imageInfo.pageURL
-            }.asObservable(),
-            _tappedMetaLink.asObservable()
-        ])
-        .merge()
-        .asSignal(onErrorJustReturn: URL.empty)
+        return _requestEnquire.compactMap{ [weak self] _ in
+            return self?.imageInfo.pageURL
+        }.asSignal(onErrorJustReturn: URL.empty)
+        .filter { !$0.isEmpty }
+    }
+    
+    var requestPushCollectionView: Signal<(titile: String, url: URL)> {
+        return _tappedMetaLink
+            .asSignal(onErrorJustReturn: ("", URL.empty))
+            .filter{ !$0.0.isEmpty && !$0.1.isEmpty }
+            .map{ (titile: $0.0, url: $0.1) }
     }
 }
 

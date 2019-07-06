@@ -17,7 +17,7 @@ protocol ImageDetailViewModelInput {
     
     func refresh()
     
-    func metaTagDidTap(link: URL)
+    func metaTagDidTap(meta: (key: String, link: URL))
     
     func enquireButtonDidTap()
 }
@@ -29,6 +29,8 @@ protocol ImageDetailViewModelOutput {
     var enquireButtonEnability: Driver<Bool> { get }
 
     var openURLPage: Signal<URL> { get }
+    
+    var requestPushCollectionView: Signal<(titile: String, url: URL)> { get }
 }
 
 

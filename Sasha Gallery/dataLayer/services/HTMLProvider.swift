@@ -33,12 +33,13 @@ extension HTMLProvider {
             resultCallback(.failure(CommonError.wrongURL))
             return
         }
-        
+        print("read string called..")
+        let start = Date()
         guard let string = try? String(contentsOf: url) else {
             resultCallback(.failure(CommonError.emptyData))
             return
         }
-        
+        print("string loading interval: \(Date().timeIntervalSince(start))")
         resultCallback(.success(string))
     }
 }

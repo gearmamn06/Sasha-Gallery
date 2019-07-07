@@ -160,8 +160,7 @@
 		2B0D3EC322CA3CA200054216 /* Sasha Gallery */ = {
 			isa = PBXGroup;
 			children = (
-				2B0D3EF222CA3DA300054216 /* services */,
-				2BE1892622CA86BF0047310D /* models */,
+				2BEDBC9B22D23DAE00976420 /* dataLayer */,
 				2B1E039622CBBF83000EC425 /* features */,
 				2BE1893722CB8E980047310D /* comon */,
 				2B1E03EA22D072A0000EC425 /* BaseCoordinator.swift */,
@@ -339,6 +338,15 @@
 				2B1E03A022CBC0CB000EC425 /* StoryboardLoadableView.swift */,
 			);
 			path = comon;
+			sourceTree = "<group>";
+		};
+		2BEDBC9B22D23DAE00976420 /* dataLayer */ = {
+			isa = PBXGroup;
+			children = (
+				2B0D3EF222CA3DA300054216 /* services */,
+				2BE1892622CA86BF0047310D /* models */,
+			);
+			path = dataLayer;
 			sourceTree = "<group>";
 		};
 		87BEFDF4A65FEF1807611718 /* Pods */ = {

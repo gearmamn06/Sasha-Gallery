@@ -36,10 +36,10 @@ extension ImageDetail: HTMLParsable {
     }
     
     init?(element: Element) {
+        
         // set productImageURL
-        guard let imageElement = try? element.select("div.product-image").first(),
-            let img = try? imageElement.select("img").first(),
-            let src = try? img.attr("src"),
+        guard let src = try? element.select("div.product-image").first()?
+            .select("img").first()?.attr("src"),
             let url = URL(string: src) else {
                 return nil
         }
@@ -72,8 +72,9 @@ extension ImageDetail: HTMLParsable {
         self.collection = collection
         
         // set description
-        guard let contentElement = try? productInfoElement.select("div.product-content").first(),
-            let description = try? contentElement.select("p").first()?.text() else {
+        guard let description = try? productInfoElement.select("div.product-content").first()?
+            .select("p").first()?
+            .text() else {
                 return nil
         }
         self.description = description

@@ -204,22 +204,23 @@ extension GalleryListViewController {
 
 extension GalleryListViewController {
     
-    private func createRefreshControl() {
-        
-        let refreshControl = UIRefreshControl()
-        refreshControl.addTarget(self, action: #selector(refresDidCall), for: .valueChanged)
-        collectionView.refreshControl = refreshControl
-        collectionView.sendSubviewToBack(refreshControl)
-    }
-    
     private func subscribeRefreshControl() {
         
-        createRefreshControl()
+        let refreshControl = UIRefreshControl()
+        refreshControl.tintColor = UIColor.white
+        refreshControl.rx.controlEvent(.valueChanged)
+            .throttle(.milliseconds(100) , scheduler: MainScheduler.instance)
+            .subscribe(onNext: { [weak self] in
+                self?.viewModel.input.refreshList(withOutCache: true)
+            })
+            .disposed(by: bag)
         
+        collectionView.refreshControl = refreshControl
+        collectionView.alwaysBounceVertical = true
+
         viewModel.output.acitivityIndicatorAnimating
             .drive(onNext: { [weak self] animating in
                 if animating {
-                    self?.collectionView.refreshControl?.beginRefreshing()
                     self?.navigationItem.rightBarButtonItems?.forEach{ $0.isEnabled = false }
                 }else{
                     self?.collectionView.refreshControl?.endRefreshing()
@@ -228,14 +229,6 @@ extension GalleryListViewController {
             })
             .disposed(by: bag)
     }
-    
-    
-    @objc private func refresDidCall() {
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5, execute: {
-            self.viewModel.input.refreshList(withOutCache: true)
-        })
-    }
-    
 }
 
 

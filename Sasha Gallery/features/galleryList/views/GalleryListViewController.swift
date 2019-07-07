@@ -207,18 +207,24 @@ extension GalleryListViewController {
     private func createRefreshControl() {
         
         let refreshControl = UIRefreshControl()
+        refreshControl.tintColor = UIColor.white
         refreshControl.addTarget(self, action: #selector(refresDidCall), for: .valueChanged)
         collectionView.refreshControl = refreshControl
-        collectionView.sendSubviewToBack(refreshControl)
+        collectionView.alwaysBounceVertical = true
     }
     
     private func subscribeRefreshControl() {
-        
-        createRefreshControl()
-        
+
         viewModel.output.acitivityIndicatorAnimating
             .drive(onNext: { [weak self] animating in
                 if animating {
+                    
+                    if self?.collectionView.refreshControl == nil {
+                        self?.createRefreshControl()
+                    }
+                    
+                    if self?.collectionView.refreshControl?.isRefreshing == true { return }
+                    
                     self?.collectionView.refreshControl?.beginRefreshing()
                     self?.navigationItem.rightBarButtonItems?.forEach{ $0.isEnabled = false }
                 }else{
@@ -231,9 +237,7 @@ extension GalleryListViewController {
     
     
     @objc private func refresDidCall() {
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5, execute: {
             self.viewModel.input.refreshList(withOutCache: true)
-        })
     }
     
 }

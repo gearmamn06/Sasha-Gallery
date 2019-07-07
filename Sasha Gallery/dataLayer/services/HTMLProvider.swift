@@ -27,20 +27,30 @@ struct HTMLProvider<Model: HTMLParsable> {
 
 extension HTMLProvider {
     
-    func loadHTMLString(_ resultCallback: (Result<String, Error>) -> Void) {
+    func loadHTMLString(withOutCache: Bool = false,
+                        _ resultCallback: @escaping (Result<String, Error>) -> Void) {
         
         guard let url = URL(string: urlString) else {
             resultCallback(.failure(CommonError.wrongURL))
             return
         }
-        print("read string called..")
-        let start = Date()
-        guard let string = try? String(contentsOf: url) else {
-            resultCallback(.failure(CommonError.emptyData))
-            return
-        }
-        print("string loading interval: \(Date().timeIntervalSince(start))")
-        resultCallback(.success(string))
+        
+        let cachePolicy: URLRequest.CachePolicy = withOutCache ? .reloadIgnoringCacheData
+            : .returnCacheDataElseLoad
+        
+        let request = URLRequest(url: url, cachePolicy: cachePolicy)
+        
+        URLSession.shared.dataTask(with: request) { (data, response, error) in
+            if let data = data,
+                ((response as? HTTPURLResponse)?.statusCode ?? 500 < 300),
+                let string = String(data: data, encoding: .utf8) {
+                
+                resultCallback(.success(string))
+                return
+            }
+            
+            resultCallback(.failure(error ?? CommonError.emptyData))
+        }.resume()
     }
 }
 
@@ -50,7 +60,7 @@ extension HTMLProvider {
 
 extension HTMLProvider {
     
-    func loadHTML(withOutCache: Bool = false, _ resultCallback: (Result<Model, Error>) -> Void) {
+    func loadHTML(withOutCache: Bool = false, _ resultCallback: @escaping (Result<Model, Error>) -> Void) {
         
         // check cache exists
         if !withOutCache, let cached: Model = HTMLCache.shared.get(key: urlString)  {
@@ -59,7 +69,7 @@ extension HTMLProvider {
         }
         
         let urlString = self.urlString
-        self.loadHTMLString { result in
+        self.loadHTMLString(withOutCache: withOutCache) { result in
             switch result {
             case .success(let htmlString):
                 guard let document = try? SwiftSoup.parse(htmlString) else {

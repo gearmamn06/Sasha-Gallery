@@ -33,24 +33,25 @@ enum ListLayoutStyle: CGFloat {
 
 protocol GalleryListViewModelInput {
     
-    // list updating trigger
+    /// ViewController의 viewDidLayoutSubview가 콜되었다는 이벤트 전달
     func viewDidLayoutSubviews()
     
-    // refresh datasource and update list
+    /// 최초 목록 그리기 요청 및 새로고침 요청이 되었다는 이벤트 전달
     func refreshList(withOutCache: Bool)
     
-    // prefetch uiimage
+    /// collectionView prefetch 델리게이션 함수가 콜되었다는 이벤트 전달
     func requestPreFetches(atIndxPaths: [IndexPath])
     
-    // 소팅옵션 변경 요청
+    /// 정렬기준 변경 버튼이 탭되었다는 이벤트 전달
     func sortingButtonDidTap()
-    // 새로운 소팅기준 선택됨
-    func newSortingOrderDidSelect(to: ListSortingOrder) // -> update dataSource
     
-    // toogle current layout style
+    /// 유저가 새로운 정렬기준을 선택하였다는 이벤트 전달
+    func newSortingOrderDidSelect(to: ListSortingOrder)
+    
+    /// 목록 레이아웃스타일 변경이 요청되었다는 이벤트 전달
     func toggleLayoutStyle() // -> update layout
     
-    // some image selected
+    /// 리스트내에 이미지가 선택되었다는 이벤트 전달
     func imageDidSelect(atIndexPath indexPath: IndexPath)
 }
 
@@ -58,14 +59,19 @@ protocol GalleryListViewModelInput {
 
 protocol GalleryListViewModelOutput {
     
+    /// 현재화면의 로딩과 관련된 인디케이터의 에니메이팅 여부
     var acitivityIndicatorAnimating: Driver<Bool> { get }
     
+    /// 목록에 그릴 이미지 모델 어레이
     var images: Signal<[GalleryImage]> { get }
     
+    /// 정렬기준 변경 팦업을 현재 정렬기준값과 함께 보여주라는 시그널
     var showSortOrderSelectPopupWithCurrentValue: Signal<String> { get }
     
+    /// 콜렉션뷰에 새로 적용할 레이아웃
     var newCollectionViewFlowLayout: Driver<(String, UICollectionViewFlowLayout)> { get }
     
+    /// 이미지 상세페이지로 이동하라는 시그널
     var requestPushImageDetailView: Signal<GalleryImage?> { get }
 }
 

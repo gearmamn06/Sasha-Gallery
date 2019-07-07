@@ -74,6 +74,7 @@ extension ImageDetailViewModel: ImageDetailViewModelInput {
 
 extension ImageDetailViewModel: ImageDetailViewModelOutput {
     
+    // 뷰가 준비되었으면(최촤값) 가장 마지막 이미지 정보를 바탕으로 셀뷰모델 방출
     var items: Driver<[ImageDetailCellViewModel?]> {
         return Observable.combineLatest(
             _viewIsReady.take(1),
@@ -89,6 +90,7 @@ extension ImageDetailViewModel: ImageDetailViewModelOutput {
         .filter{ !$0.isEmpty }
     }
     
+    // 로딩이 요청되었다면 -> 비활성화 / 초기값 제외 셀뷰모델이 갱신되었다면 -> 활성화
     var enquireButtonEnability: Driver<Bool> {
         return Observable.from([
             _requestLoadData.map{ _ in false },
@@ -103,6 +105,7 @@ extension ImageDetailViewModel: ImageDetailViewModelOutput {
         .asDriver(onErrorJustReturn: false)
     }
     
+    // _requestEnquire이 방출되면 이미지 세부정보 URL로 변환하여 방출
     var openURLPage: Signal<URL> {
         return _requestEnquire.compactMap{ [weak self] _ in
             return self?.imageInfo.pageURL
@@ -110,6 +113,7 @@ extension ImageDetailViewModel: ImageDetailViewModelOutput {
         .filter { !$0.isEmpty }
     }
     
+    // _tappedMetaLink가 방툴되었다면 콜렉션 타이틀과, URL 튜플로 반환하여 방출
     var requestPushCollectionView: Signal<(titile: String, url: URL)> {
         return _tappedMetaLink
             .asSignal(onErrorJustReturn: ("", URL.empty))

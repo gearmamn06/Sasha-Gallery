@@ -86,6 +86,7 @@ extension GalleryListViewModel: GalleryListViewModelInput {
 
 extension GalleryListViewModel: GalleryListViewModelOutput {
     
+    // 뷰가 준비되었으면(최촤값) 화면에 보여줄 가장 마지막 이미지 리스트를 정렬기준에따라 정렬하여 방출
     var images: Signal<[GalleryImage]> {
         return Observable.combineLatest(
                 _viewIsReady.take(1),
@@ -105,12 +106,13 @@ extension GalleryListViewModel: GalleryListViewModelOutput {
             .asSignal(onErrorJustReturn: [])
     }
     
-    
+    // _isLoading 값을 드라이버로 방출
     var acitivityIndicatorAnimating: Driver<Bool> {
         return _isLoading
             .asDriver(onErrorJustReturn: false)
     }
     
+    // 보여질 이미지 리스트값이 변경되거나 레이아웃 스타일 기준이 변경되면 새로운 레이아웃 방출
     var newCollectionViewFlowLayout: Driver<(String, UICollectionViewFlowLayout)> {
         return Observable.combineLatest( _images.skip(1), _currentLayoutStyle) { data, style in
             let ratios = data.map{ $0.imageRatio }
@@ -121,6 +123,7 @@ extension GalleryListViewModel: GalleryListViewModelOutput {
                                       UICollectionViewFlowLayout()))
     }
     
+    // _sortingButtonDidTap 값이 방출되면 현재 정렬기준값으로 변경하여 방출
     var showSortOrderSelectPopupWithCurrentValue: Signal<String> {
         return _sortingButtonDidTap.compactMap { [weak self] in
             return self?._sortingOption.value.description
@@ -129,7 +132,7 @@ extension GalleryListViewModel: GalleryListViewModelOutput {
         .filter{ !$0.isEmpty }
     }
     
-    
+    // _selectImageIndexPath값이 방출되면 요청된 위치의 이미지정보를 방출
     var requestPushImageDetailView: Signal<GalleryImage?> {
         return _selectImageIndexPath.compactMap { [weak self] (indexPath: IndexPath) -> GalleryImage? in
             if let self = self, (0..<self._images.value.count) ~= indexPath.row {
@@ -164,7 +167,7 @@ private extension GalleryListViewModel {
         
         let urlString = self.collectionURL.absoluteString
         
-        // subscribe data load request -> refresh dataSource
+        // _requestLoadData를 내부적으로 구독하여 방출되면 새로운 GalleryImageList 값 요청 -> 결과([GalleryImage]만) 방출
         _requestLoadData
             .do(onNext: { [weak self] _ in
                 self?._isLoading.accept(true)
@@ -184,7 +187,7 @@ private extension GalleryListViewModel {
     
     private func subscribePreFetchRequest() {
         
-        // map indexPath to request image url
+        // _requestPreFetch가 방출되면 [IndexPath]를 preFetch 할 [URL]로 변경
         let prefetcInfos: Signal<[URL]> = _requestPreFetch
             .compactMap { [weak self] indexPaths in
                 guard let self = self else { return nil }
@@ -203,7 +206,7 @@ private extension GalleryListViewModel {
             .asSignal(onErrorJustReturn: [])
             .filter{ !$0.isEmpty }
         
-        // subscribe requested image urls -> start preFetch
+        // prefetcInfos를 내부적으로 구독하여 방출시 Kingfisher의 preFetch 시작
         prefetcInfos
             .emit(onNext: { requestURLs in
                 let preFetcher = ImagePrefetcher(resources: requestURLs)

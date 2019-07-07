@@ -39,6 +39,9 @@ protocol GalleryListViewModelInput {
     // refresh datasource and update list
     func refreshList(withOutCache: Bool)
     
+    // prefetch uiimage
+    func requestPreFetches(atIndxPaths: [IndexPath])
+    
     // 소팅옵션 변경 요청
     func sortingButtonDidTap()
     // 새로운 소팅기준 선택됨

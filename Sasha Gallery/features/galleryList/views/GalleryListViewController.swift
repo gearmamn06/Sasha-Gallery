@@ -72,6 +72,7 @@ extension GalleryListViewController {
     
     private func setUpNavigationBar() {
         
+        // set rightBarButton items
         let sortButton = UIBarButtonItem(image: #imageLiteral(resourceName: "29"), style: .plain, target: nil, action: nil)
         
         let layoutStyleToggleButton = UIBarButtonItem(title: "2xn", style: .plain,
@@ -79,6 +80,8 @@ extension GalleryListViewController {
         
         self.navigationItem.rightBarButtonItems = [sortButton, layoutStyleToggleButton]
         
+        
+        // subscribe rightBarButton items tap
         sortButton.rx.tap
             .subscribe(onNext: { [weak self] _ in
                 self?.viewModel.input.sortingButtonDidTap()
@@ -91,8 +94,8 @@ extension GalleryListViewController {
             })
             .disposed(by: bag)
         
+        // subscribe viewmodel.output.new sorting option -> change barbuttonItem
         subscribeSortOptionSelectionAlertController()
-        
     }
     
     private func subscribeSortOptionSelectionAlertController() {
@@ -133,25 +136,43 @@ extension GalleryListViewController {
         collectionView.register(GalleryListItemCell.self,
                                 forCellWithReuseIdentifier: "GalleryListItemCell")
         
+        // bind viewmodel.output.items to uicollectionview
         viewModel.output.images.asObservable()
             .bind(to: collectionView.rx.items(cellIdentifier: "GalleryListItemCell", cellType: GalleryListItemCell.self))
             { _ , element, cell in
                 cell.imageURL = element.imageURL
             }
             .disposed(by: bag)
+
         
+        subscribeCollectionViewItemSelected()
+        subscribeCollectionViewPrefetch()
+        subscribeCollectionViewFlowLayout()
+        subscribeRefreshControl()
+    }
+}
+
+
+// MARK: Collectionview subscribing
+
+extension GalleryListViewController {
+    
+    private func subscribeCollectionViewItemSelected() {
         collectionView.rx.itemSelected
             .subscribe(onNext: { [weak self] indexPath in
                 self?.viewModel.input.imageDidSelect(atIndexPath: indexPath)
             })
             .disposed(by: bag)
-        
-        subscribeCollectionViewFlowLayout()
-        
-        subscribeRefreshControl()
+    }
+    
+    private func subscribeCollectionViewPrefetch() {
+        collectionView.rx.prefetchItems
+            .subscribe(onNext: { [weak self] indexPaths in
+                self?.viewModel.input.requestPreFetches(atIndxPaths: indexPaths)
+            })
+            .disposed(by: bag)
     }
 }
-
 
 
 // MARK: CollectionViewFlowLayout changes

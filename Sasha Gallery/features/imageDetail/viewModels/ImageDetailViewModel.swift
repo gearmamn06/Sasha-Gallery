@@ -20,7 +20,7 @@ final class ImageDetailViewModel: ImageDetailViewModelType {
     private let bag = DisposeBag()
     
     private let _viewIsReady = PublishRelay<Void>()
-    private let _requestLoadData = PublishRelay<Void>()
+    private let _requestLoadData = PublishRelay<Bool>()
     private let _tappedMetaLink = PublishRelay<(String, URL)>()
     private let _requestEnquire = PublishRelay<Void>()
 
@@ -33,12 +33,13 @@ final class ImageDetailViewModel: ImageDetailViewModelType {
     
     private lazy var _imageDetail: Signal<ImageDetail> = {
         return _requestLoadData
-            .compactMap { [weak self] _ in
-                return self?.imageInfo.pageURL
+            .compactMap { [weak self] withoutCache in
+                guard let self = self else { return nil }
+                return (withoutCache, self.imageInfo.pageURL)
             }
-            .flatMapLatest { url in
+            .flatMapLatest { (withoutCache: Bool, url: URL) in
                 return HTMLProvider<ImageDetail>(urlString: url.absoluteString)
-                    .loadHTML()
+                    .loadHTML(withOutCache: withoutCache)
                     .asSignal(onErrorJustReturn: ImageDetail.empty)
             }
             .asSignal(onErrorJustReturn: .empty)
@@ -56,8 +57,8 @@ extension ImageDetailViewModel: ImageDetailViewModelInput {
         _viewIsReady.accept(())
     }
     
-    func refresh() {
-        _requestLoadData.accept(())
+    func refresh(withOutCache: Bool) {
+        _requestLoadData.accept(withOutCache)
     }
     
     func metaTagDidTap(meta: (key: String, link: URL)) {

@@ -19,7 +19,7 @@ protocol ImageDetailViewModelInput {
     func viewDidLayoutSubviews()
     
     /// 최초 목록 그리기 요청 및 새로고침 요청이 되었다는 이벤트 전달
-    func refresh()
+    func refresh(withOutCache: Bool)
     
     /// collection 태그가 탭되었다는 이벤트 전달
     func metaTagDidTap(meta: (key: String, link: URL))

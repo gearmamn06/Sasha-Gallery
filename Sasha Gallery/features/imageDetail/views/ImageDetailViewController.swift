@@ -35,7 +35,7 @@ class ImageDetailViewController: UIViewController {
         subscribePushCollectionView()
         
         DispatchQueue.global().async {
-            self.viewModel.input.refresh()
+            self.viewModel.input.refresh(withOutCache: false)
         }
     }
     
@@ -74,6 +74,10 @@ extension ImageDetailViewController {
         viewModel.output.enquireButtonEnability
             .drive(onNext: { [weak self] isEnable in
                 self?.navigationItem.rightBarButtonItem?.isEnabled = isEnable
+                
+                if isEnable {
+                   self?.tableView.refreshControl?.endRefreshing()
+                }
             })
             .disposed(by: bag)
     }
@@ -95,6 +99,7 @@ extension ImageDetailViewController {
         tableView.register(cellType: ImageDetailDescriptionCell.self)
         
         viewModel.output.items.asObservable()
+            .debug()
             .bind(to: tableView.rx.items) { [weak self] tableview, index, element in
                 switch index {
                 case 0:
@@ -122,6 +127,23 @@ extension ImageDetailViewController {
                 }
             }
             .disposed(by: bag)
+        
+        
+        setUpTableViewRefreshControl()
+    }
+    
+    private func setUpTableViewRefreshControl() {
+        let refreshControl = UIRefreshControl()
+        refreshControl.tintColor = UIColor.white
+        refreshControl.rx.controlEvent(.valueChanged)
+            .throttle(.milliseconds(100) , scheduler: MainScheduler.instance)
+            .subscribe(onNext: { [weak self] in
+                self?.viewModel.input.refresh(withOutCache: true)
+            })
+            .disposed(by: bag)
+        
+        tableView.refreshControl = refreshControl
+        tableView.alwaysBounceVertical = true
     }
 }
 

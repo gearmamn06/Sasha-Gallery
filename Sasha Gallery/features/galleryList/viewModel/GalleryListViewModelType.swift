@@ -42,6 +42,9 @@ protocol GalleryListViewModelInput {
     /// collectionView prefetch 델리게이션 함수가 콜되었다는 이벤트 전달
     func requestPreFetches(atIndxPaths: [IndexPath])
     
+    /// collectionView cancel prefetch 델리게이션 함수가 콜되었다는 이벤트 전달
+    func cancelPreFetches(atIndexPaths: [IndexPath])
+    
     /// 정렬기준 변경 버튼이 탭되었다는 이벤트 전달
     func sortingButtonDidTap()
     

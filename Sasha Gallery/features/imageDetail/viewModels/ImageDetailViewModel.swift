@@ -31,8 +31,11 @@ final class ImageDetailViewModel: ImageDetailViewModelType {
     }
 
     
-    private lazy var _imageDetail: Signal<ImageDetail> = {
+    private lazy var _imageDetail: Observable<ImageDetail> = {
         return _requestLoadData
+            .observeOn(ConcurrentDispatchQueueScheduler(queue:
+                DispatchQueue(label: "crawl.imageDetail"))
+            )
             .compactMap { [weak self] withoutCache in
                 guard let self = self else { return nil }
                 return (withoutCache, self.imageInfo.pageURL)
@@ -40,11 +43,9 @@ final class ImageDetailViewModel: ImageDetailViewModelType {
             .flatMapLatest { (withoutCache: Bool, url: URL) in
                 return HTMLProvider<ImageDetail>(urlString: url.absoluteString)
                     .loadHTML(withOutCache: withoutCache)
-                    .asSignal(onErrorJustReturn: ImageDetail.empty)
             }
-            .asSignal(onErrorJustReturn: .empty)
-            .asSharedSequence()
-    }()
+            .share()
+        }()
 }
 
 
@@ -79,7 +80,7 @@ extension ImageDetailViewModel: ImageDetailViewModelOutput {
     var items: Driver<[ImageDetailCellViewModel?]> {
         return Observable.combineLatest(
             _viewIsReady.take(1),
-            _imageDetail.asObservable()
+            _imageDetail
         )
         .compactMap { [weak self] _ , detail in
             guard let self = self else { return nil }

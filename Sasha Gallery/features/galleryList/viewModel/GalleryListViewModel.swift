@@ -23,6 +23,7 @@ final class GalleryListViewModel: GalleryListViewModelType {
     private let _isLoading = BehaviorRelay<Bool>(value: false)
     
     private let _requestPreFetch = PublishRelay<[IndexPath]>()
+    private let _cancelPreFetch = PublishRelay<[IndexPath]>()
     
     private let _sortingButtonDidTap = PublishRelay<Void>()
     private let _sortingOption = BehaviorRelay<ListSortingOrder>(value: .normal)
@@ -33,6 +34,8 @@ final class GalleryListViewModel: GalleryListViewModelType {
     private let _images = BehaviorRelay<[GalleryImage]>(value: [])
     
     private let _selectImageIndexPath = PublishRelay<IndexPath>()
+    
+    private var _prefetcherMap: [URL: ImagePrefetcher] = [:]
     
     var collectionURL: URL
     
@@ -59,6 +62,10 @@ extension GalleryListViewModel: GalleryListViewModelInput {
     
     func requestPreFetches(atIndxPaths: [IndexPath]) {
         _requestPreFetch.accept(atIndxPaths)
+    }
+    
+    func cancelPreFetches(atIndexPaths: [IndexPath]) {
+        _cancelPreFetch.accept(atIndexPaths)
     }
     
     func sortingButtonDidTap() {
@@ -169,13 +176,15 @@ private extension GalleryListViewModel {
         
         // _requestLoadData를 내부적으로 구독하여 방출되면 새로운 GalleryImageList 값 요청 -> 결과([GalleryImage]만) 방출
         _requestLoadData
+            .observeOn(ConcurrentDispatchQueueScheduler(queue:
+                DispatchQueue(label: "crawl.gallery"))
+            )
             .do(onNext: { [weak self] _ in
                 self?._isLoading.accept(true)
             })
             .flatMapLatest { flag in
                 return HTMLProvider<GalleryImageList>(urlString: urlString)
                     .loadHTML(withOutCache: flag)
-                    .asSignal(onErrorJustReturn: GalleryImageList.empty)
             }
             .map{ $0.images }
             .do(onNext: { [weak self] _ in
@@ -185,6 +194,19 @@ private extension GalleryListViewModel {
             .disposed(by: bag)
     }
     
+    private func getURLs(withIndexPaths indexPaths: [IndexPath]) -> [URL] {
+        var sender = [URL]()
+        let models = self._images.value
+        
+        for indexPath in indexPaths {
+            guard (0..<models.count) ~= indexPath.row else { continue }
+            let model = models[indexPath.row]
+            sender.append(model.imageURL)
+        }
+        
+        return sender
+    }
+    
     private func subscribePreFetchRequest() {
         
         // _requestPreFetch가 방출되면 [IndexPath]를 preFetch 할 [URL]로 변경
@@ -192,25 +214,36 @@ private extension GalleryListViewModel {
             .compactMap { [weak self] indexPaths in
                 guard let self = self else { return nil }
                 
-                var sender = [URL]()
-                let models = self._images.value
-                
-                for indexPath in indexPaths {
-                    guard (0..<models.count) ~= indexPath.row else { continue }
-                    let model = models[indexPath.row]
-                    sender.append(model.imageURL)
-                }
-                
-                return sender
+                return self.getURLs(withIndexPaths: indexPaths)
             }
             .asSignal(onErrorJustReturn: [])
             .filter{ !$0.isEmpty }
         
         // prefetcInfos를 내부적으로 구독하여 방출시 Kingfisher의 preFetch 시작
         prefetcInfos
-            .emit(onNext: { requestURLs in
-                let preFetcher = ImagePrefetcher(resources: requestURLs)
-                preFetcher.start()
+            .emit(onNext: { [weak self] requestURLs in
+                requestURLs.forEach {
+                    let preFetcher = ImagePrefetcher(urls: [$0])
+                    self?._prefetcherMap[$0] = preFetcher
+                    preFetcher.start()
+                }
+            })
+            .disposed(by: bag)
+        
+        
+        let cancelInfos: Signal<[URL]> = _cancelPreFetch
+            .compactMap { [weak self] indexPaths in
+                guard let self = self else { return nil }
+                return self.getURLs(withIndexPaths: indexPaths)
+            }
+            .asSignal(onErrorJustReturn: [])
+                .filter{ !$0.isEmpty }
+        
+        cancelInfos
+            .emit(onNext: { [weak self] urls in
+                urls.forEach {
+                    self?._prefetcherMap[$0]?.stop()
+                }
             })
             .disposed(by: bag)
     }

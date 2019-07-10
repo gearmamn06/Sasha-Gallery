@@ -34,9 +34,7 @@ class ImageDetailViewController: UIViewController {
         subscribeOpenWebpage()
         subscribePushCollectionView()
         
-        DispatchQueue.global().async {
-            self.viewModel.input.refresh(withOutCache: false)
-        }
+        self.viewModel.input.refresh(withOutCache: false)
     }
     
     override func viewDidLayoutSubviews() {
@@ -99,7 +97,6 @@ extension ImageDetailViewController {
         tableView.register(cellType: ImageDetailDescriptionCell.self)
         
         viewModel.output.items.asObservable()
-            .debug()
             .bind(to: tableView.rx.items) { [weak self] tableview, index, element in
                 switch index {
                 case 0:
@@ -165,7 +162,6 @@ extension ImageDetailViewController {
         
         viewModel.output.requestPushCollectionView
             .emit(onNext: { [weak self] info in
-                
                 self?.delegate?.pushGalleryCollectionView(collectionTitle: info.titile,
                                                           collectionURL: info.url)
             })

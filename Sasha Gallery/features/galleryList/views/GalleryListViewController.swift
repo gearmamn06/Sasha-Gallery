@@ -34,9 +34,7 @@ class GalleryListViewController: UIViewController {
         
         subscribeNextViewControllerPushing()
         
-        DispatchQueue.global().async {
-            self.viewModel.input.refreshList(withOutCache: false)
-        }
+        viewModel.input.refreshList(withOutCache: false)
     }
     
     
@@ -47,7 +45,9 @@ class GalleryListViewController: UIViewController {
     
     
     override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
         setUpTheme()
+        
     }
     
     
@@ -171,6 +171,12 @@ extension GalleryListViewController {
                 self?.viewModel.input.requestPreFetches(atIndxPaths: indexPaths)
             })
             .disposed(by: bag)
+        
+        collectionView.rx.cancelPrefetchingForItems
+            .subscribe(onNext: { [weak self] indexPaths in
+                self?.viewModel.input.cancelPreFetches(atIndexPaths: indexPaths)
+            })
+            .disposed(by: bag)
     }
 }
 
@@ -182,10 +188,19 @@ extension GalleryListViewController {
     private func subscribeCollectionViewFlowLayout() {
         viewModel.output.newCollectionViewFlowLayout
             .drive(onNext: { [weak self] info in
+                // 레이아웃 변경전 이전 레이아웃이 MosaicFlowLayout인지 검사
+                let isMosaicLayout = self?.collectionView.collectionViewLayout
+                    is MosaicFlowLayoutView
+                
                 self?.collectionView.collectionViewLayout = info.1
                 self?.collectionView.reloadData()
                 
                 self?.navigationItem.rightBarButtonItems?.last?.title = info.0
+                
+                // 이전 레이아웃이 mosaicFlowLayout이 아니었다면 == 최초 기본레리아웃 -> 오프셋 .zero로 변경
+                if isMosaicLayout == false {
+                    self?.collectionView.contentOffset = .zero
+                }
             })
             .disposed(by: bag)
     }

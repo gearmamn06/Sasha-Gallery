@@ -48,6 +48,9 @@
 		2BE1892A22CA8D390047310D /* GalleryImageList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BE1892922CA8D390047310D /* GalleryImageList.swift */; };
 		2BE1892D22CA8E3A0047310D /* GalleryImageTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BE1892C22CA8E3A0047310D /* GalleryImageTest.swift */; };
 		2BE1892F22CA90C40047310D /* GalleryImageListTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BE1892E22CA90C40047310D /* GalleryImageListTest.swift */; };
+		2BF863CF22F1CAC20055B7C8 /* GalleryViewModelTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BF863CE22F1CAC20055B7C8 /* GalleryViewModelTest.swift */; };
+		2BF863D122F1CAD80055B7C8 /* GalleryViewTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BF863D022F1CAD80055B7C8 /* GalleryViewTest.swift */; };
+		2BF863D322F1CAFE0055B7C8 /* GalleryListItemCellTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BF863D222F1CAFE0055B7C8 /* GalleryListItemCellTest.swift */; };
 		B8235F06D85102C01D3A6A28 /* Pods_Sasha_Gallery.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 47EFC87C5114B0C625C0BE48 /* Pods_Sasha_Gallery.framework */; };
 		E833A0941C086F5233986124 /* Pods_Sasha_GalleryTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8DFF7BB7498FC72FF5C73CEE /* Pods_Sasha_GalleryTests.framework */; };
 /* End PBXBuildFile section */
@@ -110,6 +113,9 @@
 		2BE1892922CA8D390047310D /* GalleryImageList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GalleryImageList.swift; sourceTree = "<group>"; };
 		2BE1892C22CA8E3A0047310D /* GalleryImageTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GalleryImageTest.swift; sourceTree = "<group>"; };
 		2BE1892E22CA90C40047310D /* GalleryImageListTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GalleryImageListTest.swift; sourceTree = "<group>"; };
+		2BF863CE22F1CAC20055B7C8 /* GalleryViewModelTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = GalleryViewModelTest.swift; path = "../../../../../../../../System/Volumes/Data/Users/pH500/Documents/xcodenewrep/Sasha-Gallery/Sasha GalleryTests/featureTests/galleryTests/GalleryViewModelTest.swift"; sourceTree = "<group>"; };
+		2BF863D022F1CAD80055B7C8 /* GalleryViewTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = GalleryViewTest.swift; path = "../../../../../../../../System/Volumes/Data/Users/pH500/Documents/xcodenewrep/Sasha-Gallery/Sasha GalleryTests/featureTests/galleryTests/GalleryViewTest.swift"; sourceTree = "<group>"; };
+		2BF863D222F1CAFE0055B7C8 /* GalleryListItemCellTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = GalleryListItemCellTest.swift; path = "../../../../../../../../System/Volumes/Data/Users/pH500/Documents/xcodenewrep/Sasha-Gallery/Sasha GalleryTests/featureTests/galleryTests/GalleryListItemCellTest.swift"; sourceTree = "<group>"; };
 		47EFC87C5114B0C625C0BE48 /* Pods_Sasha_Gallery.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Sasha_Gallery.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		5A2A58620993085A4EE6068F /* Pods-Sasha GalleryTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Sasha GalleryTests.release.xcconfig"; path = "Target Support Files/Pods-Sasha GalleryTests/Pods-Sasha GalleryTests.release.xcconfig"; sourceTree = "<group>"; };
 		658C9AD5B6B04332F0D22AE2 /* Pods-Sasha GalleryTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Sasha GalleryTests.debug.xcconfig"; path = "Target Support Files/Pods-Sasha GalleryTests/Pods-Sasha GalleryTests.debug.xcconfig"; sourceTree = "<group>"; };
@@ -182,6 +188,7 @@
 				2B1E03DC22CFC4EB000EC425 /* cacheTest */,
 				2B0D3EFF22CA4E0B00054216 /* networkModuleTest */,
 				2BE1892B22CA8E220047310D /* ModelTest */,
+				2BF863CB22F1C9D60055B7C8 /* featureTests */,
 				2B0D3EDB22CA3CA400054216 /* Info.plist */,
 			);
 			path = "Sasha GalleryTests";
@@ -352,6 +359,32 @@
 			path = dataLayer;
 			sourceTree = "<group>";
 		};
+		2BF863CB22F1C9D60055B7C8 /* featureTests */ = {
+			isa = PBXGroup;
+			children = (
+				2BF863CC22F1C9ED0055B7C8 /* galleryTests */,
+				2BF863CD22F1C9FE0055B7C8 /* imageDetailTests */,
+			);
+			path = featureTests;
+			sourceTree = "<group>";
+		};
+		2BF863CC22F1C9ED0055B7C8 /* galleryTests */ = {
+			isa = PBXGroup;
+			children = (
+				2BF863CE22F1CAC20055B7C8 /* GalleryViewModelTest.swift */,
+				2BF863D022F1CAD80055B7C8 /* GalleryViewTest.swift */,
+				2BF863D222F1CAFE0055B7C8 /* GalleryListItemCellTest.swift */,
+			);
+			path = galleryTests;
+			sourceTree = "<group>";
+		};
+		2BF863CD22F1C9FE0055B7C8 /* imageDetailTests */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = imageDetailTests;
+			sourceTree = "<group>";
+		};
 		87BEFDF4A65FEF1807611718 /* Pods */ = {
 			isa = PBXGroup;
 			children = (
@@ -405,6 +438,7 @@
 				2B0D3ED122CA3CA400054216 /* Sources */,
 				2B0D3ED222CA3CA400054216 /* Frameworks */,
 				2B0D3ED322CA3CA400054216 /* Resources */,
+				6F34A398F0E7FCDC36DC1C6E /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -500,6 +534,23 @@
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
+		6F34A398F0E7FCDC36DC1C6E /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-Sasha GalleryTests/Pods-Sasha GalleryTests-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-Sasha GalleryTests/Pods-Sasha GalleryTests-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Sasha GalleryTests/Pods-Sasha GalleryTests-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
 		832251B79CEAFA26B4639005 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -582,9 +633,12 @@
 			buildActionMask = 2147483647;
 			files = (
 				2B1E03B022CCFF6C000EC425 /* ImageRatioFindTest.swift in Sources */,
+				2BF863D322F1CAFE0055B7C8 /* GalleryListItemCellTest.swift in Sources */,
+				2BF863CF22F1CAC20055B7C8 /* GalleryViewModelTest.swift in Sources */,
 				2BE1892D22CA8E3A0047310D /* GalleryImageTest.swift in Sources */,
 				2B1E03DE22CFC501000EC425 /* HTMLCacheTest.swift in Sources */,
 				2B1E03BA22CE4770000EC425 /* ImageDetailTest.swift in Sources */,
+				2BF863D122F1CAD80055B7C8 /* GalleryViewTest.swift in Sources */,
 				2BE1891B22CA58E90047310D /* LocalHTMLSourceReader.swift in Sources */,
 				2BE1892F22CA90C40047310D /* GalleryImageListTest.swift in Sources */,
 				2B0D3EF822CA442700054216 /* HTMLSourceTest.swift in Sources */,

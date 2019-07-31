@@ -15,6 +15,7 @@ target 'Sasha Gallery' do
   target 'Sasha GalleryTests' do
     inherit! :search_paths
     # Pods for testing
+    pod 'RxTest', '~> 5'
   end
 
 end

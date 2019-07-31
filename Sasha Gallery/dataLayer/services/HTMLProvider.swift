@@ -13,7 +13,7 @@ import RxSwift
 
 // MARK; Properties & initializer
 
-struct HTMLProvider<Model: HTMLParsable> {
+struct HTMLProvider: HTMLProViderType {
     
     private let urlString: String
     
@@ -60,7 +60,7 @@ extension HTMLProvider {
 
 extension HTMLProvider {
     
-    func loadHTML(withOutCache: Bool = false, _ resultCallback: @escaping (Result<Model, Error>) -> Void) {
+    func loadHTML<Model: HTMLParsable>(withOutCache: Bool = false, _ resultCallback: @escaping (Result<Model, Error>) -> Void) {
         
         // check cache exists
         if !withOutCache, let cached: Model = HTMLCache.shared.get(key: urlString)  {
@@ -93,29 +93,6 @@ extension HTMLProvider {
             case .failure(let error):
                 resultCallback(.failure(error))
             }
-        }
-    }
-}
-
-
-
-extension HTMLProvider {
-    
-    func loadHTML(withOutCache: Bool = false) -> Observable<Model> {
-        return Observable.create { observer in
-            self.loadHTML(withOutCache: withOutCache) { result in
-                
-                switch result {
-                case .success(let model):
-                    observer.onNext(model)
-                    observer.onCompleted()
-                    
-                case .failure(let error):
-                    observer.onError(error)
-                }
-            }
-            
-            return Disposables.create()
         }
     }
 }

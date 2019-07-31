@@ -25,12 +25,12 @@ protocol BaseCoordinatorInterface: class {
 class BaseCoordinator {
     
     fileprivate enum NavigationFlow: Equatable {
-        case collection(title: String, collectionURL: URL)
+        case collection(title: String, provider: HTMLProvider)
         case imageDetail(imageTitle: String, webPageURL: URL, imageRatio: Float)
         
         static var initialFlow: NavigationFlow {
-            return .collection(title: "Sasha",
-                               collectionURL: URL(string: "https://www.gettyimagesgallery.com/collection/sasha/")!)
+            let provider = HTMLProvider(urlString: "https://www.gettyimagesgallery.com/collection/sasha/")
+            return .collection(title: "Sasha", provider: provider)
         }
         
         private var identifier: Int {
@@ -73,8 +73,8 @@ extension BaseCoordinator: BaseCoordinatorInterface {
                 guard let self = self else { return }
                 switch nextFlow {
                     
-                case .collection(let title, let url):
-                    let viewModel = GalleryListViewModel(collectionURL: url)
+                case .collection(let title, let provider):
+                    let viewModel = GalleryListViewModel(provider: provider)
                     let nextViewController = GalleryListViewController.instance
                     nextViewController.injectDependency(viewModel, delegate: self)
                     nextViewController.title = title
@@ -105,7 +105,9 @@ extension BaseCoordinator: BaseCoordinatorInterface {
 extension BaseCoordinator {
     
     func pushGalleryCollectionView(collectionTitle: String, collectionURL: URL) {
-        let flow = NavigationFlow.collection(title: collectionTitle, collectionURL: collectionURL)
+        let provider = HTMLProvider(urlString: collectionURL.absoluteString)
+        let flow = NavigationFlow.collection(title: collectionTitle,
+                                             provider: provider)
         nextNavigationFlow.accept(flow)
     }
     

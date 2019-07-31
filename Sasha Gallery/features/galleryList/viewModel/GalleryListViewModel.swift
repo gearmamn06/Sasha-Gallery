@@ -37,10 +37,10 @@ final class GalleryListViewModel: GalleryListViewModelType {
     
     private var _prefetcherMap: [URL: ImagePrefetcher] = [:]
     
-    var collectionURL: URL
+    private let provider: HTMLProViderType
     
-    init(collectionURL: URL) {
-        self.collectionURL = collectionURL
+    init(provider: HTMLProViderType) {
+        self.provider = provider
         
         bindRefresh()
         subscribePreFetchRequest()
@@ -171,9 +171,8 @@ extension GalleryListViewModel {
 private extension GalleryListViewModel {
     
     func bindRefresh() {
-        
-        let urlString = self.collectionURL.absoluteString
-        
+    
+        let provider = self.provider
         // _requestLoadData를 내부적으로 구독하여 방출되면 새로운 GalleryImageList 값 요청 -> 결과([GalleryImage]만) 방출
         _requestLoadData
             .observeOn(ConcurrentDispatchQueueScheduler(queue:
@@ -182,9 +181,10 @@ private extension GalleryListViewModel {
             .do(onNext: { [weak self] _ in
                 self?._isLoading.accept(true)
             })
-            .flatMapLatest { flag in
-                return HTMLProvider<GalleryImageList>(urlString: urlString)
-                    .loadHTML(withOutCache: flag)
+            .flatMapLatest { (flag: Bool) -> Observable<GalleryImageList> in
+                let sender: Observable<GalleryImageList>
+                    = provider.loadHTML(withOutCache: flag)
+                return sender
             }
             .map{ $0.images }
             .do(onNext: { [weak self] _ in

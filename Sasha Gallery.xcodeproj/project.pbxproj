@@ -51,6 +51,9 @@
 		2BF863CF22F1CAC20055B7C8 /* GalleryViewModelTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BF863CE22F1CAC20055B7C8 /* GalleryViewModelTest.swift */; };
 		2BF863D122F1CAD80055B7C8 /* GalleryViewTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BF863D022F1CAD80055B7C8 /* GalleryViewTest.swift */; };
 		2BF863D322F1CAFE0055B7C8 /* GalleryListItemCellTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BF863D222F1CAFE0055B7C8 /* GalleryListItemCellTest.swift */; };
+		2BF863D522F1D03A0055B7C8 /* HTMLProviderType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BF863D422F1D03A0055B7C8 /* HTMLProviderType.swift */; };
+		2BF863D722F1D7D00055B7C8 /* HTMLProviderMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BF863D622F1D7D00055B7C8 /* HTMLProviderMock.swift */; };
+		2BF863D922F1D8530055B7C8 /* TestError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BF863D822F1D8530055B7C8 /* TestError.swift */; };
 		B8235F06D85102C01D3A6A28 /* Pods_Sasha_Gallery.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 47EFC87C5114B0C625C0BE48 /* Pods_Sasha_Gallery.framework */; };
 		E833A0941C086F5233986124 /* Pods_Sasha_GalleryTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8DFF7BB7498FC72FF5C73CEE /* Pods_Sasha_GalleryTests.framework */; };
 /* End PBXBuildFile section */
@@ -116,6 +119,9 @@
 		2BF863CE22F1CAC20055B7C8 /* GalleryViewModelTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = GalleryViewModelTest.swift; path = "../../../../../../../../System/Volumes/Data/Users/pH500/Documents/xcodenewrep/Sasha-Gallery/Sasha GalleryTests/featureTests/galleryTests/GalleryViewModelTest.swift"; sourceTree = "<group>"; };
 		2BF863D022F1CAD80055B7C8 /* GalleryViewTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = GalleryViewTest.swift; path = "../../../../../../../../System/Volumes/Data/Users/pH500/Documents/xcodenewrep/Sasha-Gallery/Sasha GalleryTests/featureTests/galleryTests/GalleryViewTest.swift"; sourceTree = "<group>"; };
 		2BF863D222F1CAFE0055B7C8 /* GalleryListItemCellTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = GalleryListItemCellTest.swift; path = "../../../../../../../../System/Volumes/Data/Users/pH500/Documents/xcodenewrep/Sasha-Gallery/Sasha GalleryTests/featureTests/galleryTests/GalleryListItemCellTest.swift"; sourceTree = "<group>"; };
+		2BF863D422F1D03A0055B7C8 /* HTMLProviderType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = HTMLProviderType.swift; path = "../../../../../../../../System/Volumes/Data/Users/pH500/Documents/xcodenewrep/Sasha-Gallery/Sasha Gallery/dataLayer/services/HTMLProviderType.swift"; sourceTree = "<group>"; };
+		2BF863D622F1D7D00055B7C8 /* HTMLProviderMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = HTMLProviderMock.swift; path = "../../../../../../../System/Volumes/Data/Users/pH500/Documents/xcodenewrep/Sasha-Gallery/Sasha GalleryTests/featureTests/HTMLProviderMock.swift"; sourceTree = "<group>"; };
+		2BF863D822F1D8530055B7C8 /* TestError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = TestError.swift; path = "../../../../../../System/Volumes/Data/Users/pH500/Documents/xcodenewrep/Sasha-Gallery/Sasha GalleryTests/TestError.swift"; sourceTree = "<group>"; };
 		47EFC87C5114B0C625C0BE48 /* Pods_Sasha_Gallery.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Sasha_Gallery.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		5A2A58620993085A4EE6068F /* Pods-Sasha GalleryTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Sasha GalleryTests.release.xcconfig"; path = "Target Support Files/Pods-Sasha GalleryTests/Pods-Sasha GalleryTests.release.xcconfig"; sourceTree = "<group>"; };
 		658C9AD5B6B04332F0D22AE2 /* Pods-Sasha GalleryTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Sasha GalleryTests.debug.xcconfig"; path = "Target Support Files/Pods-Sasha GalleryTests/Pods-Sasha GalleryTests.debug.xcconfig"; sourceTree = "<group>"; };
@@ -182,6 +188,7 @@
 		2B0D3ED822CA3CA400054216 /* Sasha GalleryTests */ = {
 			isa = PBXGroup;
 			children = (
+				2BF863D822F1D8530055B7C8 /* TestError.swift */,
 				2BE1891822CA58D20047310D /* mainPage.html */,
 				2B1E03BB22CE4856000EC425 /* imageDetail.html */,
 				2BE1891A22CA58E90047310D /* LocalHTMLSourceReader.swift */,
@@ -198,6 +205,7 @@
 			isa = PBXGroup;
 			children = (
 				2B1E03DA22CFC045000EC425 /* HTMLCache.swift */,
+				2BF863D422F1D03A0055B7C8 /* HTMLProviderType.swift */,
 				2B0D3EFB22CA45D400054216 /* HTMLProvider.swift */,
 			);
 			path = services;
@@ -362,6 +370,7 @@
 		2BF863CB22F1C9D60055B7C8 /* featureTests */ = {
 			isa = PBXGroup;
 			children = (
+				2BF863D622F1D7D00055B7C8 /* HTMLProviderMock.swift */,
 				2BF863CC22F1C9ED0055B7C8 /* galleryTests */,
 				2BF863CD22F1C9FE0055B7C8 /* imageDetailTests */,
 			);
@@ -625,6 +634,7 @@
 				2B1E03ED22D07B49000EC425 /* ImageDetailCellViewModel.swift in Sources */,
 				2B0D3EC522CA3CA200054216 /* AppDelegate.swift in Sources */,
 				2B1E03DB22CFC045000EC425 /* HTMLCache.swift in Sources */,
+				2BF863D522F1D03A0055B7C8 /* HTMLProviderType.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -632,6 +642,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2BF863D922F1D8530055B7C8 /* TestError.swift in Sources */,
 				2B1E03B022CCFF6C000EC425 /* ImageRatioFindTest.swift in Sources */,
 				2BF863D322F1CAFE0055B7C8 /* GalleryListItemCellTest.swift in Sources */,
 				2BF863CF22F1CAC20055B7C8 /* GalleryViewModelTest.swift in Sources */,
@@ -642,6 +653,7 @@
 				2BE1891B22CA58E90047310D /* LocalHTMLSourceReader.swift in Sources */,
 				2BE1892F22CA90C40047310D /* GalleryImageListTest.swift in Sources */,
 				2B0D3EF822CA442700054216 /* HTMLSourceTest.swift in Sources */,
+				2BF863D722F1D7D00055B7C8 /* HTMLProviderMock.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

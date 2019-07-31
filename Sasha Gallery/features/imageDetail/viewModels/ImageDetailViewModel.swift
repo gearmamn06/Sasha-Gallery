@@ -40,9 +40,10 @@ final class ImageDetailViewModel: ImageDetailViewModelType {
                 guard let self = self else { return nil }
                 return (withoutCache, self.imageInfo.pageURL)
             }
-            .flatMapLatest { (withoutCache: Bool, url: URL) in
-                return HTMLProvider<ImageDetail>(urlString: url.absoluteString)
-                    .loadHTML(withOutCache: withoutCache)
+            .flatMapLatest { (withoutCache: Bool, url: URL)
+                -> Observable<ImageDetail> in
+                let provider = HTMLProvider(urlString: url.absoluteString)
+                return provider.loadHTML(withOutCache: withoutCache)
             }
             .share()
         }()
